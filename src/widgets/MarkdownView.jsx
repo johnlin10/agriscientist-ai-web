@@ -1,21 +1,21 @@
-import style from "./css/MarkdownView.module.scss"
-import { useLocation } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { onSnapshot, doc } from "firebase/firestore"
-import { db, auth, app, writeFirestoreDoc, getFirestoreData } from "../firebase"
-import ReactMarkdown from "react-markdown"
-import gfm from "remark-gfm"
-import remarkMath from "remark-math"
-import rehypeKatex from "rehype-katex"
-import rehypeRaw from "rehype-raw"
-import rehypeHighlight from "rehype-highlight"
-import "highlight.js/styles/panda-syntax-dark.css"
-import { initializeApp } from "firebase/app"
-import { getAuth } from "firebase/auth"
-import { useContext } from "react"
-import { AppContext } from "../AppContext"
+import style from './css/MarkdownView.module.scss'
+import { useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { onSnapshot, doc } from 'firebase/firestore'
+import { db, auth, app, writeFirestoreDoc, getFirestoreData } from '../firebase'
+import ReactMarkdown from 'react-markdown'
+import gfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import rehypeRaw from 'rehype-raw'
+import rehypeHighlight from 'rehype-highlight'
+import 'highlight.js/styles/panda-syntax-dark.css'
+import { initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { useContext } from 'react'
+import { AppContext } from '../AppContext'
 
-import Loading from "./Loading"
+import Loading from './Loading'
 
 export default function MarkdownView({ filePath }) {
   const { adminPermit } = useContext(AppContext)
@@ -48,26 +48,35 @@ export default function MarkdownView({ filePath }) {
   }, [])
 
   useEffect(() => {
-    const md_view = document.querySelector(".markdownView")
+    const md_view = document.querySelector('.markdownView')
     if (markdown && md_view) {
-      const md_headerTitle = md_view.querySelector("h1")
-      if (md_headerTitle) md_headerTitle.classList.add("mdHeaderTitle")
+      const md_headerTitle = md_view.querySelector('h1')
+      if (md_headerTitle) md_headerTitle.classList.add('mdHeaderTitle')
     }
   }, [markdown, editingMarkdown])
 
   useEffect(() => {
-    const preElements = document.querySelectorAll("pre")
-    const pElements = document.querySelectorAll("p")
+    const h2Elements = document.querySelectorAll('h2')
+    if (h2Elements.length > 0) {
+      h2Elements.forEach((h2Element) => {
+        h2Element.id = `#${h2Element.textContent}`
+      })
+    }
+  }, [markdown, editingMarkdown])
+
+  useEffect(() => {
+    const preElements = document.querySelectorAll('pre')
+    const pElements = document.querySelectorAll('p')
     if (pElements) {
       pElements.forEach((pElements) => {
-        pElements.classList.remove("codeSource")
+        pElements.classList.remove('codeSource')
       })
     }
     if (preElements) {
       preElements.forEach((preElement) => {
         const nextElement = preElement.nextElementSibling
-        if (nextElement && nextElement.tagName === "P") {
-          nextElement.classList.add("codeSource")
+        if (nextElement && nextElement.tagName === 'P') {
+          nextElement.classList.add('codeSource')
         }
       })
     }
@@ -75,8 +84,8 @@ export default function MarkdownView({ filePath }) {
 
   const saveMarkdown = async () => {
     const md_headerTitle_content = document
-      .querySelector(".markdownView")
-      .querySelector("h1").textContent
+      .querySelector('.markdownView')
+      .querySelector('h1').textContent
     await writeFirestoreDoc(
       `docs/${filePath}`,
       { title: md_headerTitle_content, doc: editingMarkdown },
@@ -97,7 +106,7 @@ export default function MarkdownView({ filePath }) {
     <>
       <div
         className={`${style.view}${
-          editMarkdown_actv ? ` ${style.edit}` : ""
+          editMarkdown_actv ? ` ${style.edit}` : ''
         } markdownView`}
       >
         <div className={style.markdown}>
@@ -137,7 +146,7 @@ export default function MarkdownView({ filePath }) {
             type="button"
             onClick={() => editToMarkdown()}
           >
-            {editMarkdown_actv ? "取消" : "編輯"}
+            {editMarkdown_actv ? '取消' : '編輯'}
           </button>
         </div>
       )}

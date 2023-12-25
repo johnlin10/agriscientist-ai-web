@@ -36,7 +36,7 @@
         }
         > h1 {
           font-size: 24px;
-          font-family: "ZenMaruGothic-Bold";
+          font-family: 'ZenMaruGothic-Bold';
           font-weight: bold;
           align-items: center;
           color: var(--font-green-2-light);
@@ -83,7 +83,7 @@
           > li {
             width: fit-content;
             margin: 3px 0;
-            font-family: "ZenMaruGothic-Medium";
+            font-family: 'ZenMaruGothic-Medium';
             cursor: pointer;
 
             &:hover {

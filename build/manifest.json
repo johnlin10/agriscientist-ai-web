@@ -1,0 +1,47 @@
+{
+  "short_name": "田野數據科學家",
+  "name": "田野數據科學家",
+  "description": "一個分析農場數據專題作品的介紹網站",
+  "id": "johnlin.agriscientist.ai",
+  "start_url": "/",
+  "scope": "https://agriscientist-ai.web.app/",
+  "display": "standalone",
+  "display_override": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#48d566",
+  "background_color": "#141b14",
+  "font": [
+    "/fonts/ZenMaruGothic/ZenMaruGothic-Black.ttf",
+    "/fonts/ZenMaruGothic/ZenMaruGothic-Bold.ttf",
+    "/fonts/ZenMaruGothic/ZenMaruGothic-Medium.ttf",
+    "/fonts/ZenMaruGothic/ZenMaruGothic-Regular.ttf",
+    "/fonts/ZenMaruGothic/ZenMaruGothic-Light.ttf"
+  ],
+  "icons": [
+    {
+      "src": "/images/icon/general-icon/general-icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon/general-icon/general-icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon/general-icon/general-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon/general-icon/general-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon/general-icon/general-icon-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ]
+}

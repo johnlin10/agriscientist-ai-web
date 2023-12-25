@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import style from "./css/Aside.module.scss"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import style from './css/Aside.module.scss'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 /**
  * 側邊欄
@@ -59,11 +59,11 @@ export default function Aside({ list }) {
    * @param {number} index - 段落索引
    */
   const moveToHeader = () => {
-    const header = document.querySelector("h1.mdHeaderTitle")
+    const header = document.querySelector('h1.mdHeaderTitle')
 
     if (header) {
       setTimeout(() => {
-        header.scrollIntoView({ behavior: "smooth" })
+        header.scrollIntoView({ behavior: 'smooth' })
       }, 150)
     }
   }
@@ -73,13 +73,13 @@ export default function Aside({ list }) {
    * @param {number} index - 段落索引
    */
   const moveToPassage = (index) => {
-    const passages = document.querySelectorAll("h2")
+    const passages = document.querySelectorAll('h2')
 
     if (passages && passages[index]) {
-      passages[index].nextElementSibling.style.scrollMarginTop = "88px"
+      passages[index].nextElementSibling.style.scrollMarginTop = '88px'
       setTimeout(() => {
         passages[index].nextElementSibling.scrollIntoView({
-          behavior: "smooth",
+          behavior: 'smooth',
         })
       }, 150)
     }
@@ -90,13 +90,13 @@ export default function Aside({ list }) {
    * @param {number} index - 段落索引
    */
   const moveToChildPassage = (index) => {
-    const passages = document.querySelectorAll("h3")
+    const passages = document.querySelectorAll('h3')
 
     if (passages && passages[index]) {
-      passages[index].style.scrollMarginTop = "96px"
+      passages[index].style.scrollMarginTop = '96px'
       setTimeout(() => {
         passages[index].scrollIntoView({
-          behavior: "smooth",
+          behavior: 'smooth',
         })
       }, 150)
     }
@@ -111,7 +111,7 @@ export default function Aside({ list }) {
             {item.ul.map((li, index) => (
               <>
                 <li
-                  className={checkLocation([`${li.path}`]) ? style.actv : ""}
+                  className={checkLocation([`${li.path}`]) ? style.actv : ''}
                   onClick={() => navigateClick(li.path)}
                   key={index}
                 >
@@ -119,7 +119,7 @@ export default function Aside({ list }) {
                   {li.child ? (
                     <div
                       className={
-                        checkLocation([`${li.path}`]) ? style.actv : ""
+                        checkLocation([`${li.path}`]) ? style.actv : ''
                       }
                     >
                       {li.child.map((li, index) => (
@@ -141,13 +141,13 @@ export default function Aside({ list }) {
                               ))}
                             </div>
                           ) : (
-                            ""
+                            ''
                           )}
                         </>
                       ))}
                     </div>
                   ) : (
-                    ""
+                    ''
                   )}
                 </li>
               </>

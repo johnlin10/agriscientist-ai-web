@@ -1,15 +1,12 @@
-# 忽略的目錄
 node_modules/
 .firebase
-
-# 忽略的檔案
-/build
 /dist
 /.cache
 **/.DS_Store
-/react-scripts
-/storage.rules
-/firebase.json
-/firestore.rules
-/firestore.indexes.rules
-/firestore.rules
+**/react-scripts
+**/storage.rules
+**/firebase.json
+**/firestore.rules
+**/firestore.indexes.rules
+**/firestore.rules
+**/.env
