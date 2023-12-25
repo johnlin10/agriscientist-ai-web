@@ -1,0 +1,95 @@
+:root {
+  --theme: #48d566;
+  --theme-2: #34a84d;
+  --theme-3: #268039;
+  /* background color */
+  --theme-bg-light: #e5fbe9;
+  --theme-bg-dark: #07260e;
+  --system-noti: linear-gradient(150deg, #4ba2e9, #4ee19f);
+
+  /* 用戶認證 */
+  --projet-user: linear-gradient(150deg, #4ee19f, #4bafe9, #894ceb);
+  --guest: linear-gradient(150deg, #8ceec2, #3dcd8c);
+
+  /* block color*/
+  --block-bg-white: #fff;
+  --block-bg-green-light-0: var(--theme);
+  --block-bg-green-light-1: #acf4ba;
+  --block-bg-green-light-2: #86e89b;
+
+  /* font color */
+  --font-white: #fff;
+  --font-green-1-light: #1c662c;
+  --font-green-2-light: #25853a;
+  --font-green-3-light: #2d9945;
+  --font-green-4-light: #39ac52;
+
+  --font-green-1-dark: #9dd8aa;
+  --font-green-2-dark: #6ca077;
+  --font-green-3-dark: #507c5a;
+
+  --font-black: #0a4020;
+  --font-green: #27954e;
+
+  --btn-red: #eaa74a;
+
+  --bg: #f8f7f3;
+
+  --test: #af721c;
+
+  --opacity_w: #ffffff;
+  --opacity_w_9: hsla(0, 0%, 100%, 0.9);
+  --opacity_w_8: hsla(0, 0%, 100%, 0.8);
+  --opacity_w_7: hsla(0, 0%, 100%, 0.7);
+  --opacity_w_6: hsla(0, 0%, 100%, 0.6);
+  --opacity_w_5: hsla(0, 0%, 100%, 0.5);
+  --opacity_w_4: hsla(0, 0%, 100%, 0.4);
+  --opacity_w_3: hsla(0, 0%, 100%, 0.3);
+  --opacity_w_2: hsla(0, 0%, 100%, 0.2);
+  --opacity_w_1: hsla(0, 0%, 100%, 0.1);
+  --opacity_w_0: hsla(0, 0%, 100%, 0);
+
+  --opacity_b: #000000;
+  --opacity_b_9: rgba(0, 0, 0, 0.9);
+  --opacity_b_8: rgba(0, 0, 0, 0.8);
+  --opacity_b_7: rgba(0, 0, 0, 0.7);
+  --opacity_b_6: rgba(0, 0, 0, 0.6);
+  --opacity_b_5: rgba(0, 0, 0, 0.5);
+  --opacity_b_4: rgba(0, 0, 0, 0.4);
+  --opacity_b_3: rgba(0, 0, 0, 0.3);
+  --opacity_b_2: rgba(0, 0, 0, 0.2);
+  --opacity_b_1: rgba(0, 0, 0, 0.1);
+  --opacity_b_0: rgba(0, 0, 0, 0);
+
+  --green_L8: #e5fbe9;
+  --green_L7: #d0fada;
+  --green_L6: #b4f0c1;
+  --green_L5: #90e7a3;
+  --green_L4: #72dd89;
+  --green_L3: #61d87b;
+  --green_L2: #56db72;
+  --green: #48d566;
+  --green_D2: #39ac52;
+  --green_D3: #318f45;
+  --green_D4: #2a763b;
+  --green_D5: #21592d;
+  --green_D6: #183d20;
+  --green_D7: #132b18;
+  --green_D8: #0e1d11;
+
+  --blue_L8: #dfebff;
+  --blue_L7: #bacef0;
+  --blue_L6: #9ab9e7;
+  --blue_L5: #84ace7;
+  --blue_L4: #73a3eb;
+  --blue_L3: #6398e6;
+  --blue_L2: #538ce2;
+  --blue: #407cd6;
+  --blue_D2: #3a6fbe;
+  --blue_D3: #3663a5;
+  --blue_D4: #325891;
+  --blue_D5: #2a4876;
+  --blue_D6: #20385c;
+  --blue_D7: #19293f;
+  --blue_D8: #0c121a;
+}

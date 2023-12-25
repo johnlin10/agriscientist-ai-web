@@ -1,0 +1,143 @@
+.container {
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-height: 480px;
+  padding: 24px 24px 108px 24px;
+  background-color: #0000000f;
+
+  @media (max-width: 600px) {
+    max-height: none;
+  }
+
+  > .view {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    width: 100%;
+    max-width: 720px;
+
+    > .header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      > .title {
+        display: flex;
+        flex-direction: row;
+
+        > img {
+          height: 40px;
+        }
+        > h1 {
+          font-size: 24px;
+          font-family: "ZenMaruGothic-Bold";
+          font-weight: bold;
+          align-items: center;
+          color: var(--font-green-2-light);
+        }
+      }
+    }
+    > .navigation {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      flex-wrap: wrap;
+      max-height: 240px;
+      @media (max-width: 600px) {
+        max-height: 360px;
+      }
+      @media (max-width: 450px) {
+        max-height: none;
+      }
+
+      > div {
+        position: relative;
+        width: 33.3333%;
+        max-width: 33.3333%;
+        padding: 12px 0;
+
+        @media (max-width: 600px) {
+          width: 50%;
+          max-width: 50%;
+        }
+        @media (max-width: 450px) {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        > p {
+          margin-bottom: 6px;
+          color: #0000007f;
+          font-size: 0.8rem;
+        }
+
+        > ul {
+          overflow: auto;
+
+          > li {
+            width: fit-content;
+            margin: 3px 0;
+            font-family: "ZenMaruGothic-Medium";
+            cursor: pointer;
+
+            &:hover {
+              color: var(--font-green-3-light);
+              > svg {
+                opacity: 1;
+                margin-left: 6px;
+              }
+            }
+
+            > svg {
+              color: var(--font-green-3-light);
+              opacity: 0;
+              transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+              -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+              -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+              -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+              -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+
+            transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+          }
+        }
+      }
+    }
+
+    > .copyRight {
+      margin-top: 12px;
+      padding: 15px;
+      border-top: 2px solid #0000000f;
+
+      > div {
+        > p {
+          font-size: 0.8rem;
+          color: #0000007f;
+
+          > span.link {
+            cursor: pointer;
+
+            &:hover {
+              border-bottom: 1px solid #0000007f;
+            }
+          }
+        }
+
+        img {
+          height: 16px;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

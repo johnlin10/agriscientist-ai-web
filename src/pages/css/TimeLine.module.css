@@ -1,0 +1,8 @@
+div.timeLine_view {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 54px;
+  background: var(--theme-bg-light);
+}

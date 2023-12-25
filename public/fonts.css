@@ -1,0 +1,58 @@
+@font-face {
+  font-family: Inter;
+  src: url("./fonts/Inter-VariableFont_slnt,wght.ttf");
+}
+
+/* MartianMono */
+@font-face {
+  font-family: MartianMono;
+  src: url("./fonts/MartianMono-VariableFont_wdth\,wght.ttf");
+}
+
+/* NotoSansTC */
+@font-face {
+  font-family: NotoSansTC-Black;
+  src: url("./fonts/NotoSansTC/NotoSansTC-Black.otf");
+}
+@font-face {
+  font-family: NotoSansTC-Bold;
+  src: url("./fonts/NotoSansTC/NotoSansTC-Bold.otf");
+}
+@font-face {
+  font-family: NotoSansTC-Medium;
+  src: url("./fonts/NotoSansTC/NotoSansTC-Medium.otf");
+}
+@font-face {
+  font-family: NotoSansTC-Regular;
+  src: url("./fonts/NotoSansTC/NotoSansTC-Regular.otf");
+}
+@font-face {
+  font-family: NotoSansTC-Light;
+  src: url("./fonts/NotoSansTC/NotoSansTC-Light.otf");
+}
+@font-face {
+  font-family: NotoSansTC-Thin;
+  src: url("./fonts/NotoSansTC/NotoSansTC-Thin.otf");
+}
+
+/* ZenMaruGothic */
+@font-face {
+  font-family: ZenMaruGothic-Black;
+  src: url("./fonts/ZenMaruGothic/ZenMaruGothic-Black.ttf");
+}
+@font-face {
+  font-family: ZenMaruGothic-Bold;
+  src: url("./fonts/ZenMaruGothic/ZenMaruGothic-Bold.ttf");
+}
+@font-face {
+  font-family: ZenMaruGothic-Medium;
+  src: url("./fonts/ZenMaruGothic/ZenMaruGothic-Medium.ttf");
+}
+@font-face {
+  font-family: ZenMaruGothic-Regular;
+  src: url("./fonts/ZenMaruGothic/ZenMaruGothic-Regular.ttf");
+}
+@font-face {
+  font-family: ZenMaruGothic-Light;
+  src: url("./fonts/ZenMaruGothic/ZenMaruGothic-Light.ttf");
+}

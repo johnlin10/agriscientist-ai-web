@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+  width: 100%;
+  height: fit-content;
+
+  @media (max-width: 900px) {
+    padding: 0 12px;
+  }
+
+  > div.chat_block {
+    position: relative;
+    margin-bottom: 6px;
+    padding: 12px 12px;
+    width: 100%;
+    max-width: 860px;
+    background: #ffffffd1;
+
+    &.expire {
+      position: relative;
+      opacity: 0.5;
+
+      &::after {
+        content: "已遺忘";
+        position: absolute;
+        top: 6px;
+        right: 9px;
+        font-size: 0.8rem;
+      }
+    }
+    &.user {
+      background: #ffffff00;
+
+      > span {
+        background: var(--green);
+        color: #fff;
+        font-weight: bolder;
+      }
+    }
+    &:global(.animation) {
+      opacity: 0;
+      transform: scaleX(0.8) scaleY(0.3) translateY(200px);
+      -webkit-transform: scaleX(0.8) scaleY(0.3) translateY(200px);
+      -moz-transform: scaleX(0.8) scaleY(0.3) translateY(200px);
+      -ms-transform: scaleX(0.8) scaleY(0.3) translateY(200px);
+      -o-transform: scaleX(0.8) scaleY(0.3) translateY(200px);
+    }
+    &:global(.animation_other) {
+      opacity: 0;
+      transform: scaleX(0.9) scaleY(0.7) translateY(100px);
+      -webkit-transform: scaleX(0.9) scaleY(0.7) translateY(100px);
+      -moz-transform: scaleX(0.9) scaleY(0.7) translateY(100px);
+      -ms-transform: scaleX(0.9) scaleY(0.7) translateY(100px);
+      -o-transform: scaleX(0.9) scaleY(0.7) translateY(100px);
+    }
+
+    > audio {
+      position: absolute;
+      top: 11px;
+      right: 11px;
+      height: 28px;
+      max-width: calc(100% - 108px);
+    }
+
+    > span {
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      color: var(--green_D3);
+      background: var(--green_L7);
+      cursor: default;
+
+      &.noAudio {
+        position: absolute;
+        top: 11px;
+        right: 11px;
+        color: var(--green_D3);
+        background: #ffffff00;
+      }
+
+      border-radius: 6px;
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      -ms-border-radius: 6px;
+      -o-border-radius: 6px;
+    }
+    > p {
+      color: var(--green_D8);
+      margin: 9px 3px 3px 3px;
+      white-space: pre-line;
+    }
+
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    -ms-border-radius: 13px;
+    -o-border-radius: 13px;
+    transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}

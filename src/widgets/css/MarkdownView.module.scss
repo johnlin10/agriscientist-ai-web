@@ -1,0 +1,534 @@
+.view {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+
+  &.edit {
+    min-width: 100%;
+    max-width: none;
+    height: calc(100vh - 48px - 120px);
+
+    > .markdown {
+      padding: 0 24px;
+      overflow: auto;
+    }
+  }
+
+  > .markdown {
+    width: 100%;
+    height: 100%;
+
+    @media (max-width: 900px) {
+      overflow: inherit;
+    }
+
+    > * {
+      width: 100%;
+    }
+
+    > h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      color: var(--green_D2);
+      font-family: ZenMaruGothic-Black;
+      letter-spacing: 0.1rem;
+    }
+
+    > h1 {
+      scroll-margin: 60px;
+      margin: 12px 6px 12px 6px;
+      width: calc(100% - 12px);
+      font-size: 2.5rem;
+    }
+    > h2 {
+      z-index: 100;
+      position: sticky;
+      top: 0;
+      margin: 72px 0 24px 0;
+      padding: 3px 12px 5px 12px;
+      scroll-margin: 48px;
+      background: var(--green_L7);
+      border-top: 1px solid var(--green_D2);
+      border-bottom: 1px solid var(--green_D2);
+      border-left: 5px solid var(--green_D2);
+      border-right: 1px solid var(--green_D2);
+      box-shadow: 0 -24px 24px 36px var(--green_L8);
+
+      @media (max-width: 900px) {
+        top: 12px;
+        margin: 66px 0 12px -6px;
+        width: calc(100% + 12px);
+        border-left: 6px solid var(--green_D2);
+      }
+
+      border-radius: 13px;
+      -webkit-border-radius: 13px;
+      -moz-border-radius: 13px;
+      -ms-border-radius: 13px;
+      -o-border-radius: 13px;
+    }
+
+    > h3 {
+      padding: 0 9px;
+      margin: 36px 0 6px 6px;
+      width: fit-content;
+      color: var(--green_D3);
+      border-left: 4px solid var(--green_D3);
+      border-right: 1px solid var(--green_D3);
+      border-top: 1px solid var(--green_D3);
+      border-bottom: 1px solid var(--green_D3);
+
+      @media (max-width: 900px) {
+        margin: 24px 0 6px 0;
+      }
+      border-radius: 7px;
+      -webkit-border-radius: 7px;
+      -moz-border-radius: 7px;
+      -ms-border-radius: 7px;
+      -o-border-radius: 7px;
+    }
+
+    > h4 {
+      margin: 24px 12px 6px 12px;
+      font-size: 1.1rem;
+      padding: 0 3px;
+      width: fit-content;
+      border-bottom: 3px solid var(--green_D2);
+
+      @media (max-width: 900px) {
+        margin: 18px 0 0 0;
+      }
+
+      border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+    }
+
+    > h5 {
+      margin: 24px 12px 6px 12px;
+      font-size: 1rem;
+    }
+
+    // 段落內容
+    p {
+      margin: 6px 12px;
+      width: calc(100% - 24px);
+      font-size: 1rem;
+      text-align: start;
+      color: var(--green_D7);
+
+      @media (max-width: 900px) {
+        font-size: 0.9rem;
+        margin: 6px 6px;
+        width: calc(100% - 12px);
+      }
+
+      // 段落內容粗體
+      > strong {
+        margin: 0 3px;
+        font-family: ZenMaruGothic-Bold;
+        color: var(--green_D3);
+      }
+
+      > a {
+        font-family: ZenMaruGothic-Medium;
+      }
+
+      > img {
+        margin: 24px -50% 24px 50%;
+        width: auto;
+        max-width: 100%;
+        max-height: 50vh;
+        border-radius: 11px;
+        -webkit-border-radius: 11px;
+        -moz-border-radius: 11px;
+        -ms-border-radius: 11px;
+        -o-border-radius: 11px;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+      }
+
+      > code {
+        padding: 1px 4px;
+        color: var(--green_D4);
+        background: var(--green_L6);
+        border-radius: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ms-border-radius: 6px;
+        -o-border-radius: 6px;
+      }
+    }
+
+    pre {
+      z-index: 10;
+      position: relative;
+      margin: 12px 12px;
+      width: calc(100% - 24px);
+      background: #1b291b;
+      overflow-x: scroll;
+
+      @media (max-width: 900px) {
+        margin: 12px 0;
+        width: 100%;
+        border-radius: 11px 11px 0 0;
+        -webkit-border-radius: 11px 11px 0 0;
+        -moz-border-radius: 11px 11px 0 0;
+        -ms-border-radius: 11px 11px 0 0;
+        -o-border-radius: 11px 11px 0 0;
+      }
+
+      > code {
+        display: block;
+        padding: 15px 19px 15px 19px !important;
+        font-size: 0.8rem;
+        font-family: MartianMono;
+        font-weight: 300;
+        line-height: 1.15rem;
+        color: #fff;
+        background: #00000000;
+
+        > span {
+          font-family: MartianMono;
+          font-weight: 300;
+          line-height: 1.15rem;
+        }
+
+        &::selection {
+          color: #fff;
+          background: #ffffff5f;
+        }
+
+        *::selection {
+          color: #fff;
+          background: #ffffff5f;
+        }
+
+        > span:global(.hljs-comment) {
+          font-family: NotoSansTC-Light !important;
+        }
+      }
+
+      > button {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+
+      border-radius: 9px 9px 0 0;
+      -webkit-border-radius: 9px 9px 0 0;
+      -moz-border-radius: 9px 9px 0 0;
+      -ms-border-radius: 9px 9px 0 0;
+      -o-border-radius: 9px 9px 0 0;
+    }
+
+    // code 說明
+    p:global(.codeSource) {
+      margin: -24px 12px 12px 12px;
+      padding: 15px 10px 5px 10px;
+      font-size: 0.8rem;
+      color: #ffffffa1;
+      background: #373e37;
+
+      @media (max-width: 900px) {
+        margin: -24px 0 12px 0;
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+        -webkit-border-radius: 0 0 10px 10px;
+        -moz-border-radius: 0 0 10px 10px;
+        -ms-border-radius: 0 0 10px 10px;
+        -o-border-radius: 0 0 10px 10px;
+      }
+
+      &::selection {
+        color: #fff;
+        background: #ffffff5f;
+      }
+
+      *::selection {
+        color: #fff;
+        background: #ffffff5f;
+      }
+
+      border-radius: 0 0 10px 10px;
+      -webkit-border-radius: 0 0 10px 10px;
+      -moz-border-radius: 0 0 10px 10px;
+      -ms-border-radius: 0 0 10px 10px;
+      -o-border-radius: 0 0 10px 10px;
+    }
+
+    // 表格
+    table {
+      display: block;
+      margin: 18px 0 18px 12px;
+      width: fit-content;
+      max-width: calc(100% - 24px);
+      border: 1px solid var(--green_L5);
+      border-spacing: 0;
+      background: var(--green_L7);
+      overflow: auto;
+
+      -ms-overflow-style: none; /* IE 和 Edge */
+      scrollbar-width: none; /* Firefox */
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      > thead {
+        background: var(--green_L7);
+        > tr {
+          > th {
+            padding: 5px 8px;
+            min-width: 120px;
+            color: var(--green_D5);
+          }
+        }
+      }
+
+      > tbody {
+        background: var(--green_L8);
+        > tr {
+          > td {
+            padding: 5px 9px 5px 9px;
+            border-top: 1px solid var(--green_L6);
+            color: var(--green_D3);
+
+            &:not(:first-child) {
+              border-left: 1px solid var(--green_L6);
+            }
+          }
+        }
+      }
+      border-radius: 13px;
+      -webkit-border-radius: 13px;
+      -moz-border-radius: 13px;
+      -ms-border-radius: 13px;
+      -o-border-radius: 13px;
+    }
+
+    // 無序列表
+    ul {
+      margin: 12px 0;
+
+      > li {
+        list-style: disc;
+        position: relative;
+        margin: 12px 0 12px 36px;
+        font-family: ZenMaruGothic-Bold;
+        color: var(--green_D3);
+
+        &:global(.task-list-item) {
+          margin-left: 0;
+          list-style: none;
+        }
+
+        > p {
+          margin: 6px 3px;
+          font-family: ZenMaruGothic-Regular;
+          color: var(--green_D8);
+
+          > strong {
+            font-family: ZenMaruGothic-Bold;
+            color: var(--green_D3);
+          }
+
+          @media (max-width: 900px) {
+            font-size: 0.9rem;
+            margin: 6px 6px;
+            width: calc(100% - 12px);
+          }
+        }
+      }
+    }
+
+    // 有序列表
+    ol {
+      margin: 12px 0;
+      > li {
+        position: relative;
+        margin: 6px 0 6px 40px;
+        font-family: ZenMaruGothic-Bold;
+        color: var(--green_D3);
+
+        @media (max-width: 900px) {
+          margin: 6px 0 6px 32px;
+        }
+
+        &::before {
+          z-index: -1;
+          content: "";
+          position: absolute;
+          top: 1px;
+          left: -24px;
+          height: 24px;
+          width: 24px;
+          background: var(--green_D2);
+          border-radius: 12px;
+          -webkit-border-radius: 12px;
+          -moz-border-radius: 12px;
+          -ms-border-radius: 12px;
+          -o-border-radius: 12px;
+        }
+
+        &::marker {
+          color: #fff;
+        }
+
+        > p {
+          margin: 6px 9px;
+          font-family: ZenMaruGothic-Regular;
+          color: var(--green_D8);
+
+          > strong {
+            font-family: ZenMaruGothic-Bold;
+            color: var(--green_D3);
+          }
+
+          @media (max-width: 900px) {
+            font-size: 0.9rem;
+            margin: 6px 6px;
+            width: calc(100% - 12px);
+          }
+        }
+      }
+    }
+
+    // 補充說明
+    blockquote {
+      position: relative;
+      margin: 6px 12px 18px 12px;
+      width: calc(100% - 24px);
+      padding: 28px 12px 12px 12px;
+      background: var(--green_L7);
+      border: 1px solid var(--green_D2);
+      // box-shadow: 0 3px 10px 0 #0000000f, 0 6px 50px 0 #0000000a;
+      overflow: hidden;
+
+      @media (max-width: 900px) {
+        margin: 6px 6px 18px 6px;
+        width: calc(100% - 12px);
+      }
+
+      &::before {
+        content: "補充說明";
+        position: absolute;
+        padding: 1px 6px 2px 6px;
+        top: 0;
+        left: 0;
+        font-size: 0.8rem;
+        background: var(--green_D2);
+        color: #fff;
+        border-radius: 6px 0 6px 0;
+        -webkit-border-radius: 6px 0 6px 0;
+        -moz-border-radius: 6px 0 6px 0;
+        -ms-border-radius: 6px 0 6px 0;
+        -o-border-radius: 6px 0 6px 0;
+      }
+
+      > p {
+        > code {
+          padding: 1px 4px;
+          background: #00000017;
+          border-radius: 6px;
+          -webkit-border-radius: 6px;
+          -moz-border-radius: 6px;
+          -ms-border-radius: 6px;
+          -o-border-radius: 6px;
+        }
+      }
+
+      border-radius: 9px;
+      -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      -ms-border-radius: 9px;
+      -o-border-radius: 9px;
+    }
+    hr {
+      width: 90%;
+      margin: 48px 0;
+      border: 3px solid var(--green_L5);
+      border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+    }
+  }
+
+  > .editMarkdown {
+    z-index: 100;
+    width: 100%;
+    white-space: pre-line;
+    height: 100%;
+
+    > textarea {
+      padding: 12px;
+      min-width: 100%;
+      width: 100%;
+      height: 100%;
+      background: #ffffffa1;
+      font-size: 0.8rem;
+      // font-family: NotoSansTC-Light;
+      font-family: MartianMono;
+      color: var(--green_D6);
+      resize: none;
+      word-break: break-all;
+      border-radius: 13px;
+      -webkit-border-radius: 13px;
+      -moz-border-radius: 13px;
+      -ms-border-radius: 13px;
+      -o-border-radius: 13px;
+    }
+    @media (max-width: 1200px) {
+      display: none;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+
+  > button {
+    z-index: 200;
+    padding: 0 12px;
+    margin: 0 0 0 6px;
+    height: 36px;
+    width: fit-content;
+    background: #fff;
+
+    &:active {
+      background: #e5e5e5;
+    }
+
+    &.save {
+      right: 12px;
+    }
+    &.edit {
+      right: 72px;
+      @media (max-width: 1200px) {
+        display: none;
+      }
+    }
+
+    border-radius: 13px;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    -ms-border-radius: 13px;
+    -o-border-radius: 13px;
+  }
+}
