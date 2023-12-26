@@ -1,27 +1,27 @@
-import { useEffect, useRef } from "react"
-import style from "./css/Home.module.scss"
-import { Helmet } from "react-helmet"
-import Bottom from "../widgets/Bottom"
-import ImageAnimation from "../widgets/ImageAnimation"
+import { useEffect, useRef } from 'react'
+import style from './css/Home.module.scss'
+import { Helmet } from 'react-helmet'
+import Bottom from '../widgets/Bottom'
+import ImageAnimation from '../widgets/ImageAnimation'
 
-import Rellax from "rellax"
+import Rellax from 'rellax'
 
 export default function Home(props) {
   // props.navigateClick('/preview')
   useEffect(() => {
     const selectors = [
-      ".headerIcon",
-      ".headerTitle",
-      ".headerDescription",
-      ".headerTag",
-      ".introTitle",
-      ".introDescription",
-      ".introTag",
-      ".introBg",
+      '.headerIcon',
+      '.headerTitle',
+      '.headerDescription',
+      '.headerTag',
+      '.introTitle',
+      '.introDescription',
+      '.introTag',
+      '.introBg',
     ]
 
     const titleRellaxes = selectors.map(
-      (selector) => new Rellax(selector, { wrapper: "#main" })
+      (selector) => new Rellax(selector, { wrapper: '#main' })
     )
 
     return () => {
@@ -73,7 +73,7 @@ export default function Home(props) {
           <div className={`${style.title}`}>
             <h1 className="introTitle" data-rellax-speed="1">
               <span className="introTag" data-rellax-speed="0">
-                將在今年晚些時候推出
+                延後於一月初推出
               </span>
               一語成築，生產無憂！
             </h1>

@@ -1,8 +1,8 @@
 import style from './css/MarkdownView.module.scss'
-import { useLocation } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { onSnapshot, doc } from 'firebase/firestore'
-import { db, auth, app, writeFirestoreDoc, getFirestoreData } from '../firebase'
+import { db, writeFirestoreDoc, getFirestoreData } from '../firebase'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -10,8 +10,8 @@ import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeHighlight from 'rehype-highlight'
 import 'highlight.js/styles/panda-syntax-dark.css'
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+// import { initializeApp } from 'firebase/app'
+// import { getAuth } from 'firebase/auth'
 import { useContext } from 'react'
 import { AppContext } from '../AppContext'
 
@@ -22,14 +22,6 @@ export default function MarkdownView({ filePath }) {
   const [markdown, setMarkdown] = useState()
   const [editMarkdown_actv, setEditMarkdown_actv] = useState(false)
   const [editingMarkdown, setEditingMarkdown] = useState()
-
-  // useEffect(() => {
-  //   if (filePath) {
-  //     fetch(`/docs/${filePath}.md`)
-  //       .then((res) => res.text())
-  //       .then((text) => setMarkdown(text));
-  //   }
-  // }, [filePath]);
 
   useEffect(() => {
     const md_doc_ref = doc(db, `docs/${filePath}`)
