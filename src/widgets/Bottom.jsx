@@ -44,10 +44,13 @@ export default function Bottom(props) {
       path: '',
       class: style.openSource,
       child: [
-        { title: 'Raspberry Pi', path: '' },
+        {
+          title: 'Raspberry Pi',
+          path: 'https://github.com/johnlin10/agriscientist-ai-raspberrypi',
+        },
         {
           title: 'Website',
-          path: 'https://github.com/johnlin10/agriscientist-ai-web/tree/main',
+          path: 'https://github.com/johnlin10/agriscientist-ai-web',
         },
       ],
     },
