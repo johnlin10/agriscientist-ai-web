@@ -141,7 +141,7 @@ function App() {
   const [loadingAniActv, setLoadingAniActv] = useState(true)
   useEffect(() => {
     setIsLoading(true)
-    setLoadingAniActv(false)
+    // setLoadingAniActv(false)
     setTimeout(() => {
       setLoadingAniActv(true)
       setTimeout(() => {
