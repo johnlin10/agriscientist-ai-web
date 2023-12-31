@@ -1,0 +1,8 @@
+.container {
+  width: 100%;
+
+  > .control_block {
+    width: calc(100% - 24px);
+    max-width: 720px;
+  }
+}

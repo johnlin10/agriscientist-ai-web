@@ -1,25 +1,29 @@
-import { Outlet } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import css from "./css/LiveInfo.module.css";
-import Aside from "../widgets/Aside";
-import { Helmet } from "react-helmet";
+import { Outlet } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import css from './css/LiveInfo.module.scss'
+import Aside from '../widgets/Aside'
+import { Helmet } from 'react-helmet'
 
 export default function LiveInfo(props) {
   const aside = [
     {
-      title: "即時資訊",
+      title: '即時資訊',
       ul: [
         {
-          title: "感測器",
-          path: "/realtime/sensor",
+          title: '感測數據',
+          path: '/realtime/sensor',
         },
         {
-          title: "聊天",
-          path: "/realtime/chat",
+          title: '控制台',
+          path: '/realtime/control',
+        },
+        {
+          title: '聊天',
+          path: '/realtime/chat',
         },
       ],
     },
-  ];
+  ]
   return (
     <div className={css.container}>
       <Helmet>
@@ -30,5 +34,5 @@ export default function LiveInfo(props) {
         <Outlet />
       </div>
     </div>
-  );
+  )
 }

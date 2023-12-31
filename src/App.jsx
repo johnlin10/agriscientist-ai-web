@@ -31,6 +31,7 @@ import NotFound from './pages/NotFound'
 import ProjProgress from './pages/ProjProgress'
 import TimeLine from './pages/TimeLine'
 import LiveInfo from './pages/LiveInfo'
+import Contrals from './pages/LiveInfo/Controls'
 import Sensors from './pages/LiveInfo/Sensors'
 import Chats from './pages/LiveInfo/Chats'
 import Products from './pages/Products'
@@ -383,6 +384,7 @@ function App() {
               }
             >
               <Route path="sensor" element={<Sensors />} />
+              <Route path="control" element={<Contrals />} />
               <Route path="chat" element={<Chats />} />
             </Route>
           </Routes>
