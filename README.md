@@ -2,7 +2,7 @@
 
 <img src="https://github.com/johnlin10/agriscientist-ai-web/raw/main/public/agriscientist-ai.ico" alt="agriscientist-ai-icon" width="120px;">
 
-# 田野數據科學家 WEB
+# Agriscientist AI - WEB
 
 基於農場數據分析為基礎，並以語音交互為核心的專題作品網站開源儲存庫。
 
