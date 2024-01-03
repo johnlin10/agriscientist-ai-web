@@ -114,7 +114,7 @@ export default function Chats(props) {
   return (
     <div className={`${style.container}`}>
       <Helmet>
-        <title>即時聊天｜田野數據科學家</title>
+        <title>農場助理｜田野數據科學家</title>
       </Helmet>
       <div
         className={`${style.assistant}${

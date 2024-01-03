@@ -1,16 +1,16 @@
-import style from "./style/Sensors.module.scss"
-import { db } from "../firebase"
-import { doc, onSnapshot } from "firebase/firestore"
-import React, { useEffect, useState } from "react"
+import style from './style/Sensors.module.scss'
+import { db } from '../firebase'
+import { doc, onSnapshot } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTemperatureThreeQuarters,
   faTemperatureHalf,
   faTemperatureQuarter,
-} from "@fortawesome/free-solid-svg-icons"
+} from '@fortawesome/free-solid-svg-icons'
 
-import { Helmet } from "react-helmet"
+import { Helmet } from 'react-helmet'
 // 圖表庫
 import {
   BarChart,
@@ -34,7 +34,7 @@ import {
   Label,
   ReferenceLine,
   ResponsiveContainer,
-} from "recharts"
+} from 'recharts'
 
 export default function Sensors(props) {
   const [sensors, setSensors] = useState()
@@ -56,24 +56,24 @@ export default function Sensors(props) {
 
   const RADIAN = Math.PI / 180
   const temperature_gear = [
-    { name: "寒冷", value: 15, color: "#649df2" },
-    { name: "適中", value: 12, color: "#48d566" },
-    { name: "炎熱", value: 13, color: "#d45353" },
+    { name: '寒冷', value: 15, color: '#649df2' },
+    { name: '適中', value: 12, color: '#48d566' },
+    { name: '炎熱', value: 13, color: '#d45353' },
   ]
   const humidity_gear = [
-    { name: "乾燥", value: 33, color: "#649df2" },
-    { name: "適中", value: 34, color: "#48d566" },
-    { name: "潮濕", value: 33, color: "#d45353" },
+    { name: '乾燥', value: 33, color: '#649df2' },
+    { name: '適中', value: 34, color: '#48d566' },
+    { name: '潮濕', value: 33, color: '#d45353' },
   ]
   const soilHumidity_gear = [
-    { name: "乾燥", value: 33, color: "#649df2" },
-    { name: "適中", value: 34, color: "#48d566" },
-    { name: "潮濕", value: 33, color: "#d45353" },
+    { name: '乾燥', value: 33, color: '#649df2' },
+    { name: '適中', value: 34, color: '#48d566' },
+    { name: '潮濕', value: 33, color: '#d45353' },
   ]
   const water_gear = [
-    { name: "乾燥", value: 33, color: "#d45353" },
-    { name: "適中", value: 34, color: "#649df2" },
-    { name: "潮濕", value: 33, color: "#48d566" },
+    { name: '乾燥', value: 33, color: '#d45353' },
+    { name: '適中', value: 34, color: '#649df2' },
+    { name: '潮濕', value: 33, color: '#48d566' },
   ]
 
   // 儀表板指針
@@ -122,9 +122,9 @@ export default function Sensors(props) {
 
   // 感測器數據即時同步
   useEffect(() => {
-    const sensorsDataRef = doc(db, "sensors_data", "sensors")
+    const sensorsDataRef = doc(db, 'sensors_data', 'sensors')
     const unsubscribe = onSnapshot(sensorsDataRef, (docSnap) => {
-      if (docSnap.exists() && docSnap.data().hasOwnProperty("data")) {
+      if (docSnap.exists() && docSnap.data().hasOwnProperty('data')) {
         const sortData = docSnap.data().data.sort((a, b) => {
           const timestampA =
             a.timestamp.seconds * 1000 + a.timestamp.nanoseconds / 1e6
@@ -145,7 +145,7 @@ export default function Sensors(props) {
 
   // 獲取數據分析
   useEffect(() => {
-    const dataAnalytics_ref = doc(db, "sensors_data", "dataAnalytics")
+    const dataAnalytics_ref = doc(db, 'sensors_data', 'dataAnalytics')
 
     const unsubscribe = onSnapshot(dataAnalytics_ref, (docSnap) => {
       if (docSnap.exists()) {
@@ -160,7 +160,7 @@ export default function Sensors(props) {
 
   // 感測器在線狀態
   useEffect(() => {
-    const lastData = sensors ? sensors[sensors.length - 1] : ""
+    const lastData = sensors ? sensors[sensors.length - 1] : ''
     if (lastData && sensors && checkSensorStatus(lastData.timestamp)) {
       setSensors_actv(false)
     } else {
@@ -183,7 +183,7 @@ export default function Sensors(props) {
   // 將timestamp時間格式化
   function formatTimestamp(seconds) {
     const date = new Date(seconds * 1000)
-    return date.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" })
+    return date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
   }
 
   // 溫度感測器在不同狀態下的 icon
@@ -197,7 +197,7 @@ export default function Sensors(props) {
   return (
     <>
       <Helmet>
-        <title>即時數據｜田野數據科學家</title>
+        <title>感測數據｜田野數據科學家</title>
       </Helmet>
       <div className={style.data_range}>
         <input
@@ -250,7 +250,7 @@ export default function Sensors(props) {
                   ? temperature_icon[0].high
                   : sensors[sensors.length - 1].temperature > 15
                   ? temperature_icon[0].medium
-                  : temperature_icon[0].low}{" "}
+                  : temperature_icon[0].low}{' '}
                 {sensors[sensors.length - 1].temperature} 度
               </h2>
 
@@ -258,29 +258,29 @@ export default function Sensors(props) {
               {dataAnalytics ? (
                 <span className={style.analytics}>
                   <span>
-                    總平均{" "}
+                    總平均{' '}
                     {dataAnalytics.temperature
                       ? dataAnalytics.temperature.mean
-                      : "--"}
+                      : '--'}
                   </span>
                   <span>
-                    總中位數{" "}
+                    總中位數{' '}
                     {dataAnalytics.temperature
                       ? dataAnalytics.temperature.median
-                      : "--"}
+                      : '--'}
                   </span>
                   {dataAnalytics.temperature ? (
                     <span>
                       {dataAnalytics.temperature.trend
                         ? `總${dataAnalytics.temperature.trend}`
-                        : "--"}
+                        : '--'}
                     </span>
                   ) : (
-                    ""
+                    ''
                   )}
                   <span
                     className={`${style.more}${
-                      dataAnalytics_temperature_actv ? ` ${style.actv}` : ""
+                      dataAnalytics_temperature_actv ? ` ${style.actv}` : ''
                     }`}
                     onClick={() =>
                       set_dataAnalytics_temperature_actv(
@@ -288,38 +288,38 @@ export default function Sensors(props) {
                       )
                     }
                   >
-                    {dataAnalytics_temperature_actv ? "收回" : "更多..."}
+                    {dataAnalytics_temperature_actv ? '收回' : '更多...'}
                   </span>
                   {dataAnalytics_temperature_actv ? (
                     <>
                       <span>
-                        一天平均{" "}
+                        一天平均{' '}
                         {dataAnalytics.temperature
                           ? dataAnalytics.temperature.mean_1
-                          : "--"}
+                          : '--'}
                       </span>
                       <span>
-                        一天中位數{" "}
+                        一天中位數{' '}
                         {dataAnalytics.temperature
                           ? dataAnalytics.temperature.median_1
-                          : "--"}
+                          : '--'}
                       </span>
                       {dataAnalytics.temperature ? (
                         <span>
                           {dataAnalytics.temperature.trend_1
                             ? `一天${dataAnalytics.temperature.trend_1}`
-                            : "--"}
+                            : '--'}
                         </span>
                       ) : (
-                        ""
+                        ''
                       )}
                     </>
                   ) : (
-                    ""
+                    ''
                   )}
                 </span>
               ) : (
-                ""
+                ''
               )}
 
               {/* 時間 */}
@@ -352,7 +352,7 @@ export default function Sensors(props) {
                   cy,
                   iR,
                   oR,
-                  "#f3f350"
+                  '#f3f350'
                 )}
               </PieChart>
             </>
@@ -388,15 +388,15 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
                 />
-                <YAxis type="number" domain={["dataMin - 10", "dataMax + 5"]} />
+                <YAxis type="number" domain={['dataMin - 10', 'dataMax + 5']} />
                 <Tooltip
                   animationDuration={50}
                   animationEasing="ease-in-out"
@@ -408,10 +408,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -433,7 +433,7 @@ export default function Sensors(props) {
                     />
                   </ReferenceLine>
                 ) : (
-                  ""
+                  ''
                 )}
                 {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
               </LineChart>
@@ -466,29 +466,29 @@ export default function Sensors(props) {
               {dataAnalytics ? (
                 <span className={style.analytics}>
                   <span>
-                    總平均{" "}
+                    總平均{' '}
                     {dataAnalytics.humidity
                       ? dataAnalytics.humidity.mean
-                      : "--"}
+                      : '--'}
                   </span>
                   <span>
-                    總中位數{" "}
+                    總中位數{' '}
                     {dataAnalytics.humidity
                       ? dataAnalytics.humidity.median
-                      : "--"}
+                      : '--'}
                   </span>
                   {dataAnalytics.humidity ? (
                     <span>
                       {dataAnalytics.humidity.trend
                         ? `總${dataAnalytics.humidity.trend}`
-                        : "--"}
+                        : '--'}
                     </span>
                   ) : (
-                    ""
+                    ''
                   )}
                   <span
                     className={`${style.more}${
-                      dataAnalytics_humidity_actv ? ` ${style.actv}` : ""
+                      dataAnalytics_humidity_actv ? ` ${style.actv}` : ''
                     }`}
                     onClick={() =>
                       set_dataAnalytics_humidity_actv(
@@ -496,38 +496,38 @@ export default function Sensors(props) {
                       )
                     }
                   >
-                    {dataAnalytics_humidity_actv ? "收回" : "更多..."}
+                    {dataAnalytics_humidity_actv ? '收回' : '更多...'}
                   </span>
                   {dataAnalytics_humidity_actv ? (
                     <>
                       <span>
-                        一天平均{" "}
+                        一天平均{' '}
                         {dataAnalytics.humidity
                           ? dataAnalytics.humidity.mean_1
-                          : "--"}
+                          : '--'}
                       </span>
                       <span>
-                        一天中位數{" "}
+                        一天中位數{' '}
                         {dataAnalytics.humidity
                           ? dataAnalytics.humidity.median_1
-                          : "--"}
+                          : '--'}
                       </span>
                       {dataAnalytics.humidity ? (
                         <span>
                           {dataAnalytics.humidity.trend_1
                             ? `一天${dataAnalytics.humidity.trend_1}`
-                            : "--"}
+                            : '--'}
                         </span>
                       ) : (
-                        ""
+                        ''
                       )}
                     </>
                   ) : (
-                    ""
+                    ''
                   )}
                 </span>
               ) : (
-                ""
+                ''
               )}
 
               {/* 時間 */}
@@ -560,7 +560,7 @@ export default function Sensors(props) {
                   cy,
                   iR,
                   oR,
-                  "#f3f350"
+                  '#f3f350'
                 )}
               </PieChart>
             </>
@@ -610,10 +610,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -622,7 +622,7 @@ export default function Sensors(props) {
                 <Tooltip
                   animationDuration={50}
                   animationEasing="ease-in-out"
-                  cursor={{ stroke: "#48d566", strokeWidth: 1 }}
+                  cursor={{ stroke: '#48d566', strokeWidth: 1 }}
                   labelFormatter={(unixTime) => {
                     const date = new Date(unixTime * 1000)
                     const month = date.getMonth() + 1 // 月份是從 0 開始的，所以要加 1
@@ -631,10 +631,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -664,7 +664,7 @@ export default function Sensors(props) {
                     />
                   </ReferenceLine>
                 ) : (
-                  ""
+                  ''
                 )}
               </AreaChart>
             </ResponsiveContainer>
@@ -695,62 +695,62 @@ export default function Sensors(props) {
               {dataAnalytics ? (
                 <span className={style.analytics}>
                   <span>
-                    總平均{" "}
-                    {dataAnalytics.light ? dataAnalytics.light.mean : "--"}
+                    總平均{' '}
+                    {dataAnalytics.light ? dataAnalytics.light.mean : '--'}
                   </span>
                   <span>
-                    總中位數{" "}
-                    {dataAnalytics.light ? dataAnalytics.light.median : "--"}
+                    總中位數{' '}
+                    {dataAnalytics.light ? dataAnalytics.light.median : '--'}
                   </span>
                   {dataAnalytics.light ? (
                     <span>
                       {dataAnalytics.light.trend
                         ? `總${dataAnalytics.light.trend}`
-                        : "--"}
+                        : '--'}
                     </span>
                   ) : (
-                    ""
+                    ''
                   )}
                   <span
                     className={`${style.more}${
-                      dataAnalytics_light_actv ? ` ${style.actv}` : ""
+                      dataAnalytics_light_actv ? ` ${style.actv}` : ''
                     }`}
                     onClick={() =>
                       set_dataAnalytics_light_actv(!dataAnalytics_light_actv)
                     }
                   >
-                    {dataAnalytics_light_actv ? "收回" : "更多..."}
+                    {dataAnalytics_light_actv ? '收回' : '更多...'}
                   </span>
                   {dataAnalytics_light_actv ? (
                     <>
                       <span>
-                        一天平均{" "}
+                        一天平均{' '}
                         {dataAnalytics.light
                           ? dataAnalytics.light.mean_1
-                          : "--"}
+                          : '--'}
                       </span>
                       <span>
-                        一天中位數{" "}
+                        一天中位數{' '}
                         {dataAnalytics.light
                           ? dataAnalytics.light.median_1
-                          : "--"}
+                          : '--'}
                       </span>
                       {dataAnalytics.light ? (
                         <span>
                           {dataAnalytics.light.trend_1
                             ? `一天${dataAnalytics.light.trend_1}`
-                            : "--"}
+                            : '--'}
                         </span>
                       ) : (
-                        ""
+                        ''
                       )}
                     </>
                   ) : (
-                    ""
+                    ''
                   )}
                 </span>
               ) : (
-                ""
+                ''
               )}
 
               {/* 時間 */}
@@ -790,10 +790,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -810,10 +810,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -840,7 +840,7 @@ export default function Sensors(props) {
                     />
                   </ReferenceLine>
                 ) : (
-                  ""
+                  ''
                 )}
               </BarChart>
             </ResponsiveContainer>
@@ -871,29 +871,29 @@ export default function Sensors(props) {
               {dataAnalytics ? (
                 <span className={style.analytics}>
                   <span>
-                    總平均{" "}
+                    總平均{' '}
                     {dataAnalytics.soilHumidity
                       ? dataAnalytics.soilHumidity.mean
-                      : "--"}
+                      : '--'}
                   </span>
                   <span>
-                    總中位數{" "}
+                    總中位數{' '}
                     {dataAnalytics.soilHumidity
                       ? dataAnalytics.soilHumidity.median
-                      : "--"}
+                      : '--'}
                   </span>
                   {dataAnalytics.soilHumidity ? (
                     <span>
                       {dataAnalytics.soilHumidity.trend
                         ? `總${dataAnalytics.soilHumidity.trend}`
-                        : "--"}
+                        : '--'}
                     </span>
                   ) : (
-                    ""
+                    ''
                   )}
                   <span
                     className={`${style.more}${
-                      dataAnalytics_soilHumidity_actv ? ` ${style.actv}` : ""
+                      dataAnalytics_soilHumidity_actv ? ` ${style.actv}` : ''
                     }`}
                     onClick={() =>
                       set_dataAnalytics_soilHumidity_actv(
@@ -901,38 +901,38 @@ export default function Sensors(props) {
                       )
                     }
                   >
-                    {dataAnalytics_soilHumidity_actv ? "收回" : "更多..."}
+                    {dataAnalytics_soilHumidity_actv ? '收回' : '更多...'}
                   </span>
                   {dataAnalytics_soilHumidity_actv ? (
                     <>
                       <span>
-                        一天平均{" "}
+                        一天平均{' '}
                         {dataAnalytics.soilHumidity
                           ? dataAnalytics.soilHumidity.mean_1
-                          : "--"}
+                          : '--'}
                       </span>
                       <span>
-                        一天中位數{" "}
+                        一天中位數{' '}
                         {dataAnalytics.soilHumidity
                           ? dataAnalytics.soilHumidity.median_1
-                          : "--"}
+                          : '--'}
                       </span>
                       {dataAnalytics.soilHumidity ? (
                         <span>
                           {dataAnalytics.soilHumidity.trend_1
                             ? `一天${dataAnalytics.soilHumidity.trend_1}`
-                            : "--"}
+                            : '--'}
                         </span>
                       ) : (
-                        ""
+                        ''
                       )}
                     </>
                   ) : (
-                    ""
+                    ''
                   )}
                 </span>
               ) : (
-                ""
+                ''
               )}
               {/* 時間 */}
               <span>
@@ -964,7 +964,7 @@ export default function Sensors(props) {
                   cy,
                   iR,
                   oR,
-                  "#f3f350"
+                  '#f3f350'
                 )}
               </PieChart>
             </>
@@ -1000,10 +1000,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -1020,10 +1020,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -1054,7 +1054,7 @@ export default function Sensors(props) {
                     />
                   </ReferenceLine>
                 ) : (
-                  ""
+                  ''
                 )}
               </BarChart>
             </ResponsiveContainer>
@@ -1086,62 +1086,62 @@ export default function Sensors(props) {
               {dataAnalytics ? (
                 <span className={style.analytics}>
                   <span>
-                    總平均{" "}
-                    {dataAnalytics.water ? dataAnalytics.water.mean : "--"}
+                    總平均{' '}
+                    {dataAnalytics.water ? dataAnalytics.water.mean : '--'}
                   </span>
                   <span>
-                    總中位數{" "}
-                    {dataAnalytics.water ? dataAnalytics.water.median : "--"}
+                    總中位數{' '}
+                    {dataAnalytics.water ? dataAnalytics.water.median : '--'}
                   </span>
                   {dataAnalytics.water ? (
                     <span>
                       {dataAnalytics.water.trend
                         ? `總${dataAnalytics.water.trend}`
-                        : "--"}
+                        : '--'}
                     </span>
                   ) : (
-                    ""
+                    ''
                   )}
                   <span
                     className={`${style.more}${
-                      dataAnalytics_water_actv ? ` ${style.actv}` : ""
+                      dataAnalytics_water_actv ? ` ${style.actv}` : ''
                     }`}
                     onClick={() =>
                       set_dataAnalytics_water_actv(!dataAnalytics_water_actv)
                     }
                   >
-                    {dataAnalytics_water_actv ? "收回" : "更多..."}
+                    {dataAnalytics_water_actv ? '收回' : '更多...'}
                   </span>
                   {dataAnalytics_water_actv ? (
                     <>
                       <span>
-                        一天平均{" "}
+                        一天平均{' '}
                         {dataAnalytics.water
                           ? dataAnalytics.water.mean_1
-                          : "--"}
+                          : '--'}
                       </span>
                       <span>
-                        一天中位數{" "}
+                        一天中位數{' '}
                         {dataAnalytics.water
                           ? dataAnalytics.water.median_1
-                          : "--"}
+                          : '--'}
                       </span>
                       {dataAnalytics.water ? (
                         <span>
                           {dataAnalytics.water.trend_1
                             ? `一天${dataAnalytics.water.trend_1}`
-                            : "--"}
+                            : '--'}
                         </span>
                       ) : (
-                        ""
+                        ''
                       )}
                     </>
                   ) : (
-                    ""
+                    ''
                   )}
                 </span>
               ) : (
-                ""
+                ''
               )}
 
               {/* 時間 */}
@@ -1174,7 +1174,7 @@ export default function Sensors(props) {
                   cy,
                   iR,
                   oR,
-                  "#f3f350"
+                  '#f3f350'
                 )}
               </PieChart>
             </>
@@ -1209,15 +1209,15 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
                 />
-                <YAxis type="number" domain={[0, "dataMax + 100"]} />
+                <YAxis type="number" domain={[0, 'dataMax + 100']} />
                 <Tooltip
                   animationDuration={50}
                   animationEasing="ease-in-out"
@@ -1230,10 +1230,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -1244,7 +1244,7 @@ export default function Sensors(props) {
                   dataKey="water"
                   fill="var(--blue_L4)"
                   // stroke="#3f9dea"
-                  background={{ fill: "#0000000f" }}
+                  background={{ fill: '#0000000f' }}
                 />
 
                 {dataAnalytics && dataAnalytics.water ? (
@@ -1264,7 +1264,7 @@ export default function Sensors(props) {
                     />
                   </ReferenceLine>
                 ) : (
-                  ""
+                  ''
                 )}
               </BarChart>
             </ResponsiveContainer>
@@ -1301,10 +1301,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -1321,10 +1321,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
@@ -1404,10 +1404,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
@@ -1424,10 +1424,10 @@ export default function Sensors(props) {
                     const minutes = date.getMinutes()
 
                     // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-                    const formattedMonth = month.toString().padStart(2, "0")
-                    const formattedDay = day.toString().padStart(2, "0")
-                    const formattedHours = hours.toString().padStart(2, "0")
-                    const formattedMinutes = minutes.toString().padStart(2, "0")
+                    const formattedMonth = month.toString().padStart(2, '0')
+                    const formattedDay = day.toString().padStart(2, '0')
+                    const formattedHours = hours.toString().padStart(2, '0')
+                    const formattedMinutes = minutes.toString().padStart(2, '0')
 
                     return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}

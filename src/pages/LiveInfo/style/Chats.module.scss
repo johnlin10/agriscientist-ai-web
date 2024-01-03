@@ -17,7 +17,7 @@
     bottom: 158px;
     right: 50%;
     opacity: 0;
-    box-shadow: 0 6px 30px 40px var(--green_L6);
+    box-shadow: 0 6px 30px 40px var(--green_L8);
 
     &.actv {
       opacity: 1;
@@ -141,11 +141,11 @@
 
       &:nth-child(1) {
         z-index: 30;
-        height: 40px;
-        width: 40px;
+        height: 50px;
+        width: 50px;
         background: rgba(72, 213, 102, 0.6);
-        animation: circle_1 3s linear 0s infinite;
-        -webkit-animation: circle_1 3s linear 0s infinite;
+        animation: circle_1 4s linear 0s infinite;
+        -webkit-animation: circle_1 4s linear 0s infinite;
       }
       @keyframes circle_1 {
         0% {
@@ -186,47 +186,47 @@
       }
       &:nth-child(2) {
         z-index: 10;
-        height: 50px;
-        width: 50px;
+        height: 60px;
+        width: 60px;
         background: rgba(72, 213, 102, 0.2);
         animation: circle_2 5s linear 0s infinite;
         -webkit-animation: circle_2 5s linear 0s infinite;
       }
       @keyframes circle_2 {
         0% {
-          transform: rotate(0deg) translateX(-10%) translateY(-10%);
-          -webkit-transform: rotate(0deg) translateX(-10%) translateY(-10%);
-          -moz-transform: rotate(0deg) translateX(-10%) translateY(-10%);
-          -ms-transform: rotate(0deg) translateX(-10%) translateY(-10%);
-          -o-transform: rotate(0deg) translateX(-10%) translateY(-10%);
+          transform: rotate(0deg) translateX(-5%) translateY(-5%);
+          -webkit-transform: rotate(0deg) translateX(-5%) translateY(-5%);
+          -moz-transform: rotate(0deg) translateX(-5%) translateY(-5%);
+          -ms-transform: rotate(0deg) translateX(-5%) translateY(-5%);
+          -o-transform: rotate(0deg) translateX(-5%) translateY(-5%);
         }
         25% {
-          transform: rotate(-90deg) translateX(-20%) translateY(-20%);
-          -webkit-transform: rotate(-90deg) translateX(-20%) translateY(-20%);
-          -moz-transform: rotate(-90deg) translateX(-20%) translateY(-20%);
-          -ms-transform: rotate(-90deg) translateX(-20%) translateY(-20%);
-          -o-transform: rotate(-90deg) translateX(-20%) translateY(-20%);
+          transform: rotate(-90deg) translateX(-13%) translateY(-13%);
+          -webkit-transform: rotate(-90deg) translateX(-13%) translateY(-13%);
+          -moz-transform: rotate(-90deg) translateX(-13%) translateY(-13%);
+          -ms-transform: rotate(-90deg) translateX(-13%) translateY(-13%);
+          -o-transform: rotate(-90deg) translateX(-13%) translateY(-13%);
         }
         50% {
-          transform: rotate(-180deg) translateX(-30%) translateY(-30%);
-          -webkit-transform: rotate(-180deg) translateX(-30%) translateY(-30%);
-          -moz-transform: rotate(-180deg) translateX(-30%) translateY(-30%);
-          -ms-transform: rotate(-180deg) translateX(-30%) translateY(-30%);
-          -o-transform: rotate(-180deg) translateX(-30%) translateY(-30%);
+          transform: rotate(-180deg) translateX(-20%) translateY(-20%);
+          -webkit-transform: rotate(-180deg) translateX(-20%) translateY(-20%);
+          -moz-transform: rotate(-180deg) translateX(-20%) translateY(-20%);
+          -ms-transform: rotate(-180deg) translateX(-20%) translateY(-20%);
+          -o-transform: rotate(-180deg) translateX(-20%) translateY(-20%);
         }
         75% {
-          transform: rotate(-270deg) translateX(-20%) translateY(-20%);
-          -webkit-transform: rotate(-270deg) translateX(-20%) translateY(-20%);
-          -moz-transform: rotate(-270deg) translateX(-20%) translateY(-20%);
-          -ms-transform: rotate(-270deg) translateX(-20%) translateY(-20%);
-          -o-transform: rotate(-270deg) translateX(-20%) translateY(-20%);
+          transform: rotate(-270deg) translateX(-13%) translateY(-13%);
+          -webkit-transform: rotate(-270deg) translateX(-13%) translateY(-13%);
+          -moz-transform: rotate(-270deg) translateX(-13%) translateY(-13%);
+          -ms-transform: rotate(-270deg) translateX(-13%) translateY(-13%);
+          -o-transform: rotate(-270deg) translateX(-13%) translateY(-13%);
         }
         100% {
-          transform: rotate(-360deg) translateX(-10%) translateY(-10%);
-          -webkit-transform: rotate(-360deg) translateX(-10%) translateY(-10%);
-          -moz-transform: rotate(-360deg) translateX(-10%) translateY(-10%);
-          -ms-transform: rotate(-360deg) translateX(-10%) translateY(-10%);
-          -o-transform: rotate(-360deg) translateX(-10%) translateY(-10%);
+          transform: rotate(-360deg) translateX(-5%) translateY(-5%);
+          -webkit-transform: rotate(-360deg) translateX(-5%) translateY(-5%);
+          -moz-transform: rotate(-360deg) translateX(-5%) translateY(-5%);
+          -ms-transform: rotate(-360deg) translateX(-5%) translateY(-5%);
+          -o-transform: rotate(-360deg) translateX(-5%) translateY(-5%);
         }
       }
       &:nth-child(3) {
@@ -234,8 +234,8 @@
         height: 45px;
         width: 45px;
         background: rgba(72, 213, 102, 0.4);
-        animation: circle_3 4s linear 0s infinite;
-        -webkit-animation: circle_3 4s linear 0s infinite;
+        animation: circle_3 5s linear 0s infinite;
+        -webkit-animation: circle_3 5s linear 0s infinite;
       }
       @keyframes circle_3 {
         0% {
@@ -279,10 +279,10 @@
         height: 30px;
         width: 30px;
         background: rgba(72, 213, 102, 1);
-        animation: circle_3 2s linear 0s infinite;
-        -webkit-animation: circle_3 2s linear 0s infinite;
+        animation: circle_4 3s linear 0s infinite;
+        -webkit-animation: circle_4 3s linear 0s infinite;
       }
-      @keyframes circle_3 {
+      @keyframes circle_4 {
         0% {
           transform: rotate(0deg) translateX(-35%) translateY(-35%);
           -webkit-transform: rotate(0deg) translateX(-35%) translateY(-35%);
@@ -324,10 +324,10 @@
         height: 35px;
         width: 35px;
         background: rgba(72, 213, 102, 0.8);
-        animation: circle_3 3s linear 0s infinite;
-        -webkit-animation: circle_3 3s linear 0s infinite;
+        animation: circle_5 4s linear 0s infinite;
+        -webkit-animation: circle_5 4s linear 0s infinite;
       }
-      @keyframes circle_3 {
+      @keyframes circle_5 {
         0% {
           transform: rotate(0deg) translateX(-5%) translateY(-5%);
           -webkit-transform: rotate(0deg) translateX(-5%) translateY(-5%);

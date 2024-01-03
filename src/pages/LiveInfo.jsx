@@ -18,7 +18,7 @@ export default function LiveInfo(props) {
           path: '/realtime/control',
         },
         {
-          title: '聊天',
+          title: '農場助理',
           path: '/realtime/chat',
         },
       ],

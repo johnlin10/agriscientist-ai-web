@@ -1,24 +1,24 @@
-import style from "./css/Products.module.scss";
-import Aside from "../widgets/Aside";
-import { Outlet } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import style from './css/Products.module.scss'
+import Aside from '../widgets/Aside'
+import { Outlet } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 export default function Products(props) {
   const aside = [
     {
-      title: "產品",
+      title: '產品',
       ul: [
         {
-          title: "微農場 MicroFarm",
-          path: "/products/microfarm",
+          title: 'MicroFarm',
+          path: '/products/microfarm',
         },
         {
-          title: "敬請期待...",
-          path: "",
+          title: 'MicroFarm Pro',
+          path: '/products/notFound',
         },
       ],
     },
-  ];
+  ]
   return (
     <div className={style.container}>
       <Helmet>
@@ -30,5 +30,5 @@ export default function Products(props) {
         <Outlet />
       </div>
     </div>
-  );
+  )
 }

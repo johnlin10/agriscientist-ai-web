@@ -45,6 +45,8 @@ export default function Researches(props) {
               click: '',
               child: [
                 { title: '開發調試', id: '' },
+                { title: '遠程調試環境 - Mac', id: '' },
+                { title: '遠程調試環境 - RP', id: '' },
                 { title: 'Raspberry Pi 程式', id: '' },
               ],
             },

@@ -13,8 +13,8 @@ export default function NotFound(props) {
         <br />
         頁面找不到～
       </h1>
-      <p>先回首頁吧！</p>
-      <button onClick={() => props.navigateClick('/')}>首頁</button>
+      <p>返回上一頁吧！</p>
+      <button onClick={() => window.history.back()}>返回</button>
     </main>
   )
 }

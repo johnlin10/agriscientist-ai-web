@@ -1,6 +1,6 @@
-import style from "./css/Nav.module.scss";
+import style from './css/Nav.module.scss'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCaretUp,
   faLeaf,
@@ -9,20 +9,20 @@ import {
   faBook,
   faUsers,
   faArrowRight,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons'
 
 export default function Nav(props) {
   return (
     <nav className={style.nav}>
       <div className={style.view}>
         <ul>
-          <li onClick={() => props.navigateClick("/")}>
+          <li onClick={() => props.navigateClick('/')}>
             <p>
               <FontAwesomeIcon icon={faLeaf} className={style.icon} />
               <span>首頁</span>
             </p>
           </li>
-          <li onClick={() => props.navigateClick("/realtime/sensor")}>
+          <li onClick={() => props.navigateClick('/realtime/sensor')}>
             <p>
               <FontAwesomeIcon
                 icon={faMagnifyingGlassChart}
@@ -30,8 +30,44 @@ export default function Nav(props) {
               />
               <span>即時</span>
             </p>
+            <FontAwesomeIcon icon={faCaretUp} className={style.more} />
+            <ul>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/realtime/sensor')
+                }}
+              >
+                <p>
+                  感測數據
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
+              </li>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/realtime/control')
+                }}
+              >
+                <p>
+                  控制台
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
+              </li>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/realtime/chat')
+                }}
+              >
+                <p>
+                  農場助理
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
+              </li>
+            </ul>
           </li>
-          <li onClick={() => props.navigateClick("/products/microfarm")}>
+          <li onClick={() => props.navigateClick('/products/microfarm')}>
             <p>
               <FontAwesomeIcon icon={faInbox} className={style.icon} />
               <span>產品</span>
@@ -40,18 +76,29 @@ export default function Nav(props) {
             <ul>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/products/microfarm");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/products/microfarm')
                 }}
               >
                 <p>
-                  MicroFarm 微農場
+                  MicroFarm
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
+              </li>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/products/notFound')
+                }}
+              >
+                <p>
+                  MicroFarm Pro
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
             </ul>
           </li>
-          <li onClick={() => props.navigateClick("/researches/intro")}>
+          <li onClick={() => props.navigateClick('/researches/intro')}>
             <p>
               <FontAwesomeIcon icon={faBook} className={style.icon} />
               <span>研究</span>
@@ -60,8 +107,8 @@ export default function Nav(props) {
             <ul>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/researches/intro");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/researches/intro')
                 }}
               >
                 <p>
@@ -71,8 +118,8 @@ export default function Nav(props) {
               </li>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/researches/hardware");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/researches/hardware')
                 }}
               >
                 <p>
@@ -82,8 +129,8 @@ export default function Nav(props) {
               </li>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/researches/software");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/researches/software')
                 }}
               >
                 <p>
@@ -93,8 +140,8 @@ export default function Nav(props) {
               </li>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/researches/crops");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/researches/crops')
                 }}
               >
                 <p>
@@ -104,8 +151,8 @@ export default function Nav(props) {
               </li>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/researches/dataProcessing");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/researches/dataProcessing')
                 }}
               >
                 <p>
@@ -115,8 +162,8 @@ export default function Nav(props) {
               </li>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/researches/aiAndMachinelearning");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/researches/aiAndMachinelearning')
                 }}
               >
                 <p>
@@ -126,7 +173,7 @@ export default function Nav(props) {
               </li>
             </ul>
           </li>
-          <li onClick={() => props.navigateClick("/about")}>
+          <li onClick={() => props.navigateClick('/about')}>
             <p>
               <FontAwesomeIcon icon={faUsers} className={style.icon} />
               <span>關於</span>
@@ -141,8 +188,8 @@ export default function Nav(props) {
               </li>
               <li
                 onClick={(event) => {
-                  event.stopPropagation(); // 阻止事件冒泡
-                  props.navigateClick("/user");
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/user')
                 }}
               >
                 <p>
@@ -155,5 +202,5 @@ export default function Nav(props) {
         </ul>
       </div>
     </nav>
-  );
+  )
 }
