@@ -36,7 +36,7 @@
       text-shadow: none;
       background: var(--theme);
 
-      &[data-type="center"] {
+      &[data-type='center'] {
         align-self: center;
       }
 
@@ -86,57 +86,71 @@
     }
 
     // 專題簡略介紹 intro
-    &.intro {
-      // background-color: var(--bg);
 
-      > div.title {
-        position: absolute;
+    // background-color: var(--bg);
+
+    &:not(.header) > div.title {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      bottom: 30%;
+      width: fit-content;
+      height: fit-content;
+
+      &.l {
         left: 5%;
-        bottom: 30%;
-        width: calc(100% - 10%);
-        height: max-content;
+      }
+
+      &.r {
+        right: 5%;
+        align-items: flex-end;
 
         > h1 {
-          position: relative;
-          width: fit-content;
-          font-size: calc(1.5rem + 3vw);
-          font-family: ZenMaruGothic-Black;
-          color: #fff;
-          text-shadow: 3px 3px 10px var(--theme-3);
-
           > span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: -48px;
-            left: 0;
-            text-align: end;
-            height: 36px;
-            padding: 6px 12px;
-            font-size: calc(0.6rem + 0.6vw);
-            width: fit-content;
-            color: #ffffffd1;
-            text-shadow: none;
-            background: var(--theme);
-            border-radius: 18px;
-            -webkit-border-radius: 18px;
-            -moz-border-radius: 18px;
-            -ms-border-radius: 18px;
-            -o-border-radius: 18px;
           }
         }
-        > p {
-          text-align: start;
-          font-size: calc(1rem + 1vw);
-          color: #ffffffd1;
-          text-shadow: 3px 3px 10px var(--theme-3);
-        }
       }
 
-      > img {
-        top: -30%;
+      > h1 {
+        position: relative;
+        width: fit-content;
+        font-size: calc(1.5rem + 3vw);
+        font-family: ZenMaruGothic-Black;
+        color: #fff;
+        text-shadow: 3px 3px 10px var(--theme-3);
+
+        > span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          top: -48px;
+          left: 0;
+          text-align: end;
+          height: 36px;
+          padding: 6px 12px;
+          font-size: calc(0.6rem + 0.6vw);
+          width: fit-content;
+          color: #ffffffd1;
+          text-shadow: none;
+          background: var(--theme);
+          border-radius: 18px;
+          -webkit-border-radius: 18px;
+          -moz-border-radius: 18px;
+          -ms-border-radius: 18px;
+          -o-border-radius: 18px;
+        }
       }
+      > p {
+        text-align: start;
+        font-size: calc(1rem + 1vw);
+        color: #ffffffd1;
+        text-shadow: 3px 3px 10px var(--theme-3);
+      }
+    }
+
+    > img {
+      top: -30%;
     }
 
     &.team {

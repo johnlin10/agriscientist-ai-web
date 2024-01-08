@@ -68,15 +68,9 @@ export default function Home(props) {
               將於下週發表
             </span>
           </div>
-          {/* <img
-            className="headerBg"
-            data-rellax-speed="-10"
-            src={`${process.env.PUBLIC_URL}/images/minimalist_style__best_quality_4k_ultra_detailed_realistic_photorealistic___aerial_view_flat_colorful_blocky_minimalist__a_small_farm_on_a_vast_plain__a_small__futuristic_looking_house__1204961570_upscayl_4x_realesrgan-x4plus.jpg`}
-            alt=""
-          /> */}
         </div>
         <div className={style.intro}>
-          <div className={`${style.title}`}>
+          <div className={`${style.title} ${style.r}`}>
             <h1 className="introTitle" data-rellax-speed="1">
               <span className="introTag" data-rellax-speed="0">
                 將於二月初推出
@@ -94,8 +88,8 @@ export default function Home(props) {
             alt=""
           />
         </div>
-        {/* <div className={style.team}></div>
-        <div className={style.product}></div> */}
+        <div className={style.team}></div>
+        <div className={style.product}></div>
       </div>
       <Bottom />
     </>

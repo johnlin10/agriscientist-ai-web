@@ -22,7 +22,10 @@ export default function Bottom(props) {
       title: '產品',
       path: '/products',
       class: style.product,
-      child: [{ title: '微農場 MicroFarm', path: '/products/microfarm' }],
+      child: [
+        { title: 'MicroFarm', path: '/products/microfarm' },
+        { title: 'MicroFarm Pro', path: '/products/microfarm-pro' },
+      ],
     },
     {
       title: '研究',

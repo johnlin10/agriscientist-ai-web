@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react"
-import { initializeApp } from "firebase/app"
-import { getAnalytics } from "firebase/analytics"
-import { getFirestore } from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
+import React, { useEffect, useState } from 'react'
+import { initializeApp } from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
+import { getFirestore } from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import {
   collection,
   addDoc,
@@ -13,18 +13,18 @@ import {
   setDoc,
   onSnapshot,
   updateDoc,
-} from "firebase/firestore"
-import { getStorage, ref, getDownloadURL } from "firebase/storage"
-import { debounce } from "lodash"
+} from 'firebase/firestore'
+import { getStorage, ref, getDownloadURL } from 'firebase/storage'
+import { debounce } from 'lodash'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCWmLE3mis8l1DRUovdntGBxdDW_BxywYg",
-  authDomain: "agriscientist-ai.firebaseapp.com",
-  projectId: "agriscientist-ai",
-  storageBucket: "agriscientist-ai.appspot.com",
-  messagingSenderId: "774646280553",
-  appId: "1:774646280553:web:81a472271448aa950c0df8",
-  measurementId: "G-3K8E9VNZJQ",
+  apiKey: 'AIzaSyCWmLE3mis8l1DRUovdntGBxdDW_BxywYg',
+  authDomain: 'agriscientist-ai.firebaseapp.com',
+  projectId: 'agriscientist-ai',
+  storageBucket: 'agriscientist-ai.appspot.com',
+  messagingSenderId: '774646280553',
+  appId: '1:774646280553:web:81a472271448aa950c0df8',
+  measurementId: 'G-3K8E9VNZJQ',
 }
 
 // Initialize Firebase
@@ -41,7 +41,7 @@ const analytics = getAnalytics(app)
  */
 export const getFirestoreData = async (path) => {
   // 切割路徑以確定是 document 還是 collection
-  const pathSegments = path.split("/").filter(Boolean) // 過濾掉空字符串
+  const pathSegments = path.split('/').filter(Boolean) // 過濾掉空字符串
   const isCollection = pathSegments.length % 2 !== 0 // 奇數段表示 document，偶數段表示 collection
 
   if (!isCollection) {
@@ -54,7 +54,7 @@ export const getFirestoreData = async (path) => {
       return docSnap.data()
     } else {
       // 如果 document 不存在，返回 null 或抛出錯誤
-      console.error("Document does not exist at this path:", path)
+      console.error('Document does not exist at this path:', path)
       return null
     }
   } else {

@@ -34,8 +34,10 @@ import LiveInfo from './pages/LiveInfo'
 import Contrals from './pages/LiveInfo/Controls'
 import Sensors from './pages/LiveInfo/Sensors'
 import Chats from './pages/LiveInfo/Chats'
+import SmartSwitch from './pages/SmartSwitch'
 import Products from './pages/Products'
 import MicroFarm from './pages/Products/MicroFarm'
+import MicroFarmPro from './pages/Products/MicroFarmPro'
 import Researches from './pages/Researches'
 import Software from './pages/Researches/Software'
 import Hardware from './pages/Researches/Hardware'
@@ -343,6 +345,7 @@ function App() {
               element={<Products navigateClick={navigateClick} />}
             >
               <Route path="microfarm" element={<MicroFarm />} />
+              <Route path="microfarm-pro" element={<MicroFarmPro />} />
             </Route>
 
             <Route
@@ -386,6 +389,7 @@ function App() {
               <Route path="sensor" element={<Sensors />} />
               <Route path="control" element={<Contrals />} />
               <Route path="chat" element={<Chats />} />
+              <Route path="smartSwitch" element={<SmartSwitch />} />
             </Route>
           </Routes>
         </main>

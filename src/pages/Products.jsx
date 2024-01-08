@@ -14,7 +14,7 @@ export default function Products(props) {
         },
         {
           title: 'MicroFarm Pro',
-          path: '/products/notFound',
+          path: '/products/microfarm-pro',
         },
       ],
     },

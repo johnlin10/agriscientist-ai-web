@@ -38,8 +38,11 @@ import {
 
 export default function Sensors(props) {
   const [sensors, setSensors] = useState()
+  const [sensorsDays, setSensorsDays] = useState([])
   const [sensors_actv, setSensors_actv] = useState(false)
   const [dataDisplayArea, setDataDisplayArea] = useState(60)
+  const [dataDates, setDataDates] = useState('')
+  const [selectDates, setSelectDates] = useState('')
 
   const [dataAnalytics_temperature_actv, set_dataAnalytics_temperature_actv] =
     useState(false)
@@ -134,6 +137,7 @@ export default function Sensors(props) {
           return timestampA - timestampB
         })
         setSensors(sortData)
+        // console.log(sortData)
         // setDataDisplayArea(sortData.length)
       }
     })
@@ -142,6 +146,44 @@ export default function Sensors(props) {
       unsubscribe()
     }
   }, [])
+
+  useEffect(() => {
+    if (sensors && sensors.length > 0) {
+      const uniqueDates = new Set()
+      const groupedData = sensors.reduce((acc, data) => {
+        const timestamp =
+          data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+        const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
+        const date = new Date(timestampWithOffset)
+          .toISOString()
+          .slice(0, 10)
+          .replace(/-/g, '') // Get YYYY-MM-DD format
+
+        uniqueDates.add(date)
+
+        if (!acc[date]) {
+          acc[date] = []
+        }
+        acc[date].push(data)
+        return acc
+      }, {})
+      setSensorsDays(groupedData)
+      setDataDates([...uniqueDates])
+    }
+  }, [sensors])
+
+  useEffect(() => {
+    if (dataDates && dataDates.length > 0) {
+      setSelectDates(dataDates.length - 1)
+    }
+  }, [dataDates])
+
+  const handlePrevDay = () => {
+    setSelectDates(selectDates - 1)
+  }
+  const handleNextDay = () => {
+    setSelectDates(selectDates + 1)
+  }
 
   // 獲取數據分析
   useEffect(() => {
@@ -200,31 +242,8 @@ export default function Sensors(props) {
         <title>感測數據｜田野數據科學家</title>
       </Helmet>
       <div className={style.data_range}>
-        <input
-          type="range"
-          min="0"
-          max={sensors ? sensors.length : 20}
-          step="1"
-          value={dataDisplayArea}
-          onChange={(e) => {
-            if (e.target.value < 10) {
-              return
-            }
-            setDataDisplayArea(e.target.value)
-          }}
-        />
-        <div className={style.range_bar}>
-          <div
-            className={style.range}
-            style={{
-              width: `${
-                sensors ? (dataDisplayArea / sensors.length) * 100 : 0
-              }%`,
-            }}
-          >
-            <span>{dataDisplayArea}</span>
-          </div>
-        </div>
+        <button onClick={() => handlePrevDay()}>上一天</button>
+        <button onClick={() => handleNextDay()}>下一天</button>
       </div>
 
       {/* 溫度 */}
@@ -367,9 +386,7 @@ export default function Sensors(props) {
               <LineChart
                 width={500}
                 height={100}
-                data={sensors.slice(
-                  Math.max(0, sensors.length - dataDisplayArea)
-                )}
+                data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -396,7 +413,7 @@ export default function Sensors(props) {
                     return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
                   }}
                 />
-                <YAxis type="number" domain={['dataMin - 10', 'dataMax + 5']} />
+                <YAxis type="number" domain={[0, 'dataMax + 5']} />
                 <Tooltip
                   animationDuration={50}
                   animationEasing="ease-in-out"
@@ -575,9 +592,7 @@ export default function Sensors(props) {
               <AreaChart
                 width={500}
                 height={400}
-                data={sensors.slice(
-                  Math.max(0, sensors.length - dataDisplayArea)
-                )}
+                data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -769,9 +784,7 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={300}
-                data={sensors.slice(
-                  Math.max(0, sensors.length - dataDisplayArea)
-                )}
+                data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -979,9 +992,7 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={100}
-                data={sensors.slice(
-                  Math.max(0, sensors.length - dataDisplayArea)
-                )}
+                data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -1188,9 +1199,7 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={400}
-                data={sensors.slice(
-                  Math.max(0, sensors.length - dataDisplayArea)
-                )}
+                data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -1280,9 +1289,7 @@ export default function Sensors(props) {
               <ComposedChart
                 width={500}
                 height={100}
-                data={sensors.slice(
-                  Math.max(0, sensors.length - dataDisplayArea)
-                )}
+                data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -1383,9 +1390,7 @@ export default function Sensors(props) {
               <ComposedChart
                 width={500}
                 height={100}
-                data={sensors.slice(
-                  Math.max(0, sensors.length - dataDisplayArea)
-                )}
+                data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,

@@ -88,7 +88,7 @@ export default function Nav(props) {
               <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/products/notFound')
+                  props.navigateClick('/products/microfarm-pro')
                 }}
               >
                 <p>
