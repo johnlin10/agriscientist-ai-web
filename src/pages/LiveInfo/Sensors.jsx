@@ -41,7 +41,7 @@ export default function Sensors(props) {
   const [sensors_actv, setSensors_actv] = useState(false)
   const [dataIndexes, setDataIndexes] = useState([]) // 選擇數據單位段落 - 用於尋找段落
   const [selectDataIndex, setSelectDataIndex] = useState(0)
-  const [dataUnit, setDataUnit] = useState('day') // 選擇數據單位 - hour/day/week/month
+  const [dataUnit, setDataUnit] = useState('hour') // 選擇數據單位 - hour/day/week/month
   const [displayedData, setDisplayedData] = useState()
 
   const [dataAnalytics_temperature_actv, set_dataAnalytics_temperature_actv] =
@@ -184,7 +184,6 @@ export default function Sensors(props) {
           acc[formattedDate].push(data)
           return acc
         }, {})
-        console.log(groupedByHour)
         return groupedByHour
 
       case 'day':
@@ -205,7 +204,6 @@ export default function Sensors(props) {
           acc[date].push(data)
           return acc
         }, {})
-        console.log(groupedByDay)
         return groupedByDay
 
       case 'week':
@@ -223,7 +221,6 @@ export default function Sensors(props) {
           acc[yearWeek].push(data)
           return acc
         }, {})
-        console.log(groupedByWeek)
         return groupedByWeek
 
       case 'month':
@@ -241,7 +238,6 @@ export default function Sensors(props) {
           acc[key].push(data)
           return acc
         }, {})
-        console.log(groupedByMonth)
         return groupedByMonth
 
       default:
