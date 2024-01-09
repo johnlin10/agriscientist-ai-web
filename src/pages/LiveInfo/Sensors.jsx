@@ -38,11 +38,11 @@ import {
 
 export default function Sensors(props) {
   const [sensors, setSensors] = useState()
-  const [sensorsDays, setSensorsDays] = useState([])
   const [sensors_actv, setSensors_actv] = useState(false)
-  const [dataDisplayArea, setDataDisplayArea] = useState(60)
-  const [dataDates, setDataDates] = useState('')
-  const [selectDates, setSelectDates] = useState('')
+  const [dataIndexes, setDataIndexes] = useState([]) // 選擇數據單位段落 - 用於尋找段落
+  const [selectDataIndex, setSelectDataIndex] = useState(0)
+  const [dataUnit, setDataUnit] = useState('day') // 選擇數據單位 - hour/day/week/month
+  const [displayedData, setDisplayedData] = useState()
 
   const [dataAnalytics_temperature_actv, set_dataAnalytics_temperature_actv] =
     useState(false)
@@ -149,40 +149,155 @@ export default function Sensors(props) {
 
   useEffect(() => {
     if (sensors && sensors.length > 0) {
-      const uniqueDates = new Set()
-      const groupedData = sensors.reduce((acc, data) => {
-        const timestamp =
-          data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-        const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
-        const date = new Date(timestampWithOffset)
-          .toISOString()
-          .slice(0, 10)
-          .replace(/-/g, '') // Get YYYY-MM-DD format
+      const groupedData = groupData(sensors, dataUnit)
+      setDisplayedData(groupedData)
 
-        uniqueDates.add(date)
-
-        if (!acc[date]) {
-          acc[date] = []
-        }
-        acc[date].push(data)
-        return acc
-      }, {})
-      setSensorsDays(groupedData)
-      setDataDates([...uniqueDates])
+      const availableDates = getAvailableDates(groupedData, dataUnit)
+      setDataIndexes(availableDates)
+      setSelectDataIndex(availableDates.length - 1)
     }
-  }, [sensors])
+  }, [sensors, dataUnit])
 
-  useEffect(() => {
-    if (dataDates && dataDates.length > 0) {
-      setSelectDates(dataDates.length - 1)
+  /**
+   * 將數據進行指定時間單位的分組
+   * @param {Array} data - 感測器完整數據
+   * @param {string} type - 欲分類的數據單位 hour/day/week/month
+   */
+  const groupData = (sensorData, type) => {
+    const uniqueDates = new Set()
+
+    switch (type) {
+      case 'hour':
+        const groupedByHour = sensorData.reduce((acc, data) => {
+          const timestamp =
+            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+          const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
+          const date = new Date(timestampWithOffset)
+          const formattedDate = date
+            .toISOString()
+            .slice(0, 13)
+            .replace(/-|T|:/g, '') // YYYYMMDDHH format
+
+          if (!acc[formattedDate]) {
+            acc[formattedDate] = []
+          }
+          acc[formattedDate].push(data)
+          return acc
+        }, {})
+        console.log(groupedByHour)
+        return groupedByHour
+
+      case 'day':
+        const groupedByDay = sensorData.reduce((acc, data) => {
+          const timestamp =
+            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+          const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
+          const date = new Date(timestampWithOffset)
+            .toISOString()
+            .slice(0, 10)
+            .replace(/-/g, '') // Get YYYY-MM-DD format
+
+          uniqueDates.add(date)
+
+          if (!acc[date]) {
+            acc[date] = []
+          }
+          acc[date].push(data)
+          return acc
+        }, {})
+        console.log(groupedByDay)
+        return groupedByDay
+
+      case 'week':
+        const groupedByWeek = sensorData.reduce((acc, data) => {
+          const timestamp =
+            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+          const date = new Date(timestamp)
+          const weekNumber = getWeekNumber(date)
+          const year = date.getUTCFullYear()
+          const yearWeek = `${year}${weekNumber.toString().padStart(2, '0')}` // Combine year and week
+
+          if (!acc[yearWeek]) {
+            acc[yearWeek] = []
+          }
+          acc[yearWeek].push(data)
+          return acc
+        }, {})
+        console.log(groupedByWeek)
+        return groupedByWeek
+
+      case 'month':
+        const groupedByMonth = sensorData.reduce((acc, data) => {
+          const timestamp =
+            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+          const date = new Date(timestamp)
+          const year = date.getUTCFullYear()
+          const month = (date.getUTCMonth() + 1).toString().padStart(2, '0') // Month from 01 to 12
+
+          const key = `${year}${month}`
+          if (!acc[key]) {
+            acc[key] = []
+          }
+          acc[key].push(data)
+          return acc
+        }, {})
+        console.log(groupedByMonth)
+        return groupedByMonth
+
+      default:
+        break
     }
-  }, [dataDates])
+  }
+
+  // Helper function to get the week number
+  const getWeekNumber = (date) => {
+    const firstDayOfYear = new Date(date.getUTCFullYear(), 0, 1)
+    const pastDaysOfYear = (date - firstDayOfYear) / 86400000
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)
+  }
+
+  const getAvailableDates = (groupedData, type) => {
+    switch (type) {
+      case 'hour':
+        // Extract all available hours from groupedData
+        return Object.keys(groupedData).map((hour) => hour.toString())
+
+      case 'day':
+        // Extract all available days from groupedData
+        return Object.keys(groupedData)
+
+      case 'week':
+        // Extract all available weeks from groupedData
+        return Object.keys(groupedData).map((yearWeek) => {
+          const year = yearWeek.slice(0, 4)
+          const week = yearWeek.slice(4)
+          return `${year}${week}`
+        })
+
+      case 'month':
+        // Extract all available months from groupedData
+        return Object.keys(groupedData)
+
+      default:
+        return []
+    }
+  }
+
+  // useEffect(() => {
+  //   if (dataDates && dataDates.length > 0) {
+  //     setSelectDates(dataDates.length - 1)
+  //   }
+  // }, [dataDates])
 
   const handlePrevDay = () => {
-    setSelectDates(selectDates - 1)
+    if (selectDataIndex > 0) {
+      setSelectDataIndex(selectDataIndex - 1)
+    }
   }
   const handleNextDay = () => {
-    setSelectDates(selectDates + 1)
+    if (selectDataIndex < dataIndexes.length - 1) {
+      setSelectDataIndex(selectDataIndex + 1)
+    }
   }
 
   // 獲取數據分析
@@ -242,8 +357,24 @@ export default function Sensors(props) {
         <title>感測數據｜田野數據科學家</title>
       </Helmet>
       <div className={style.data_range}>
-        <button onClick={() => handlePrevDay()}>上一天</button>
-        <button onClick={() => handleNextDay()}>下一天</button>
+        <p>{dataIndexes[selectDataIndex]}</p>
+
+        <select
+          name="數據單位"
+          className={style.dataUnitSelection}
+          value={dataUnit}
+          onChange={(e) => setDataUnit(e.target.value)}
+        >
+          <optgroup label="單位">
+            <option value="hour">小時</option>
+            <option value="day">日</option>
+            <option value="week">週</option>
+            <option value="month">月</option>
+          </optgroup>
+        </select>
+
+        <button onClick={() => handlePrevDay()}>上一筆</button>
+        <button onClick={() => handleNextDay()}>下一筆</button>
       </div>
 
       {/* 溫度 */}
@@ -386,7 +517,11 @@ export default function Sensors(props) {
               <LineChart
                 width={500}
                 height={100}
-                data={sensorsDays[dataDates[selectDates]]}
+                data={
+                  displayedData && dataIndexes && selectDataIndex
+                    ? displayedData[dataIndexes[selectDataIndex]]
+                    : []
+                }
                 margin={{
                   top: 12,
                   right: 12,
@@ -592,7 +727,7 @@ export default function Sensors(props) {
               <AreaChart
                 width={500}
                 height={400}
-                data={sensorsDays[dataDates[selectDates]]}
+                // data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -784,7 +919,7 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={300}
-                data={sensorsDays[dataDates[selectDates]]}
+                // data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -992,7 +1127,7 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={100}
-                data={sensorsDays[dataDates[selectDates]]}
+                // data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -1199,7 +1334,7 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={400}
-                data={sensorsDays[dataDates[selectDates]]}
+                // data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -1289,7 +1424,7 @@ export default function Sensors(props) {
               <ComposedChart
                 width={500}
                 height={100}
-                data={sensorsDays[dataDates[selectDates]]}
+                // data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,
@@ -1390,7 +1525,7 @@ export default function Sensors(props) {
               <ComposedChart
                 width={500}
                 height={100}
-                data={sensorsDays[dataDates[selectDates]]}
+                // data={sensorsDays[dataDates[selectDates]]}
                 margin={{
                   top: 12,
                   right: 12,

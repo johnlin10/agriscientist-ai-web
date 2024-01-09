@@ -28,11 +28,28 @@
     opacity: 1;
   }
 
+  > p {
+    padding: 0 6px;
+    color: var(--green_D3);
+  }
+  > select {
+    margin-left: 3px;
+    padding: 0 6px;
+    background: #ffffff00;
+    color: var(--green_D2);
+    border: 2px solid var(--green_L6);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+  }
   > button {
     width: 50%;
-    background: #ffffff00;
+    background: var(--green_L7);
     color: var(--green_D5);
     padding: 3px 0;
+    margin: 0 3px;
 
     &:hover {
       background: var(--green_L5);
