@@ -19,3 +19,5 @@
 [Web repository Link]: https://github.com/johnlin10/agriscientist-ai-raspberrypi
 
 </div>
+
+> English users can view the [`README.en.md`](https://github.com/johnlin10/agriscientist-ai-web/blob/main/README.en.md) file.
