@@ -500,7 +500,7 @@ export default function Sensors(props) {
                   ))}
                 </Pie>
                 {needle(
-                  sensors[0].temperature,
+                  sensors[sensors.length - 1].temperature,
                   temperature_gear,
                   cx,
                   cy,
@@ -710,7 +710,7 @@ export default function Sensors(props) {
                   ))}
                 </Pie>
                 {needle(
-                  sensors[0].humidity,
+                  sensors[sensors.length - 1].humidity,
                   humidity_gear,
                   cx,
                   cy,
@@ -1118,7 +1118,7 @@ export default function Sensors(props) {
                   ))}
                 </Pie>
                 {needle(
-                  sensors[0].soilHumidity,
+                  sensors[sensors.length - 1].soilHumidity,
                   soilHumidity_gear,
                   cx,
                   cy,
@@ -1312,7 +1312,7 @@ export default function Sensors(props) {
               </span>
 
               {/* 儀表板 */}
-              <PieChart className={style.dashboard} width={210} height={110}>
+              {/* <PieChart className={style.dashboard} width={210} height={110}>
                 <Pie
                   dataKey="value"
                   startAngle={180}
@@ -1330,7 +1330,7 @@ export default function Sensors(props) {
                   ))}
                 </Pie>
                 {needle(
-                  sensors[0].water,
+                  sensors[sensors.length - 1].water,
                   soilHumidity_gear,
                   cx,
                   cy,
@@ -1338,7 +1338,7 @@ export default function Sensors(props) {
                   oR,
                   '#f3f350'
                 )}
-              </PieChart>
+              </PieChart> */}
             </>
           ) : (
             <h2>無數據</h2>
