@@ -727,7 +727,11 @@ export default function Sensors(props) {
               <AreaChart
                 width={500}
                 height={400}
-                // data={sensorsDays[dataDates[selectDates]]}
+                data={
+                  displayedData && dataIndexes && selectDataIndex
+                    ? displayedData[dataIndexes[selectDataIndex]]
+                    : []
+                }
                 margin={{
                   top: 12,
                   right: 12,
@@ -919,7 +923,11 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={300}
-                // data={sensorsDays[dataDates[selectDates]]}
+                data={
+                  displayedData && dataIndexes && selectDataIndex
+                    ? displayedData[dataIndexes[selectDataIndex]]
+                    : []
+                }
                 margin={{
                   top: 12,
                   right: 12,
@@ -1127,7 +1135,11 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={100}
-                // data={sensorsDays[dataDates[selectDates]]}
+                data={
+                  displayedData && dataIndexes && selectDataIndex
+                    ? displayedData[dataIndexes[selectDataIndex]]
+                    : []
+                }
                 margin={{
                   top: 12,
                   right: 12,
@@ -1334,7 +1346,11 @@ export default function Sensors(props) {
               <BarChart
                 width={500}
                 height={400}
-                // data={sensorsDays[dataDates[selectDates]]}
+                data={
+                  displayedData && dataIndexes && selectDataIndex
+                    ? displayedData[dataIndexes[selectDataIndex]]
+                    : []
+                }
                 margin={{
                   top: 12,
                   right: 12,
@@ -1424,7 +1440,11 @@ export default function Sensors(props) {
               <ComposedChart
                 width={500}
                 height={100}
-                // data={sensorsDays[dataDates[selectDates]]}
+                data={
+                  displayedData && dataIndexes && selectDataIndex
+                    ? displayedData[dataIndexes[selectDataIndex]]
+                    : []
+                }
                 margin={{
                   top: 12,
                   right: 12,
@@ -1525,7 +1545,11 @@ export default function Sensors(props) {
               <ComposedChart
                 width={500}
                 height={100}
-                // data={sensorsDays[dataDates[selectDates]]}
+                data={
+                  displayedData && dataIndexes && selectDataIndex
+                    ? displayedData[dataIndexes[selectDataIndex]]
+                    : []
+                }
                 margin={{
                   top: 12,
                   right: 12,
