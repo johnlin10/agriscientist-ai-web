@@ -8,6 +8,8 @@ import {
   faTemperatureThreeQuarters,
   faTemperatureHalf,
   faTemperatureQuarter,
+  faCircleChevronRight,
+  faCircleChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { Helmet } from 'react-helmet'
@@ -120,7 +122,7 @@ export default function Sensors(props) {
     const sensorTimestamp =
       timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6
     // 检查时间差
-    return now - sensorTimestamp > 90000
+    return now - sensorTimestamp > 360000
   }
 
   // 感測器數據即時同步
@@ -353,24 +355,30 @@ export default function Sensors(props) {
         <title>感測數據｜田野數據科學家</title>
       </Helmet>
       <div className={style.data_range}>
-        <p>{dataIndexes[selectDataIndex]}</p>
+        <button className={style.switchData} onClick={() => handlePrevDay()}>
+          <FontAwesomeIcon icon={faCircleChevronLeft} />
+        </button>
 
-        <select
-          name="數據單位"
-          className={style.dataUnitSelection}
-          value={dataUnit}
-          onChange={(e) => setDataUnit(e.target.value)}
-        >
-          <optgroup label="單位">
-            <option value="hour">小時</option>
-            <option value="day">日</option>
-            <option value="week">週</option>
-            <option value="month">月</option>
-          </optgroup>
-        </select>
+        <div>
+          <p>{dataIndexes[selectDataIndex]}</p>
+          <select
+            name="數據單位"
+            className={style.dataUnitSelection}
+            value={dataUnit}
+            onChange={(e) => setDataUnit(e.target.value)}
+          >
+            <optgroup label="單位">
+              <option value="hour">小時</option>
+              <option value="day">日</option>
+              <option value="week">週</option>
+              <option value="month">月</option>
+            </optgroup>
+          </select>
+        </div>
 
-        <button onClick={() => handlePrevDay()}>上一筆</button>
-        <button onClick={() => handleNextDay()}>下一筆</button>
+        <button className={style.switchData} onClick={() => handleNextDay()}>
+          <FontAwesomeIcon icon={faCircleChevronRight} />
+        </button>
       </div>
 
       {/* 溫度 */}

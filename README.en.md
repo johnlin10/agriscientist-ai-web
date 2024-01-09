@@ -8,7 +8,7 @@
 
 An open-source repository for a project centered on voice-interaction, built upon agricultural data analysis.
 
----
+-----
 
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/johnlin10/agriscientist-ai-web?style=for-the-badge&labelColor=34a84d&color=268039)
 ![Badge Likes](https://img.shields.io/github/stars/johnlin10/agriscientist-ai-web?style=for-the-badge&labelColor=d0ab23&color=b0901e&logoColor=white&logo=Trustpilot)

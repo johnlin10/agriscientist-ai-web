@@ -2,6 +2,7 @@
   z-index: 5000;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   position: absolute;
   padding: 6px;
   width: calc(100% - 48px);
@@ -14,8 +15,13 @@
   opacity: 0.5;
 
   @media (min-width: 900px) {
-    top: 24px;
-    right: 24px;
+    bottom: 84px + 12px;
+    right: 50%;
+    transform: translateX(50%);
+    -webkit-transform: translateX(50%);
+    -moz-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    -o-transform: translateX(50%);
   }
   @media (max-width: 900px) {
     bottom: 84px + 12px + 12px;
@@ -28,21 +34,25 @@
     opacity: 1;
   }
 
-  > p {
-    padding: 0 6px;
-    color: var(--green_D3);
-  }
-  > select {
-    margin: 0 3px;
-    padding: 0 6px;
-    background: #ffffff00;
-    color: var(--green_D2);
-    border: 2px solid var(--green_L6);
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    -o-border-radius: 6px;
+  > div {
+    display: flex;
+    flex-direction: row;
+    > p {
+      padding: 0 12px;
+      color: var(--green_D3);
+    }
+    > select {
+      margin: 0 3px;
+      padding: 0 3px;
+      background: #ffffff00;
+      color: var(--green_D2);
+      border: 2px solid var(--green_L6);
+      border-radius: 12px;
+      -webkit-border-radius: 12px;
+      -moz-border-radius: 12px;
+      -ms-border-radius: 12px;
+      -o-border-radius: 12px;
+    }
   }
   > button {
     width: 50%;
@@ -54,11 +64,23 @@
     &:hover {
       background: var(--green_L5);
     }
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    -o-border-radius: 6px;
+
+    &.switchData {
+      width: fit-content;
+      padding: 0 6px;
+      background: #ffffff00;
+      color: var(--green_D2);
+
+      &:hover {
+        color: var(--green_D4);
+      }
+    }
+
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
   }
 
   > input {
@@ -120,11 +142,11 @@
     -ms-border-radius: 14px;
     -o-border-radius: 14px;
   }
-  border-radius: 14px;
-  -webkit-border-radius: 14px;
-  -moz-border-radius: 14px;
-  -ms-border-radius: 14px;
-  -o-border-radius: 14px;
+  border-radius: 24px;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  -ms-border-radius: 24px;
+  -o-border-radius: 24px;
   transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
   -webkit-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
   -moz-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
