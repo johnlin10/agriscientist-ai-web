@@ -6,10 +6,15 @@
   position: absolute;
   padding: 6px;
   width: calc(100% - 48px);
+  height: 48px;
   max-width: 480px;
   // height: 24px;
   background-color: var(--opacity_w_7);
-  border: 2px solid var(--green_L6);
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #0000000f;
+  border-right: 1px solid #0000000f;
+  // border: 2px solid var(--green_L6);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
   opacity: 0.5;
@@ -32,11 +37,13 @@
 
   &:hover {
     opacity: 1;
+    box-shadow: 0 3px 12px 0 #0000000f, 0 6px 32px 0 #0000000f;
   }
 
   > div {
     display: flex;
     flex-direction: row;
+    align-items: center;
     > p {
       padding: 0 12px;
       color: var(--green_D3);
@@ -46,12 +53,20 @@
       padding: 0 3px;
       background: #ffffff00;
       color: var(--green_D2);
-      border: 2px solid var(--green_L6);
+      border: 2px solid var(--green_L5);
+      &:hover {
+        border: 2px solid var(--green_L3);
+      }
       border-radius: 12px;
       -webkit-border-radius: 12px;
       -moz-border-radius: 12px;
       -ms-border-radius: 12px;
       -o-border-radius: 12px;
+      transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+      -webkit-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+      -moz-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+      -ms-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+      -o-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
     }
   }
   > button {
@@ -70,17 +85,22 @@
       padding: 0 6px;
       background: #ffffff00;
       color: var(--green_D2);
+      font-size: 1rem;
 
       &:hover {
         color: var(--green_D4);
       }
     }
-
     border-radius: 12px;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
     -ms-border-radius: 12px;
     -o-border-radius: 12px;
+    transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    -moz-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    -ms-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    -o-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   > input {
