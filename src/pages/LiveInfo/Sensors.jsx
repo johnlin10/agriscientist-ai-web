@@ -549,7 +549,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
                 />
                 <YAxis type="number" domain={[0, 'dataMax + 5']} />
@@ -569,7 +569,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
                   }}
                 />
                 <Line type="monotone" dataKey="temperature" stroke="#eaa74a" />
@@ -773,7 +773,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
                 />
                 <YAxis type="number" domain={[0, 100]} />
@@ -794,7 +794,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
                   }}
                   // formatter={(value) => value.toFixed(1)}
                 />
@@ -955,7 +955,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
                 />
                 <YAxis type="number" domain={[0, 1000]} />
@@ -975,7 +975,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
                   }}
                 />
                 <Bar
@@ -1167,7 +1167,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
                 />
                 <YAxis type="number" domain={[0, 100]} />
@@ -1187,7 +1187,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
                   }}
                   // formatter={(value) => value.toFixed(1)}
                 />
@@ -1378,7 +1378,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
                 />
                 <YAxis type="number" domain={[0, 'dataMax + 100']} />
@@ -1399,7 +1399,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
                   }}
                   // formatter={(value) => value.toFixed(1)}
                 />
@@ -1472,7 +1472,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
                 />
                 <YAxis type="number" domain={[0, 40]} />
@@ -1492,7 +1492,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}/${formattedDay} ${formattedHours}:${formattedMinutes}`
+                    return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
                   }}
                   // formatter={(value) => value.toFixed(1)}
                 />
@@ -1597,7 +1597,7 @@ export default function Sensors(props) {
                     const formattedHours = hours.toString().padStart(2, '0')
                     const formattedMinutes = minutes.toString().padStart(2, '0')
 
-                    return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
+                    return `${formattedMonth}月${formattedDay}日 ${formattedHours}${formattedMinutes}`
                   }}
                   // formatter={(value) => value.toFixed(1)}
                 />
