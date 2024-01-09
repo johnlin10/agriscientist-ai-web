@@ -47,21 +47,24 @@
     > p {
       padding: 0 12px;
       color: var(--green_D3);
+      font-size: 1rem;
     }
     > select {
       margin: 0 3px;
-      padding: 0 3px;
+      padding: 0 6px;
+      height: 100%;
+      font-size: 0.9rem;
       background: #ffffff00;
       color: var(--green_D2);
       border: 2px solid var(--green_L5);
       &:hover {
         border: 2px solid var(--green_L3);
       }
-      border-radius: 12px;
-      -webkit-border-radius: 12px;
-      -moz-border-radius: 12px;
-      -ms-border-radius: 12px;
-      -o-border-radius: 12px;
+      border-radius: 24px;
+      -webkit-border-radius: 24px;
+      -moz-border-radius: 24px;
+      -ms-border-radius: 24px;
+      -o-border-radius: 24px;
       transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
       -webkit-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
       -moz-transition: 0.25s cubic-bezier(0.23, 1, 0.32, 1);
