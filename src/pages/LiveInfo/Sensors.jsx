@@ -164,10 +164,9 @@ export default function Sensors(props) {
    * 將數據進行指定時間單位的分組
    * @param {Array} data - 感測器完整數據
    * @param {string} type - 欲分類的數據單位 hour/day/week/month
+   * @returns {Array} - 根據單位分組後的數據
    */
   const groupData = (sensorData, type) => {
-    const uniqueDates = new Set()
-
     switch (type) {
       case 'hour':
         const groupedByHour = sensorData.reduce((acc, data) => {
@@ -197,8 +196,6 @@ export default function Sensors(props) {
             .toISOString()
             .slice(0, 10)
             .replace(/-/g, '') // Get YYYY-MM-DD format
-
-          uniqueDates.add(date)
 
           if (!acc[date]) {
             acc[date] = []
@@ -254,6 +251,12 @@ export default function Sensors(props) {
     return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)
   }
 
+  /**
+   * 編列單位分組數據的索引
+   * @param {Array} groupedData - 根據單位分組完的數據
+   * @param {string} type - 數據分組的單位 hour/day/week/month
+   * @returns {Array} - 根據單位分組的數據索引
+   */
   const getAvailableDates = (groupedData, type) => {
     switch (type) {
       case 'hour':
