@@ -82,12 +82,21 @@
     border-left: 3px solid #0000000a;
     border-bottom: 3px solid #0000001f;
     border-right: 3px solid #0000001f;
+    cursor: default;
+
+    * {
+      user-select: none;
+    }
 
     &.noAuth {
       background: #f5b6b6;
 
       > div.authStatus {
         background: #d44141;
+
+        &.notSignin {
+          cursor: pointer;
+        }
       }
     }
 
@@ -110,7 +119,7 @@
       flex-direction: row;
       align-items: center;
       margin: 6px 6px 6px 12px;
-      padding: 3px 6px;
+      padding: 3px 9px 3px 6px;
       height: 48;
       background: var(--green_L3);
 

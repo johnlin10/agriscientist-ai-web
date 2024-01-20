@@ -7,10 +7,14 @@ import { database } from '../firebase'
 import { writeFirestoreDoc } from '../firebase'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircleCheck,
+  faCircleXmark,
+  faRightToBracket,
+} from '@fortawesome/free-solid-svg-icons'
 
 // 專門用於實驗性專題使用，知道鏈接的人即可進入
-export default function SmartSwitch() {
+export default function SmartSwitch(props) {
   const { user } = useContext(AppContext)
   const [switchInit, setSwitchInit] = useState(false)
 
@@ -70,12 +74,13 @@ export default function SmartSwitch() {
     const fetchData = async () => {
       if (
         switchInit &&
-        allowUsers.some((users) => user?.uid.startsWith(users))
+        (cardAuth || allowUsers.some((users) => user?.uid.startsWith(users)))
       ) {
         try {
           await set(sensorsDataRef, {
             switch_1: control1,
             switch_2: control2,
+            card: cardAuth,
           })
         } catch (error) {
           console.error('Error writing to Realtime Database:', error)
@@ -130,14 +135,20 @@ export default function SmartSwitch() {
           actv={switch1}
           setActv={() => setControl1(!control1)}
           auth={switchAuth}
+          cardAuth={cardAuth}
         />
         <SwitchInput
           actv={switch2}
           setActv={() => setControl2(!control2)}
           auth={switchAuth}
+          cardAuth={cardAuth}
         />
-        <div className={`${style.auth}${switchAuth ? ` ${style.actv}` : ''}`}>
-          {switchAuth ? `已授權` : '未授權'}
+        <div
+          className={`${style.auth}${
+            switchAuth || cardAuth ? ` ${style.actv}` : ''
+          }`}
+        >
+          {switchAuth || cardAuth ? `已授權` : '未授權'}
         </div>
       </div>
       {user ? (
@@ -147,8 +158,12 @@ export default function SmartSwitch() {
           <img src={user.photoURL} alt="" />
           <p>{user.displayName}</p>
           <div className={`${style.authStatus}`}>
-            {switchAuth ? <FontAwesomeIcon icon={faCircleCheck} /> : ''}
-            <p>{switchAuth ? '已驗證' : '未授權'}</p>
+            {switchAuth ? (
+              <FontAwesomeIcon icon={faCircleCheck} />
+            ) : (
+              <FontAwesomeIcon icon={faCircleXmark} />
+            )}
+            <p>{switchAuth ? '已驗證' : '未驗證'}</p>
           </div>
         </div>
       ) : (
@@ -156,19 +171,27 @@ export default function SmartSwitch() {
           className={`${style.userInfo}${switchAuth ? '' : ` ${style.noAuth}`}`}
         >
           <p>未登入</p>
+
+          <div
+            className={`${style.authStatus} ${style.notSignin}`}
+            onClick={() => props.navigateClick('/user')}
+          >
+            <FontAwesomeIcon icon={faRightToBracket} />
+            <p>前往登入</p>
+          </div>
         </div>
       )}
     </div>
   )
 }
 
-function SwitchInput({ actv, setActv, auth }) {
+function SwitchInput({ actv, setActv, auth, cardAuth }) {
   return (
     <div
       className={`${style.switch}${actv ? ` ${style.open}` : ''}${
-        auth ? '' : ` ${style.noAuth}`
+        auth || cardAuth ? '' : ` ${style.noAuth}`
       }`}
-      onClick={auth ? () => setActv() : () => {}}
+      onClick={auth || cardAuth ? () => setActv() : () => {}}
     >
       <div className={style.hole1}></div>
       <div className={style.hole2}></div>

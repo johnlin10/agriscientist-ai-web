@@ -374,7 +374,10 @@ function App() {
               <Route path="sensor" element={<Sensors />} />
               <Route path="control" element={<Contrals />} />
               <Route path="chat" element={<Chats />} />
-              <Route path="smartSwitch" element={<SmartSwitch />} />
+              <Route
+                path="smartSwitch"
+                element={<SmartSwitch navigateClick={navigateClick} />}
+              />
             </Route>
           </Routes>
         </main>
