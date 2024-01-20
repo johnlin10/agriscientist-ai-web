@@ -8,5 +8,9 @@ node_modules/
 **/firebase.json
 **/firestore.rules
 **/firestore.indexes.rules
+**/firestore.indexes.json
+**/database.rules.json
 **/firestore.rules
+**/package.json
+**/package-lock.json
 **/.env
