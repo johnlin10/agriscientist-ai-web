@@ -65,7 +65,7 @@ export default function Home(props) {
               data-type="center"
               // data-rellax-speed="-6.7"
             >
-              將於下週發表
+              已於上週發表
             </span>
           </div>
         </div>
