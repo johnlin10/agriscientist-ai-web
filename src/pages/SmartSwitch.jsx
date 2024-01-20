@@ -33,6 +33,7 @@ export default function SmartSwitch(props) {
     process.env.REACT_APP_ADMIN_ACCOUNT,
     process.env.REACT_APP_SMARTSWITCH_USER_1,
     process.env.REACT_APP_SMARTSWITCH_USER_2,
+    process.env.REACT_APP_SMARTSWITCH_USER_3,
   ]
 
   useEffect(() => {
