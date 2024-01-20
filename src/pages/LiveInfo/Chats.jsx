@@ -1,5 +1,5 @@
 import style from './style/Chats.module.scss'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import { doc, onSnapshot } from 'firebase/firestore'
 import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'

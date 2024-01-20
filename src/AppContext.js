@@ -1,21 +1,6 @@
 // AppContext.js
 import React, { createContext, useEffect, useState } from 'react'
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getFirestoreData } from './firebase'
-const firebaseConfig = {
-  apiKey: 'AIzaSyCWmLE3mis8l1DRUovdntGBxdDW_BxywYg',
-  authDomain: 'agriscientist-ai.firebaseapp.com',
-  projectId: 'agriscientist-ai',
-  storageBucket: 'agriscientist-ai.appspot.com',
-  messagingSenderId: '774646280553',
-  appId: '1:774646280553:web:81a472271448aa950c0df8',
-  measurementId: 'G-3K8E9VNZJQ',
-}
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig)
-const auth = getAuth(app)
+import { auth } from './firebase'
 
 export const AppContext = createContext()
 

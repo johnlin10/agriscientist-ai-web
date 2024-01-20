@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getDatabase } from 'firebase/database'
 import {
   collection,
   addDoc,
@@ -20,6 +20,8 @@ import { debounce } from 'lodash'
 const firebaseConfig = {
   apiKey: 'AIzaSyCWmLE3mis8l1DRUovdntGBxdDW_BxywYg',
   authDomain: 'agriscientist-ai.firebaseapp.com',
+  databaseURL:
+    'https://agriscientist-ai-default-rtdb.asia-southeast1.firebasedatabase.app',
   projectId: 'agriscientist-ai',
   storageBucket: 'agriscientist-ai.appspot.com',
   messagingSenderId: '774646280553',
@@ -30,6 +32,7 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
+export const database = getDatabase(app)
 export const auth = getAuth(app)
 const storage = getStorage()
 const analytics = getAnalytics(app)

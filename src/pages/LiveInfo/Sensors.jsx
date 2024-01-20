@@ -1,5 +1,5 @@
 import style from './style/Sensors.module.scss'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import { doc, onSnapshot } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 
@@ -239,6 +239,17 @@ export default function Sensors(props) {
         }, {})
         return groupedByMonth
 
+      case 'record':
+        const groupedByRecord = sensorData.reduce((acc, data) => {
+          if (!acc[0]) {
+            acc[0] = []
+          }
+          acc[0].push(data)
+          return acc
+        }, {})
+        console.log(groupedByRecord)
+        return groupedByRecord
+
       default:
         break
     }
@@ -276,7 +287,9 @@ export default function Sensors(props) {
         })
 
       case 'month':
-        // Extract all available months from groupedData
+        return Object.keys(groupedData)
+
+      case 'record':
         return Object.keys(groupedData)
 
       default:
@@ -370,11 +383,14 @@ export default function Sensors(props) {
             value={dataUnit}
             onChange={(e) => setDataUnit(e.target.value)}
           >
-            <optgroup label="單位">
+            <optgroup label="根據時間">
               <option value="hour">小時</option>
-              <option value="day">日</option>
-              <option value="week">週</option>
-              <option value="month">月</option>
+              <option value="day">日（可能卡頓）</option>
+              <option value="week">週（卡頓）</option>
+              <option value="month">月（非常卡頓）</option>
+            </optgroup>
+            <optgroup label="其他">
+              <option value="record">筆</option>
             </optgroup>
           </select>
         </div>

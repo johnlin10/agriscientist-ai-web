@@ -68,6 +68,75 @@
     -ms-border-radius: 24px;
     -o-border-radius: 24px;
   }
+
+  > .userInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 24px 0 0 0;
+    padding: 12px;
+    width: fit-content;
+    height: 60px;
+    background: var(--green_L6);
+    border-top: 3px solid #0000000a;
+    border-left: 3px solid #0000000a;
+    border-bottom: 3px solid #0000001f;
+    border-right: 3px solid #0000001f;
+
+    &.noAuth {
+      background: #f5b6b6;
+
+      > div.authStatus {
+        background: #d44141;
+      }
+    }
+
+    > img {
+      margin-right: 12px;
+      height: 100%;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+    }
+
+    > p {
+      font-size: 1.1rem;
+    }
+
+    > div.authStatus {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 6px 6px 6px 12px;
+      padding: 3px 6px;
+      height: 48;
+      background: var(--green_L3);
+
+      > svg {
+        margin-right: 6px;
+        color: #fff;
+      }
+      > p {
+        margin-bottom: 1px;
+        font-size: 0.8rem;
+        color: #fff;
+      }
+
+      border-radius: 24px;
+      -webkit-border-radius: 24px;
+      -moz-border-radius: 24px;
+      -ms-border-radius: 24px;
+      -o-border-radius: 24px;
+    }
+
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+  }
 }
 
 div.switch {

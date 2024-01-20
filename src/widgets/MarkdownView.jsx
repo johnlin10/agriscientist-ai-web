@@ -10,8 +10,6 @@ import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeHighlight from 'rehype-highlight'
 import 'highlight.js/styles/panda-syntax-dark.css'
-// import { initializeApp } from 'firebase/app'
-// import { getAuth } from 'firebase/auth'
 import { useContext } from 'react'
 import { AppContext } from '../AppContext'
 
