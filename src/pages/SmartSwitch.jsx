@@ -34,16 +34,12 @@ export default function SmartSwitch(props) {
     process.env.REACT_APP_SMARTSWITCH_USER_1,
     process.env.REACT_APP_SMARTSWITCH_USER_2,
     process.env.REACT_APP_SMARTSWITCH_USER_3,
+    process.env.REACT_APP_SMARTSWITCH_USER_4,
   ]
 
   useEffect(() => {
-    if (user) {
-      if (allowUsers.some((users) => user.uid.startsWith(users))) {
-        setSwitchAuth(true)
-      } else {
-        setSwitchAuth(false)
-      }
-    }
+    const isUserAllowed = user ? allowUsers.includes(user.uid) : false
+    setSwitchAuth(isUserAllowed)
   }, [user])
 
   // 新的 Realtime database 方案
