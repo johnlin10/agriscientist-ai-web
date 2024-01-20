@@ -13,16 +13,23 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 export default function SmartSwitch() {
   const { user } = useContext(AppContext)
   const [switchInit, setSwitchInit] = useState(false)
+
   const [switch1, setSwitch1] = useState(false)
   const [control1, setControl1] = useState(false)
 
   const [switch2, setSwitch2] = useState(false)
   const [control2, setControl2] = useState(false)
 
+  const [cardAuth, setCardAuth] = useState(false)
+
   const [switchAuth, setSwitchAuth] = useState(false)
   const sensorsDataRef = ref(database, 'other/smartSwitch')
 
-  const allowUsers = [process.env.REACT_APP_ADMIN_ACCOUNT]
+  const allowUsers = [
+    process.env.REACT_APP_ADMIN_ACCOUNT,
+    process.env.REACT_APP_SMARTSWITCH_USER_1,
+    process.env.REACT_APP_SMARTSWITCH_USER_2,
+  ]
 
   useEffect(() => {
     if (user) {
@@ -43,12 +50,13 @@ export default function SmartSwitch() {
         setControl1(data.switch_1)
         setSwitch2(data.switch_2)
         setControl2(data.switch_2)
+        setCardAuth(data.card ? data.card : false)
         setSwitchInit(true)
       } else {
         set(sensorsDataRef, {
           switch_1: false,
           switch_2: false,
-          auth: false,
+          card: false,
         })
       }
     })
