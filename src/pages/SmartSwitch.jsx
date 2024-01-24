@@ -18,6 +18,8 @@ import {
   faCircleCheck,
   faCircleXmark,
   faRightToBracket,
+  faCirclePlus,
+  faCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
 
 // 專門用於實驗性專題使用，知道鏈接的人即可進入
@@ -296,6 +298,7 @@ function SwitchInput({ actv, setActv, auth, cardAuth }) {
 function Authcontrol({ userAuth, selfUID }) {
   const [users, setUsers] = useState([])
   const [authStatus, setAuthStatus] = useState(false)
+  const [addUserInputStatus, setAddUserInputStatus] = useState(false)
   const [inputUserUID, setInputUserUID] = useState()
 
   useEffect(() => {
@@ -337,28 +340,33 @@ function Authcontrol({ userAuth, selfUID }) {
 
   const handleAuthChange = async (e, uid) => {
     const newAuthStatus = e.target.value === 'true'
+    const isAdmin = uid === process.env.REACT_APP_ADMIN_ACCOUNT
 
-    // 更新本地狀態
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.uid === uid ? { ...user, auth: newAuthStatus } : user
-      )
-    )
-
-    // 更新雲端狀態
-    const userAuthRef = doc(db, 'test_database', 'smartswitch_auth')
-    const userAuthSnapshot = await getDoc(userAuthRef)
-
-    if (userAuthSnapshot.exists()) {
-      const updatedUsers = userAuthSnapshot
-        .data()
-        .users.map((user) =>
-          user.uid === uid ? { ...user, authCtrl: newAuthStatus } : user
+    if (!isAdmin) {
+      // 更新本地狀態
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.uid === uid ? { ...user, auth: newAuthStatus } : user
         )
+      )
 
-      await updateDoc(userAuthRef, {
-        users: updatedUsers,
-      })
+      // 更新雲端狀態
+      const userAuthRef = doc(db, 'test_database', 'smartswitch_auth')
+      const userAuthSnapshot = await getDoc(userAuthRef)
+
+      if (userAuthSnapshot.exists()) {
+        const updatedUsers = userAuthSnapshot
+          .data()
+          .users.map((user) =>
+            user.uid === uid ? { ...user, authCtrl: newAuthStatus } : user
+          )
+
+        await updateDoc(userAuthRef, {
+          users: updatedUsers,
+        })
+      }
+    } else {
+      window.alert('無法更改此帳號權限')
     }
   }
 
@@ -382,12 +390,28 @@ function Authcontrol({ userAuth, selfUID }) {
     }
   }
 
+  const handleAddUser = (uid) => {
+    // 假設這裡有一個用戶 UID 和 authCtrl 的狀態
+    const newUserAuthCtrl = false // 或者 false，取決於你的需求
+    const userExists = userAuth.some((user) => user.uid === uid)
+
+    if (!userExists) {
+      addUser(uid, newUserAuthCtrl)
+    } else {
+      window.alert('該帳號已授權')
+    }
+
+    setInputUserUID('')
+  }
+
   // 移除用戶
   const removeUser = async (uid) => {
     const userAuthRef = doc(db, 'test_database', 'smartswitch_auth')
     const userAuthSnapshot = await getDoc(userAuthRef)
 
-    if (userAuthSnapshot.exists()) {
+    const isAdmin = uid === process.env.REACT_APP_ADMIN_ACCOUNT
+
+    if (userAuthSnapshot.exists() && !isAdmin) {
       const updatedUsers = userAuthSnapshot
         .data()
         .users.filter((user) => user.uid !== uid)
@@ -395,13 +419,9 @@ function Authcontrol({ userAuth, selfUID }) {
       await updateDoc(userAuthRef, {
         users: updatedUsers,
       })
+    } else {
+      window.alert('無法移除此帳號')
     }
-  }
-
-  const handleAddUser = (uid) => {
-    // 假設這裡有一個用戶 UID 和 authCtrl 的狀態
-    const newUserAuthCtrl = false // 或者 false，取決於你的需求
-    addUser(uid, newUserAuthCtrl)
   }
 
   const handleRemoveUser = (uid) => {
@@ -460,22 +480,42 @@ function Authcontrol({ userAuth, selfUID }) {
             ))}
           </ul>
           {authStatus && (
-            <div className={style.addUser}>
-              <input
-                type="text"
-                placeholder="欲加入用戶的 ID"
-                value={inputUserUID}
-                onChange={(e) => setInputUserUID(e.target.value)}
-              />
+            <>
               <button
-                onClick={() => {
-                  handleAddUser(inputUserUID)
-                  setInputUserUID('')
-                }}
+                className={`${style.addUser}${
+                  addUserInputStatus && inputUserUID ? ` ${style.update}` : ''
+                }${addUserInputStatus ? ` ${style.actv}` : ''}`}
+                onClick={() =>
+                  addUserInputStatus && inputUserUID
+                    ? handleAddUser(inputUserUID)
+                    : setAddUserInputStatus(!addUserInputStatus)
+                }
               >
-                新增
+                {addUserInputStatus && inputUserUID ? (
+                  <FontAwesomeIcon icon={faCircleUp} />
+                ) : (
+                  <FontAwesomeIcon icon={faCirclePlus} />
+                )}
               </button>
-            </div>
+              {addUserInputStatus && (
+                <div className={style.addUserForm}>
+                  <input
+                    type="text"
+                    placeholder="欲加入用戶的 ID"
+                    value={inputUserUID}
+                    onChange={(e) => setInputUserUID(e.target.value)}
+                  />
+                  {/* <button
+                    onClick={() => {
+                      setAddUserInputStatus(false)
+                      setInputUserUID('')
+                    }}
+                  >
+                    取消
+                  </button> */}
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
