@@ -220,7 +220,7 @@ export default function Nav(props) {
                 }}
               >
                 <p>
-                  管理員登入
+                  帳號
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>

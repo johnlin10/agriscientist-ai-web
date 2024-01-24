@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useContext } from "react"
-import css from "./css/User.module.scss"
-import { Helmet } from "react-helmet"
-import Moment from "react-moment"
+import React, { useEffect, useState, useContext } from 'react'
+import css from './css/User.module.scss'
+import { Helmet } from 'react-helmet'
+import Moment from 'react-moment'
 
-import { AppContext } from "../AppContext"
+import { AppContext } from '../AppContext'
 
 // FontAwesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 // Firebase
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import {
   collection,
   addDoc,
@@ -20,15 +20,15 @@ import {
   getDoc,
   updateDoc,
   onSnapshot,
-} from "firebase/firestore"
+} from 'firebase/firestore'
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
-} from "firebase/auth"
-import { app, db } from "../firebase"
+} from 'firebase/auth'
+import { app, db, writeFirestoreDoc } from '../firebase'
 
 export const auth = getAuth(app)
 
@@ -40,20 +40,7 @@ export default function User(props) {
   const handleGoogleSignIn = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        // const credential = GoogleAuthProvider.credentialFromResult(result)
-        // const token = credential.accessToken
         const user = result.user
-        // 將用戶資料寫入 Firestore 中，並使用 'merge' 選項避免覆蓋
-        setDoc(
-          doc(db, "user", user.email),
-          {
-            email: user.email,
-            name: user.displayName,
-            headSticker: user.photoURL,
-            uid: user.uid,
-          },
-          { merge: true }
-        )
       })
       .catch((error) => {
         const errorCode = error.code
@@ -61,7 +48,7 @@ export default function User(props) {
         const email = error.email
         const credential = GoogleAuthProvider.credentialFromError(error)
         console.log(
-          errorCode + "/ " + errorMessage + "/ " + email + "/ " + credential
+          errorCode + '/ ' + errorMessage + '/ ' + email + '/ ' + credential
         )
       })
   }
@@ -72,23 +59,14 @@ export default function User(props) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const userDataRef = doc(db, "user", user.email)
-        const userDataSnapshot = await getDoc(userDataRef)
-        if (userDataSnapshot.exists()) {
-          await updateDoc(userDataRef, {
-            email: user.email,
-            name: user.displayName,
-            headSticker: user.photoURL,
-            uid: user.uid,
-          })
-        } else {
-          await setDoc(userDataRef, {
-            email: user.email,
-            name: user.displayName,
-            headSticker: user.photoURL,
-            uid: user.uid,
-          })
+        const userInfo = {
+          email: user.email,
+          name: user.displayName,
+          headSticker: user.photoURL,
+          uid: user.uid,
         }
+
+        await writeFirestoreDoc(`user/${user.uid}`, userInfo, true)
       }
     })
     return unsubscribe
@@ -124,6 +102,10 @@ export default function User(props) {
                 <p className={css.userEmail} title={user.email}>
                   {user.email}
                 </p>
+                <p className={css.userUID} title={user.email}>
+                  <span className={css.id}>ID</span>
+                  {user.uid}
+                </p>
                 {props.adminPermit ? (
                   <p className={css.projUser}>
                     <FontAwesomeIcon icon={faStar} />
@@ -138,7 +120,7 @@ export default function User(props) {
               </div>
             </div>
             <p className={css.createdAt}>
-              Created at{" "}
+              Created at{' '}
               <Moment unix fromNow>
                 {Number(user.metadata.createdAt) / 1000}
               </Moment>
@@ -153,7 +135,7 @@ export default function User(props) {
         ) : (
           <>
             <div
-              className={`${css.userInfo}${!user ? ` ${css.notSignUp}` : ""}`}
+              className={`${css.userInfo}${!user ? ` ${css.notSignUp}` : ''}`}
             >
               <img
                 className={css.userIMG}
