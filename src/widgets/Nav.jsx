@@ -65,6 +65,17 @@ export default function Nav(props) {
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/realtime/smartSwitch')
+                }}
+              >
+                <p>
+                  智慧插座
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
+              </li>
             </ul>
           </li>
           <li onClick={() => props.navigateClick('/products/microfarm')}>

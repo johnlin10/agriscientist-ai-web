@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
 import css from './css/LiveInfo.module.scss'
 import Aside from '../widgets/Aside'
 import { Helmet } from 'react-helmet'
@@ -20,6 +19,15 @@ export default function LiveInfo(props) {
         {
           title: '農場助理',
           path: '/realtime/chat',
+        },
+      ],
+    },
+    {
+      title: '清華智慧農業',
+      ul: [
+        {
+          title: '智慧插座',
+          path: '/realtime/smartSwitch',
         },
       ],
     },

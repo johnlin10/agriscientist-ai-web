@@ -28,6 +28,11 @@ aside {
     @media (max-width: 900px) {
       margin-bottom: 0;
     }
+
+    &:not(:first-child) {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
   }
   > ul {
     position: relative;
@@ -52,7 +57,7 @@ aside {
       width: fit-content;
 
       &::before {
-        content: "";
+        content: '';
         position: sticky;
         top: 0;
         left: 0;
@@ -62,7 +67,7 @@ aside {
         pointer-events: none;
       }
       &::after {
-        content: "";
+        content: '';
         position: sticky;
         top: 0;
         right: 0;
