@@ -214,6 +214,17 @@
           user-select: none;
           pointer-events: none;
 
+          > hr {
+            margin: 3px 0;
+            height: 3px;
+            background: #0000000a;
+            border-radius: 2px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+            -o-border-radius: 2px;
+          }
+
           > li {
             list-style: none;
             width: 100%;

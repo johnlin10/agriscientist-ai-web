@@ -65,6 +65,7 @@ export default function Nav(props) {
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
+              <hr />
               <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
@@ -127,6 +128,7 @@ export default function Nav(props) {
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
+              <hr />
               <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
@@ -191,12 +193,26 @@ export default function Nav(props) {
             </p>
             <FontAwesomeIcon icon={faCaretUp} className={style.more} />
             <ul>
-              <li>
-                <p>關於我們</p>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/about')
+                }}
+              >
+                <p>
+                  關於我們
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
               </li>
-              <li>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  // props.navigateClick('/about')
+                }}
+              >
                 <p>我們的理念</p>
               </li>
+              <hr />
               <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
