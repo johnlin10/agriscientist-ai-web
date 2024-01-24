@@ -218,23 +218,95 @@ div.switch {
 }
 
 .authControl {
+  width: calc(100% - 24px);
+  max-width: 540px;
+  padding: 48px 6px 6px 6px;
+
+  > h1 {
+    font-size: 1.2rem;
+  }
   > ul {
     > li {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
+      position: relative;
       list-style: none;
-      margin: 6px;
+      margin: 6px 0;
+      padding: 6px;
+      background: var(--green_L7);
+      border: 3px solid var(--green_L6);
+      height: fit-content;
 
       > img {
         margin-right: 6px;
-        height: 36px;
-        border-radius: 18px;
-        -webkit-border-radius: 18px;
-        -moz-border-radius: 18px;
-        -ms-border-radius: 18px;
-        -o-border-radius: 18px;
+        height: 44px;
+        user-select: none;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
       }
+      > div {
+        &.userInfo {
+          > p.userName {
+            font-size: 1rem;
+            user-select: none;
+          }
+          > p.userUID {
+            padding: 1px 6px;
+            margin-top: 3px;
+            font-size: 0.7rem;
+            color: var(--green_D3);
+            background: var(--green_L6);
+            border-radius: 12px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            -ms-border-radius: 12px;
+            -o-border-radius: 12px;
+          }
+        }
+        &.authStatus {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+
+          > p {
+            font-size: 1rem;
+            color: var(--green_D3);
+          }
+          > select {
+            background: #ffffff00;
+            border: 2px solid var(--green_L6);
+            border-radius: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            -ms-border-radius: 9px;
+            -o-border-radius: 9px;
+          }
+          > button {
+            margin: 0 6px;
+            background: #ffffff00;
+          }
+
+          transform: translateY(-50%);
+          -webkit-transform: translateY(-50%);
+          -moz-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+        }
+      }
+      border-radius: 17px;
+      -webkit-border-radius: 17px;
+      -moz-border-radius: 17px;
+      -ms-border-radius: 17px;
+      -o-border-radius: 17px;
     }
   }
+  border-radius: 13px;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
 }

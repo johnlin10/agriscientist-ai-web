@@ -1,6 +1,6 @@
 // AppContext.js
 import React, { createContext, useEffect, useState } from 'react'
-import { auth } from './firebase'
+import { auth, writeFirestoreDoc } from './firebase'
 
 export const AppContext = createContext()
 
@@ -9,16 +9,26 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [adminPermit, setAdminPermit] = useState(false)
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((userInfo) => {
-      setUser(userInfo)
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      setUser(user)
       if (
-        userInfo &&
-        (userInfo.uid === process.env.REACT_APP_ADMIN_ACCOUNT ||
-          userInfo.uid === process.env.REACT_APP_PROJECT_USER1)
+        user &&
+        (user.uid === process.env.REACT_APP_ADMIN_ACCOUNT ||
+          user.uid === process.env.REACT_APP_PROJECT_USER1)
       ) {
         setAdminPermit(true)
       } else {
         setAdminPermit(false)
+      }
+      if (user) {
+        const userInfo = {
+          email: user.email,
+          name: user.displayName,
+          headSticker: user.photoURL,
+          uid: user.uid,
+        }
+
+        await writeFirestoreDoc(`user/${user.uid}`, userInfo, true)
       }
     })
     return () => unsubscribe()

@@ -1,7 +1,14 @@
 import { useEffect, useState, useContext } from 'react'
 import { AppContext } from '../AppContext'
 import style from './css/SmartSwitch.module.scss'
-import { onSnapshot, doc, collection, getDocs } from 'firebase/firestore'
+import {
+  onSnapshot,
+  doc,
+  collection,
+  getDocs,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore'
 import { ref, onValue, set } from 'firebase/database'
 import { database } from '../firebase'
 import { db, writeFirestoreDoc, getFirestoreData } from '../firebase'
@@ -38,16 +45,23 @@ export default function SmartSwitch(props) {
     process.env.REACT_APP_SMARTSWITCH_USER_4,
   ]
 
+  // useEffect(() => {
+  //   const isUserAllowed = user ? allowUsers.includes(user.uid) : false
+  //   setSwitchAuth(isUserAllowed)
+  // }, [user])
+
   useEffect(() => {
-    const isUserAllowed = user ? allowUsers.includes(user.uid) : false
-    setSwitchAuth(isUserAllowed)
-  }, [user])
+    const currentUserAuth = userAuth.find((users) => users.uid === user?.uid)
+    console.log(currentUserAuth)
+    setSwitchAuth(currentUserAuth)
+  }, [userAuth, user])
 
   // 新的 Realtime database 方案
   useEffect(() => {
     const unsubscribe = onValue(sensorsDataRef, (snapshot) => {
       const data = snapshot.val()
       if (data) {
+        console.log(data)
         setSwitch1(data.switch_1)
         setControl1(data.switch_1)
         setSwitch2(data.switch_2)
@@ -258,10 +272,9 @@ export default function SmartSwitch(props) {
             </div>
           </div>
         )}
-        {/* 智慧插座權限控制（僅管理員可控） */}
-        {/* <button onClick={() => updateUserAuth()}>test</button> */}
       </div>
-      {/* <Authcontrol userAuth={userAuth} /> */}
+      {/* 智慧插座權限控制（僅管理員可控） */}
+      {switchAuth && <Authcontrol userAuth={userAuth} selfUID={user?.uid} />}
     </>
   )
 }
@@ -280,49 +293,190 @@ function SwitchInput({ actv, setActv, auth, cardAuth }) {
   )
 }
 
-function Authcontrol({ userAuth }) {
-  const searchUser = async (uid) => {
-    if (uid) {
-      const userInfo = await getFirestoreData(`user/${uid}`).then(
-        (data) => {
-          if (data) {
-            return {
-              username: data.name,
-              avatarUrl: data.headSticker,
-            }
-          } else {
-            return '--'
-          }
-        },
-        (error) => {
-          console.error(error)
-          return '--'
-        }
-      )
+function Authcontrol({ userAuth, selfUID }) {
+  const [users, setUsers] = useState([])
+  const [authStatus, setAuthStatus] = useState(false)
+  const [inputUserUID, setInputUserUID] = useState()
 
-      return userInfo
+  useEffect(() => {
+    const fetchData = async () => {
+      // 下面的代碼根據你之前的需求進行修改
+      const userDataPromises = userAuth.map(async (item) => {
+        try {
+          const userData = await getFirestoreData(`user/${item.uid}`)
+          console.log({
+            auth: item.authCtrl,
+            uid: item.uid,
+            name: userData.name,
+            photo: userData.headSticker,
+          })
+          return {
+            auth: item.authCtrl,
+            uid: item.uid,
+            name: userData.name,
+            photo: userData.headSticker,
+          }
+        } catch (error) {
+          // 處理用戶資料未上傳的情況，這裡你可以根據實際情況進行適當的處理
+          console.error(`Failed to fetch data for user with UID: ${item.uid}`)
+          return {
+            auth: item.authCtrl,
+            uid: item.uid,
+            name: '',
+            photo: '', // 設定一個默認頭像 URL
+          }
+        }
+      })
+
+      const userDataArray = await Promise.all(userDataPromises)
+      setUsers(userDataArray)
+    }
+
+    fetchData()
+  }, [userAuth]) // 記得把依賴項設為空，這樣它只會在組件初次渲染時執行
+
+  const handleAuthChange = async (e, uid) => {
+    const newAuthStatus = e.target.value === 'true'
+
+    // 更新本地狀態
+    setUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.uid === uid ? { ...user, auth: newAuthStatus } : user
+      )
+    )
+
+    // 更新雲端狀態
+    const userAuthRef = doc(db, 'test_database', 'smartswitch_auth')
+    const userAuthSnapshot = await getDoc(userAuthRef)
+
+    if (userAuthSnapshot.exists()) {
+      const updatedUsers = userAuthSnapshot
+        .data()
+        .users.map((user) =>
+          user.uid === uid ? { ...user, authCtrl: newAuthStatus } : user
+        )
+
+      await updateDoc(userAuthRef, {
+        users: updatedUsers,
+      })
     }
   }
+
+  useEffect(() => {
+    const currentUserAuth = users.find((user) => user.uid === selfUID)?.auth
+    console.log(currentUserAuth)
+    setAuthStatus(currentUserAuth)
+  }, [selfUID, users])
+
+  // 新增用戶
+  const addUser = async (uid, authCtrl) => {
+    const userAuthRef = doc(db, 'test_database', 'smartswitch_auth')
+    const userAuthSnapshot = await getDoc(userAuthRef)
+
+    if (userAuthSnapshot.exists()) {
+      const updatedUsers = [...userAuthSnapshot.data().users, { uid, authCtrl }]
+
+      await updateDoc(userAuthRef, {
+        users: updatedUsers,
+      })
+    }
+  }
+
+  // 移除用戶
+  const removeUser = async (uid) => {
+    const userAuthRef = doc(db, 'test_database', 'smartswitch_auth')
+    const userAuthSnapshot = await getDoc(userAuthRef)
+
+    if (userAuthSnapshot.exists()) {
+      const updatedUsers = userAuthSnapshot
+        .data()
+        .users.filter((user) => user.uid !== uid)
+
+      await updateDoc(userAuthRef, {
+        users: updatedUsers,
+      })
+    }
+  }
+
+  const handleAddUser = (uid) => {
+    // 假設這裡有一個用戶 UID 和 authCtrl 的狀態
+    const newUserAuthCtrl = false // 或者 false，取決於你的需求
+    addUser(uid, newUserAuthCtrl)
+  }
+
+  const handleRemoveUser = (uid) => {
+    const confirmed = window.confirm('確定要移除用戶嗎？')
+
+    if (confirmed) {
+      removeUser(uid)
+    }
+  }
+
   return (
     <>
-      {userAuth?.length > 0 && (
+      {users?.length > 0 && (
         <div className={style.authControl}>
+          <h1>已授權</h1>
           <ul>
-            {userAuth.map((item, index) => (
-              <li>
+            {users.map((user, index) => (
+              <li key={index}>
                 <img
-                  src="https://fakeimg.pl/512x512/ffffff/?text=test"
+                  src={
+                    user.photo
+                      ? user.photo
+                      : 'https://fakeimg.pl/72x72/ffffff/?text=?'
+                  }
                   alt=""
                 />
-                {searchUser(item.uid) ? (
-                  <p>{searchUser(item.uid).username}</p>
-                ) : (
-                  <p>Loading...</p> // 在数据加载时显示占位符
-                )}
-                <p>{item.uid}</p>
+                <div className={style.userInfo}>
+                  <p className={style.userName}>
+                    {user.name ? user.name : '未知用戶'}
+                  </p>
+                  <p className={style.userUID}>{user.uid}</p>
+                </div>
+                <div className={style.authStatus}>
+                  {authStatus ? (
+                    <>
+                      <select
+                        name="權限"
+                        className={style.dataUnitSelection}
+                        value={user.auth}
+                        onChange={(e) => handleAuthChange(e, user.uid)}
+                      >
+                        <optgroup label="根據時間">
+                          <option value={true}>權限管理員</option>
+                          <option value={false}>允許控制</option>
+                        </optgroup>
+                      </select>
+                      <button onClick={() => handleRemoveUser(user.uid)}>
+                        <FontAwesomeIcon icon={faCircleXmark} />
+                      </button>
+                    </>
+                  ) : (
+                    <p>{user.auth ? '權限管理員' : '允許控制'}</p>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
+          {authStatus && (
+            <div className={style.addUser}>
+              <input
+                type="text"
+                placeholder="欲加入用戶的 ID"
+                value={inputUserUID}
+                onChange={(e) => setInputUserUID(e.target.value)}
+              />
+              <button
+                onClick={() => {
+                  handleAddUser(inputUserUID)
+                  setInputUserUID('')
+                }}
+              >
+                新增
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>
