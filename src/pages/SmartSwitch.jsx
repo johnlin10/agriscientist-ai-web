@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore'
 import { ref, onValue, set } from 'firebase/database'
 import { database } from '../firebase'
-import { db, writeFirestoreDoc, getFirestoreData } from '../firebase'
+import { db, getFirestoreData } from '../firebase'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -20,9 +20,7 @@ import {
   faRightToBracket,
   faCirclePlus,
   faPlus,
-  // faCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
-import { faCircleUp } from '@fortawesome/free-regular-svg-icons'
 
 // 專門用於實驗性專題使用，知道鏈接的人即可進入
 export default function SmartSwitch(props) {
@@ -157,62 +155,6 @@ export default function SmartSwitch(props) {
 
   //   fetchData()
   // }, [control1, control2, switchAuth])
-
-  async function updateUserAuth() {
-    await writeFirestoreDoc(
-      'test_database/smartswitch_auth',
-      {
-        users: [
-          {
-            authCtrl: true,
-            uid: 'Zh8EYV7nH3PYqZKUhbf3h76OcNn1',
-          },
-          {
-            authCtrl: true,
-            uid: 'V5MraDn2x8OJ7d9PhCve8AZ5C5k1',
-          },
-          {
-            uid: 'hogDssbxmBgCtdgR9xJzl1NjlCE3',
-            authCtrl: true,
-          },
-          {
-            authCtrl: true,
-            uid: 'yswVR0HmttcuTcXr3OXzAF0xALk2',
-          },
-          {
-            authCtrl: true,
-            uid: 'HSAwBVkprbUvI0Qf0yOen3dApm53',
-          },
-        ],
-      },
-      true
-    )
-  }
-
-  const adf = {
-    users: [
-      {
-        authCtrl: true,
-        uid: 'Zh8EYV7nH3PYqZKUhbf3h76OcNn1',
-      },
-      {
-        authCtrl: true,
-        uid: 'V5MraDn2x8OJ7d9PhCve8AZ5C5k1',
-      },
-      {
-        uid: 'hogDssbxmBgCtdgR9xJzl1NjlCE3',
-        authCtrl: true,
-      },
-      {
-        authCtrl: true,
-        uid: 'yswVR0HmttcuTcXr3OXzAF0xALk2',
-      },
-      {
-        authCtrl: true,
-        uid: 'HSAwBVkprbUvI0Qf0yOen3dApm53',
-      },
-    ],
-  }
 
   return (
     <>
@@ -500,15 +442,8 @@ function Authcontrol({ userAuth, selfUID }) {
                     placeholder="欲加入用戶的 ID"
                     value={inputUserUID}
                     onChange={(e) => setInputUserUID(e.target.value)}
+                    autoFocus
                   />
-                  {/* <button
-                    onClick={() => {
-                      setAddUserInputStatus(false)
-                      setInputUserUID('')
-                    }}
-                  >
-                    取消
-                  </button> */}
                 </div>
               )}
             </>
