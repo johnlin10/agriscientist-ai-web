@@ -19,8 +19,10 @@ import {
   faCircleXmark,
   faRightToBracket,
   faCirclePlus,
-  faCircleUp,
+  faPlus,
+  // faCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
+import { faCircleUp } from '@fortawesome/free-regular-svg-icons'
 
 // 專門用於實驗性專題使用，知道鏈接的人即可進入
 export default function SmartSwitch(props) {
@@ -54,7 +56,6 @@ export default function SmartSwitch(props) {
 
   useEffect(() => {
     const currentUserAuth = userAuth.find((users) => users.uid === user?.uid)
-    console.log(currentUserAuth)
     setSwitchAuth(currentUserAuth)
   }, [userAuth, user])
 
@@ -63,7 +64,6 @@ export default function SmartSwitch(props) {
     const unsubscribe = onValue(sensorsDataRef, (snapshot) => {
       const data = snapshot.val()
       if (data) {
-        console.log(data)
         setSwitch1(data.switch_1)
         setControl1(data.switch_1)
         setSwitch2(data.switch_2)
@@ -115,7 +115,6 @@ export default function SmartSwitch(props) {
       if (docSnap.exists()) {
         const data = docSnap.data()
         setUserAuth(data.users)
-        console.log(data.users)
       }
     })
 
@@ -307,12 +306,6 @@ function Authcontrol({ userAuth, selfUID }) {
       const userDataPromises = userAuth.map(async (item) => {
         try {
           const userData = await getFirestoreData(`user/${item.uid}`)
-          console.log({
-            auth: item.authCtrl,
-            uid: item.uid,
-            name: userData.name,
-            photo: userData.headSticker,
-          })
           return {
             auth: item.authCtrl,
             uid: item.uid,
@@ -372,7 +365,6 @@ function Authcontrol({ userAuth, selfUID }) {
 
   useEffect(() => {
     const currentUserAuth = users.find((user) => user.uid === selfUID)?.auth
-    console.log(currentUserAuth)
     setAuthStatus(currentUserAuth)
   }, [selfUID, users])
 
@@ -439,12 +431,16 @@ function Authcontrol({ userAuth, selfUID }) {
           <h1>已授權</h1>
           <ul>
             {users.map((user, index) => (
-              <li key={index}>
+              <li
+                key={index}
+                className={user.uid === selfUID ? ` ${style.self}` : ''}
+              >
                 <img
+                  className={user.uid === selfUID ? ` ${style.self}` : ''}
                   src={
                     user.photo
                       ? user.photo
-                      : 'https://fakeimg.pl/72x72/ffffff/?text=?'
+                      : 'https://fakeimg.pl/72x72/b4f0c1/?text=%20'
                   }
                   alt=""
                 />
@@ -492,9 +488,9 @@ function Authcontrol({ userAuth, selfUID }) {
                 }
               >
                 {addUserInputStatus && inputUserUID ? (
-                  <FontAwesomeIcon icon={faCircleUp} />
-                ) : (
                   <FontAwesomeIcon icon={faCirclePlus} />
+                ) : (
+                  <FontAwesomeIcon icon={faPlus} />
                 )}
               </button>
               {addUserInputStatus && (
