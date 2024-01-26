@@ -127,7 +127,7 @@ export default function Sensors(props) {
 
   // 感測器數據即時同步
   useEffect(() => {
-    const sensorsDataRef = doc(db, 'sensors_data', 'sensors')
+    const sensorsDataRef = doc(db, 'sensors_data', 'sensors_2')
     const unsubscribe = onSnapshot(sensorsDataRef, (docSnap) => {
       if (docSnap.exists() && docSnap.data().hasOwnProperty('data')) {
         const sortData = docSnap.data().data.sort((a, b) => {
@@ -157,6 +157,7 @@ export default function Sensors(props) {
       const availableDates = getAvailableDates(groupedData, dataUnit)
       setDataIndexes(availableDates)
       setSelectDataIndex(availableDates.length - 1)
+      console.log(availableDates.length - 1)
     }
   }, [sensors, dataUnit])
 
@@ -541,7 +542,9 @@ export default function Sensors(props) {
                 width={500}
                 height={100}
                 data={
-                  displayedData && dataIndexes && selectDataIndex
+                  displayedData &&
+                  dataIndexes.length > 0 &&
+                  selectDataIndex > -1
                     ? displayedData[dataIndexes[selectDataIndex]]
                     : []
                 }
@@ -751,7 +754,9 @@ export default function Sensors(props) {
                 width={500}
                 height={400}
                 data={
-                  displayedData && dataIndexes && selectDataIndex
+                  displayedData &&
+                  dataIndexes.length > 0 &&
+                  selectDataIndex > -1
                     ? displayedData[dataIndexes[selectDataIndex]]
                     : []
                 }
@@ -947,7 +952,9 @@ export default function Sensors(props) {
                 width={500}
                 height={300}
                 data={
-                  displayedData && dataIndexes && selectDataIndex
+                  displayedData &&
+                  dataIndexes.length > 0 &&
+                  selectDataIndex > -1
                     ? displayedData[dataIndexes[selectDataIndex]]
                     : []
                 }
@@ -1159,7 +1166,9 @@ export default function Sensors(props) {
                 width={500}
                 height={100}
                 data={
-                  displayedData && dataIndexes && selectDataIndex
+                  displayedData &&
+                  dataIndexes.length > 0 &&
+                  selectDataIndex > -1
                     ? displayedData[dataIndexes[selectDataIndex]]
                     : []
                 }
@@ -1370,7 +1379,9 @@ export default function Sensors(props) {
                 width={500}
                 height={400}
                 data={
-                  displayedData && dataIndexes && selectDataIndex
+                  displayedData &&
+                  dataIndexes.length > 0 &&
+                  selectDataIndex > -1
                     ? displayedData[dataIndexes[selectDataIndex]]
                     : []
                 }
@@ -1464,7 +1475,9 @@ export default function Sensors(props) {
                 width={500}
                 height={100}
                 data={
-                  displayedData && dataIndexes && selectDataIndex
+                  displayedData &&
+                  dataIndexes.length > 0 &&
+                  selectDataIndex > -1
                     ? displayedData[dataIndexes[selectDataIndex]]
                     : []
                 }
@@ -1569,7 +1582,9 @@ export default function Sensors(props) {
                 width={500}
                 height={100}
                 data={
-                  displayedData && dataIndexes && selectDataIndex
+                  displayedData &&
+                  dataIndexes.length > 0 &&
+                  selectDataIndex > -1
                     ? displayedData[dataIndexes[selectDataIndex]]
                     : []
                 }
