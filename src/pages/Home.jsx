@@ -13,7 +13,7 @@ export default function Home(props) {
       '.headerIcon',
       '.headerTitle',
       '.headerDescription',
-      '.headerTag',
+      // '.headerTag', 注釋掉未使用的 Tag Rellax 滾動跟蹤
       // '.introTitle',
       // '.introDescription',
       // '.introTag',
