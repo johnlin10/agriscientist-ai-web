@@ -3,8 +3,8 @@
   --theme-2: #34a84d;
   --theme-3: #268039;
   /* background color */
-  --theme-bg-light: #e5fbe9;
-  --theme-bg-dark: #07260e;
+  --bg-light: #e5fbe9;
+  --bg-dark: #0c0e0c;
   --system-noti: linear-gradient(150deg, #4ba2e9, #4ee19f);
 
   /* 用戶認證 */

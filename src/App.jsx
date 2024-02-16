@@ -108,6 +108,7 @@ function App() {
 
     return () => clearInterval(intervalId)
   }, [])
+
   // 檢查到新版本後，用戶需手動更新新版本
   const handleUpdate = async () => {
     const registration = await getRegistration()
@@ -211,6 +212,7 @@ function App() {
       }
     }
   }, [themeMode, prefersDarkMode])
+
   // 狀態切換輪迴
   const handleThemeChange = (event) => {
     if (themeMode === 1) {
@@ -282,6 +284,8 @@ function App() {
       >
         {/* 導航欄 */}
         <Nav navigateClick={navigateClick} isHome={checkLocation(['/'])} />
+
+        {/* 頁面加載 */}
         {isLoading && (
           <div className={`${css.loading} ${loadingAniActv ? css.actv : ''}`}>
             <img
@@ -291,14 +295,19 @@ function App() {
             />
           </div>
         )}
-        {/* {isLoading && <Loading actv={loadingAniActv} type="global" />} */}
-        {/* 路由 */}
+
+        {/* 主畫面 */}
         <main id="main">
           <Routes>
             <Route
               path="/"
               element={
-                <Home navigateClick={navigateClick} adminPermit={adminPermit} />
+                <Home
+                  navigateClick={navigateClick}
+                  adminPermit={adminPermit}
+                  handleThemeChange={handleThemeChange}
+                  modeValue={modeValue}
+                />
               }
             />
 
@@ -381,6 +390,7 @@ function App() {
             </Route>
           </Routes>
         </main>
+
         {/* 更新彈窗 */}
         {updateAvailable && (
           <div className={css.updater}>

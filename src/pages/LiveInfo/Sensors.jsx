@@ -371,11 +371,14 @@ export default function Sensors(props) {
       <Helmet>
         <title>感測數據｜田野數據科學家</title>
       </Helmet>
+
+      {/* 操控條 */}
       <div className={style.data_range}>
+        {/* 上一筆資料 */}
         <button className={style.switchData} onClick={() => handlePrevDay()}>
           <FontAwesomeIcon icon={faCircleChevronLeft} />
         </button>
-
+        {/* 數據單位控制 */}
         <div>
           <p>{dataIndexes[selectDataIndex]}</p>
           <select
@@ -395,7 +398,7 @@ export default function Sensors(props) {
             </optgroup>
           </select>
         </div>
-
+        {/* 下一筆資料 */}
         <button className={style.switchData} onClick={() => handleNextDay()}>
           <FontAwesomeIcon icon={faCircleChevronRight} />
         </button>

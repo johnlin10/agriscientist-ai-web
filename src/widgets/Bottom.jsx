@@ -106,6 +106,16 @@ export default function Bottom(props) {
             </div>
           ))}
         </div>
+        <button
+          className={style.themeChange}
+          type="button"
+          onClick={() => props.handleThemeChange()}
+        >
+          {props.modeValue[0]}
+          {` `}
+          {props.modeValue[1]}
+          {` `}(Beta)
+        </button>
         <div className={style.copyRight}>
           <div>
             <p>

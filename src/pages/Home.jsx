@@ -14,10 +14,10 @@ export default function Home(props) {
       '.headerTitle',
       '.headerDescription',
       '.headerTag',
-      '.introTitle',
-      '.introDescription',
-      '.introTag',
-      '.introBg',
+      // '.introTitle',
+      // '.introDescription',
+      // '.introTag',
+      // '.introBg',
     ]
 
     const titleRellaxes = selectors.map(
@@ -60,38 +60,41 @@ export default function Home(props) {
               <br />
               並以語音交互為核心的專題作品網站。
             </p>
-            <span
+            {/* <span
               className={`${style.tag} headerTag`}
               data-type="center"
               // data-rellax-speed="-6.7"
             >
               已於上週發表
-            </span>
+            </span> */}
           </div>
         </div>
         <div className={style.intro}>
-          <div className={`${style.title} ${style.r}`}>
+          <div className={`${style.title} ${style.l}`}>
             <h1 className="introTitle" data-rellax-speed="1">
               <span className="introTag" data-rellax-speed="0">
                 將於二月初推出
               </span>
-              語音助理，強勢來襲！
+              Agriscientist AI
             </h1>
             <p className="introDescription" data-rellax-speed="-1">
-              就像擁有了農場管家，瞭解農場資訊只需要問他。
+              農場的語音助理管家，瞭解農場資訊只需要問他。
             </p>
           </div>
-          <img
+          {/* <img
             className="introBg"
             data-rellax-speed="-5"
             src={`/images/minimalist_style__best_quality_4k_ultra_detailed_realistic_photorealistic___aerial_view_flat_colorful_blocky_minimalist__a_small_farm_on_a_vast_plain__a_small__futuristic_looking_house__1204961570_upscayl_4x_realesrgan-x4plus.webp`}
             alt=""
-          />
+          /> */}
         </div>
-        <div className={style.team}></div>
-        <div className={style.product}></div>
+        {/* <div className={style.team}></div>
+        <div className={style.product}></div> */}
       </div>
-      <Bottom />
+      <Bottom
+        handleThemeChange={props.handleThemeChange}
+        modeValue={props.modeValue}
+      />
     </>
   )
 }

@@ -4,10 +4,14 @@
   position: relative;
 
   > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    padding: 120px 24px;
     height: calc(100vh);
     width: 100%;
-    // border: 1px solid var(--theme);
     overflow: hidden;
 
     > img {
@@ -52,7 +56,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: var(--green_L8);
+      // background-color: var(--green_L8);
 
       > div.title {
         display: flex;
@@ -86,70 +90,69 @@
     }
 
     // 專題簡略介紹 intro
+    &.intro {
+      background: var(--green_L7);
+      width: 100%;
 
-    // background-color: var(--bg);
+      > div.title {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        width: calc(100% - 24px);
+        max-width: 720px;
 
-    &:not(.header) > div.title {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      bottom: 30%;
-      width: fit-content;
-      height: fit-content;
+        &.l {
+          left: 5%;
+        }
 
-      &.l {
-        left: 5%;
-      }
+        &.r {
+          right: 5%;
+          align-items: flex-end;
 
-      &.r {
-        right: 5%;
-        align-items: flex-end;
-
-        > h1 {
-          > span {
+          > h1 {
+            > span {
+            }
           }
         }
-      }
 
-      > h1 {
-        position: relative;
-        width: fit-content;
-        font-size: calc(1.5rem + 3vw);
-        font-family: ZenMaruGothic-Black;
-        color: #fff;
-        text-shadow: 3px 3px 10px var(--theme-3);
-
-        > span {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-          top: -48px;
-          left: 0;
-          text-align: end;
-          height: 36px;
-          padding: 6px 12px;
-          font-size: calc(0.6rem + 0.6vw);
+        > h1 {
+          position: relative;
           width: fit-content;
-          color: #ffffffd1;
-          text-shadow: none;
-          background: var(--theme);
-          border-radius: 18px;
-          -webkit-border-radius: 18px;
-          -moz-border-radius: 18px;
-          -ms-border-radius: 18px;
-          -o-border-radius: 18px;
+          font-size: calc(1.2rem + 3vw);
+          font-family: ZenMaruGothic-Black;
+          color: var(--green_D3);
+
+          > span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -48px;
+            left: 0;
+            text-align: end;
+            height: 36px;
+            padding: 6px 12px;
+            font-size: calc(0.6rem + 0.6vw);
+            width: fit-content;
+            color: #ffffffd1;
+            text-shadow: none;
+            background: var(--theme);
+            border-radius: 18px;
+            -webkit-border-radius: 18px;
+            -moz-border-radius: 18px;
+            -ms-border-radius: 18px;
+            -o-border-radius: 18px;
+          }
         }
-      }
-      > p {
-        text-align: start;
-        font-size: calc(1rem + 1vw);
-        color: #ffffffd1;
-        text-shadow: 3px 3px 10px var(--theme-3);
+        > p {
+          text-align: start;
+          font-size: calc(0.8rem + 1vw);
+          color: var(--green_D2);
+        }
       }
     }
 
-    > img {
+    &:not(.header) > img {
       top: -30%;
     }
 
