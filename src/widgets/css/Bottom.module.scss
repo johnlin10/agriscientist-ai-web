@@ -7,7 +7,7 @@
   width: 100%;
   max-height: 480px;
   padding: 24px 24px 108px 24px;
-  background-color: var(--green_L8);
+  background-color: #0000000f;
 
   @media (max-width: 600px) {
     max-height: none;
@@ -87,7 +87,7 @@
             cursor: pointer;
 
             &:hover {
-              color: var(--green_D2);
+              color: var(--font-green-3-light);
               > svg {
                 opacity: 1;
                 margin-left: 6px;
@@ -95,7 +95,7 @@
             }
 
             > svg {
-              color: var(--green_D2);
+              color: var(--font-green-3-light);
               opacity: 0;
               transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
               -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -117,12 +117,11 @@
     > button.themeChange {
       width: fit-content;
       padding: 3px 9px;
-      background: var(--green_L9);
-      border-radius: 12px;
-      -webkit-border-radius: 12px;
-      -moz-border-radius: 12px;
-      -ms-border-radius: 12px;
-      -o-border-radius: 12px;
+      border-radius: 6px;
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      -ms-border-radius: 6px;
+      -o-border-radius: 6px;
     }
 
     > .copyRight {
