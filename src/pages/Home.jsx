@@ -9,16 +9,7 @@ import Rellax from 'rellax'
 export default function Home(props) {
   // props.navigateClick('/preview')
   useEffect(() => {
-    const selectors = [
-      '.headerIcon',
-      '.headerTitle',
-      '.headerDescription',
-      // '.headerTag', 注釋掉未使用的 Tag Rellax 滾動跟蹤
-      // '.introTitle',
-      // '.introDescription',
-      // '.introTag',
-      // '.introBg',
-    ]
+    const selectors = ['.headerIcon', '.headerTitle', '.headerDescription']
 
     const titleRellaxes = selectors.map(
       (selector) => new Rellax(selector, { wrapper: '#main' })
@@ -43,50 +34,36 @@ export default function Home(props) {
             <img
               className="headerIcon"
               src={`${process.env.PUBLIC_URL}/agriscientist-ai.ico`}
-              // data-rellax-speed="-6.5"
+              data-rellax-speed="-5"
               alt="田野數據科學家 Logo"
             />
-            <h1
-              className="headerTitle"
-              // data-rellax-speed="-6"
-            >
-              田野數據科學家
+            <h1 className="headerTitle" data-rellax-speed="-5">
+              田野數據<span className="nowrap">科學家</span>
             </h1>
-            <p
-              className="headerDescription"
-              // data-rellax-speed="-6.5"
-            >
-              基於農場數據分析為基礎，
+            <p className="headerDescription" data-rellax-speed="-5">
+              基於農場數據分析為基礎<span className="end">，</span>
               <br />
-              並以語音交互為核心的專題作品網站。
+              並以語音交互為核心的<span className="nowrap">專題作品網站。</span>
             </p>
-            {/* <span
-              className={`${style.tag} headerTag`}
-              data-type="center"
-              // data-rellax-speed="-6.7"
-            >
-              已於上週發表
-            </span> */}
           </div>
         </div>
-        <div className={style.intro}>
-          <div className={`${style.title} ${style.l}`}>
-            <h1 className="introTitle" data-rellax-speed="1">
-              <span className="introTag" data-rellax-speed="0">
-                將於二月初推出
-              </span>
+        <div className={`${style.intro} ${style.center_v} ${style.center_h}`}>
+          <img
+            id="assistant_icon"
+            className={`${style.assistant_icon} `}
+            src="https://firebasestorage.googleapis.com/v0/b/agriscientist-ai.appspot.com/o/assets%2Fimages%2Fagriscientist-ai-assistant-2d.png?alt=media&token=18348ad1-e6e0-4627-ae35-e1af10242839"
+            alt="Agriscientist AI"
+          />
+          <div className={`${style.title} ${style.l} `}>
+            <h1 className="introTitle">
+              <span className="introTag">即將推出</span>
               Agriscientist AI
             </h1>
-            <p className="introDescription" data-rellax-speed="-1">
-              農場的語音助理管家，瞭解農場資訊只需要問他。
+            <p className="introDescription">
+              <span className="nowrap">農場的語音助理管家，</span>
+              <span className="nowrap">瞭解農場資訊只需要問他。</span>
             </p>
           </div>
-          {/* <img
-            className="introBg"
-            data-rellax-speed="-5"
-            src={`/images/minimalist_style__best_quality_4k_ultra_detailed_realistic_photorealistic___aerial_view_flat_colorful_blocky_minimalist__a_small_farm_on_a_vast_plain__a_small__futuristic_looking_house__1204961570_upscayl_4x_realesrgan-x4plus.webp`}
-            alt=""
-          /> */}
         </div>
         {/* <div className={style.team}></div>
         <div className={style.product}></div> */}
