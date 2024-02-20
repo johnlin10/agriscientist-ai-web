@@ -22,15 +22,15 @@ export default function LiveInfo(props) {
         },
       ],
     },
-    {
-      title: '清華智慧農業',
-      ul: [
-        {
-          title: '智慧插座',
-          path: '/realtime/smartSwitch',
-        },
-      ],
-    },
+    // {
+    //   title: '清華智慧農業',
+    //   ul: [
+    //     {
+    //       title: '智慧插座',
+    //       path: '/realtime/smartSwitch',
+    //     },
+    //   ],
+    // },
   ]
   return (
     <div className={css.container}>
