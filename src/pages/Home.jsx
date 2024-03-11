@@ -5,11 +5,17 @@ import Bottom from '../widgets/Bottom'
 import ImageAnimation from '../widgets/ImageAnimation'
 
 import Rellax from 'rellax'
+import CountdownTimer from '../widgets/CountdownTimer/CountdownTimer'
 
 export default function Home(props) {
   // props.navigateClick('/preview')
   useEffect(() => {
-    const selectors = ['.headerIcon', '.headerTitle', '.headerDescription']
+    const selectors = [
+      '.headerIcon',
+      '.headerTitle',
+      '.headerDescription',
+      `.${style.countDownTimer}`,
+    ]
 
     const titleRellaxes = selectors.map(
       (selector) => new Rellax(selector, { wrapper: '#main' })
@@ -44,6 +50,11 @@ export default function Home(props) {
               基於農場數據分析為基礎<span className="end">，</span>
               <br />
               並以語音交互為核心的<span className="nowrap">專題作品網站。</span>
+            </p>
+            <p className={`${style.countDownTimer}`} data-rellax-speed="-5">
+              距 全國專題競賽 結果出爐剩餘
+              <br />
+              <CountdownTimer targetDate="2024-03-22 17:00:00" />
             </p>
           </div>
         </div>

@@ -114,6 +114,18 @@
           color: var(--font-blue);
           font-size: calc(1rem + 1vw);
           font-family: ZenMaruGothic-Bold;
+
+          &.countDownTimer {
+            padding: 9px 11px;
+            color: var(--green_D2);
+            font-size: 1rem;
+            background: var(--green_L7);
+            border-radius: 13px;
+            -webkit-border-radius: 13px;
+            -moz-border-radius: 13px;
+            -ms-border-radius: 13px;
+            -o-border-radius: 13px;
+          }
         }
       }
     }
