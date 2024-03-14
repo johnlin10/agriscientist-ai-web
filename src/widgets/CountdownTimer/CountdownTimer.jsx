@@ -35,8 +35,22 @@ export default function CountdownTimer({ targetDate }) {
 
   return (
     <span>
-      {formattedTimeLeft.days} 天 {formattedTimeLeft.hours} 小時{' '}
-      {formattedTimeLeft.minutes} 分鐘 {formattedTimeLeft.seconds} 秒
+      {formattedTimeLeft
+        ? `${formattedTimeLeft.days > 0 ? `${formattedTimeLeft.days}天 ` : ''}
+          ${
+            formattedTimeLeft.hours > 0 ? `${formattedTimeLeft.hours}小時 ` : ''
+          } 
+          ${
+            formattedTimeLeft.minutes > 0
+              ? `${formattedTimeLeft.minutes}分鐘 `
+              : ''
+          }
+          ${
+            formattedTimeLeft.seconds > 0
+              ? `${formattedTimeLeft.seconds}秒 `
+              : ''
+          }`
+        : ''}
     </span>
   )
 }
