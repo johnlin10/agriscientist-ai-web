@@ -282,21 +282,7 @@ function App() {
           checkLocation(['/', '/preview']) ? ` ${css.isHome}` : ``
         }`}
       >
-        {/* 導航欄 */}
         <Nav navigateClick={navigateClick} isHome={checkLocation(['/'])} />
-
-        {/* 頁面加載 */}
-        {isLoading && (
-          <div className={`${css.loading} ${loadingAniActv ? css.actv : ''}`}>
-            <img
-              className={css.loadingGIF}
-              src={`${process.env.PUBLIC_URL}/images/loading.gif`}
-              alt="Loading..."
-            />
-          </div>
-        )}
-
-        {/* 主畫面 */}
         <main id="main">
           <Routes>
             <Route
@@ -391,6 +377,16 @@ function App() {
           </Routes>
         </main>
 
+        {/* 頁面加載 */}
+        {isLoading && (
+          <div className={`${css.loading} ${loadingAniActv ? css.actv : ''}`}>
+            <img
+              className={css.loadingGIF}
+              src={`${process.env.PUBLIC_URL}/images/loading.gif`}
+              alt="Loading..."
+            />
+          </div>
+        )}
         {/* 更新彈窗 */}
         {updateAvailable && (
           <div className={css.updater}>

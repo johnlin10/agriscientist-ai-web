@@ -57,6 +57,17 @@ export default function Bottom(props) {
         },
       ],
     },
+    {
+      title: 'Docs',
+      path: '',
+      class: style.docs,
+      child: [
+        {
+          title: '研究小論文',
+          path: 'https://firebasestorage.googleapis.com/v0/b/agriscientist-ai.appspot.com/o/assets%2Fdocs%2F田野數據科學家_小論文v1.0.2（最終版）.pdf?alt=media&token=356784e8-0158-4584-a0b3-d96c3f5e5d5d',
+        },
+      ],
+    },
   ]
 
   // 頁面跳轉
@@ -119,7 +130,7 @@ export default function Bottom(props) {
         <div className={style.copyRight}>
           <div>
             <p>
-              Copyright © 2023{' '}
+              Copyright © 2023-2024{' '}
               <span
                 className={style.link}
                 onClick={() => window.open('https://johnlin.web.app')}
