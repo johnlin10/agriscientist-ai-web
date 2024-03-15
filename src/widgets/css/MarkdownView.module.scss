@@ -168,6 +168,10 @@
         -ms-border-radius: 6px;
         -o-border-radius: 6px;
       }
+
+      > em {
+        color: var(--green_D3);
+      }
     }
 
     pre {
@@ -367,7 +371,7 @@
 
         &::before {
           z-index: -1;
-          content: "";
+          content: '';
           position: absolute;
           top: 1px;
           left: -24px;
@@ -421,7 +425,7 @@
       }
 
       &::before {
-        content: "補充說明";
+        content: '補充說明';
         position: absolute;
         padding: 1px 6px 2px 6px;
         top: 0;

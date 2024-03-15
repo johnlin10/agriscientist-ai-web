@@ -54,6 +54,7 @@ export default function MarkdownView({ filePath }) {
     }
   }, [markdown, editingMarkdown])
 
+  // 將 code 區塊下一段文字樣式設定為 code 區塊的補充資訊欄
   useEffect(() => {
     const preElements = document.querySelectorAll('pre')
     const pElements = document.querySelectorAll('p')
@@ -72,10 +73,14 @@ export default function MarkdownView({ filePath }) {
     }
   }, [markdown, editingMarkdown])
 
+  // 將以編輯內容存入雲端
   const saveMarkdown = async () => {
+    // 尋找文檔標題
     const md_headerTitle_content = document
       .querySelector('.markdownView')
       .querySelector('h1').textContent
+
+    // 保存文檔內容到雲端
     await writeFirestoreDoc(
       `docs/${filePath}`,
       { title: md_headerTitle_content, doc: editingMarkdown },
@@ -83,6 +88,7 @@ export default function MarkdownView({ filePath }) {
     )
   }
 
+  // 進入 Markdown 編輯模式
   const editToMarkdown = () => {
     if (!editMarkdown_actv) {
       setEditMarkdown_actv(true)
@@ -113,7 +119,7 @@ export default function MarkdownView({ filePath }) {
           )}
         </div>
         {editMarkdown_actv && (
-          <EditMarkdown
+          <EditMarkdownView
             editingMarkdown={editingMarkdown}
             setEditingMarkdown={setEditingMarkdown}
           />
@@ -144,7 +150,8 @@ export default function MarkdownView({ filePath }) {
   )
 }
 
-function EditMarkdown(props) {
+// Markdown 文本編輯窗口
+function EditMarkdownView(props) {
   return (
     <div className={style.editMarkdown}>
       <textarea
@@ -158,6 +165,7 @@ function EditMarkdown(props) {
   )
 }
 
+// 自訂義連結文字樣式（target設定為blank）
 function LinkRenderer(props) {
   return (
     <a href={props.href} target="_blank" rel="noreferrer">

@@ -3,6 +3,8 @@ import Aside from '../widgets/Aside'
 import { Outlet } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
+import MarkdownView from '../widgets/MarkdownView'
+
 export default function Products(props) {
   const aside = [
     {

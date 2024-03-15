@@ -7,8 +7,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: 120px 10%;
-    height: calc(100vh);
+    height: calc(100vh - 80px);
     width: 100%;
     overflow: hidden;
 
@@ -84,6 +83,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 120px 10%;
       // background-color: var(--green_L8);
 
       > div.title {
@@ -132,71 +132,89 @@
 
     // 專題簡略介紹 intro
     &.intro {
-      background: var(--green_L7);
       width: 100%;
+      padding: 0;
 
-      > div.title {
-        display: flex;
-        flex-direction: column;
-        height: fit-content;
-        width: calc(100% - 24px);
-        max-width: 720px;
-
-        > h1 {
-          position: relative;
-          width: fit-content;
-          font-size: calc(1.5rem + 3vw);
-          font-family: ZenMaruGothic-Black;
-          color: var(--green_D3);
-
-          > span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: -48px;
-            left: 50%;
-            text-align: center;
-            height: 36px;
-            padding: 6px 12px;
-            font-size: calc(0.6rem + 0.6vw);
-            width: fit-content;
-            color: #ffffffd1;
-            text-shadow: none;
-            white-space: nowrap;
-            background: var(--theme);
-            border-radius: 18px;
-            -webkit-border-radius: 18px;
-            -moz-border-radius: 18px;
-            -ms-border-radius: 18px;
-            -o-border-radius: 18px;
-            transform: translateX(-50%);
-            -webkit-transform: translateX(-50%);
-            -moz-transform: translateX(-50%);
-            -ms-transform: translateX(-50%);
-            -o-transform: translateX(-50%);
-          }
-        }
-        > p {
-          line-height: 1.381002381;
-          letter-spacing: 0.011em;
-          font-size: calc(0.8rem + 0.5vw);
-          color: var(--green_D2);
-        }
+      @media (min-width: 600px) {
+        padding: 0 24px;
       }
 
-      > img {
-        &.assistant_icon {
-          // position: absolute;
-          top: 10%;
-          left: 50%;
-          height: 240px;
-          margin-bottom: 48px + 24px;
+      > div.introContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        background: var(--green_L7);
 
-          @media (max-width: 400px) {
-            height: 200px;
+        > div.title {
+          display: flex;
+          flex-direction: column;
+          height: fit-content;
+          justify-content: center;
+
+          > h1 {
+            position: relative;
+            width: fit-content;
+            font-size: calc(1.5rem + 3vw);
+            font-family: ZenMaruGothic-Black;
+            color: var(--green_D3);
+
+            > span {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              top: -48px;
+              left: 50%;
+              text-align: center;
+              height: 36px;
+              padding: 6px 12px;
+              font-size: calc(0.6rem + 0.6vw);
+              width: fit-content;
+              color: #ffffffd1;
+              text-shadow: none;
+              white-space: nowrap;
+              background: var(--theme);
+              border-radius: 18px;
+              -webkit-border-radius: 18px;
+              -moz-border-radius: 18px;
+              -ms-border-radius: 18px;
+              -o-border-radius: 18px;
+              transform: translateX(-50%);
+              -webkit-transform: translateX(-50%);
+              -moz-transform: translateX(-50%);
+              -ms-transform: translateX(-50%);
+              -o-transform: translateX(-50%);
+            }
+          }
+          > p {
+            line-height: 1.381002381;
+            letter-spacing: 0.011em;
+            font-size: calc(0.8rem + 0.5vw);
+            color: var(--green_D2);
           }
         }
+
+        > img {
+          &.assistant_icon {
+            // position: absolute;
+            top: 10%;
+            left: 50%;
+            height: 240px;
+            margin-bottom: 48px + 24px;
+
+            @media (max-width: 400px) {
+              height: 200px;
+            }
+          }
+        }
+        border-radius: 24px;
+        -webkit-border-radius: 24px;
+        -moz-border-radius: 24px;
+        -ms-border-radius: 24px;
+        -o-border-radius: 24px;
       }
     }
 

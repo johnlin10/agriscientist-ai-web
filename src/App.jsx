@@ -52,6 +52,7 @@ import Loading from './widgets/Loading'
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax'
 
 import Nav from './widgets/Nav'
+import TermsOfUse from './pages/TermsOfUse/TermsOfUse'
 
 function App() {
   const location = useLocation()
@@ -374,6 +375,7 @@ function App() {
                 element={<SmartSwitch navigateClick={navigateClick} />}
               />
             </Route>
+            <Route path="termsOfUse" element={<TermsOfUse />} />
           </Routes>
         </main>
 

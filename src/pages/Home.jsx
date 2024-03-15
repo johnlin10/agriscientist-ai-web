@@ -1,14 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import style from './css/Home.module.scss'
 import { Helmet } from 'react-helmet'
 import Bottom from '../widgets/Bottom'
-import ImageAnimation from '../widgets/ImageAnimation'
 
 import Rellax from 'rellax'
 import CountdownTimer from '../widgets/CountdownTimer/CountdownTimer'
 
 export default function Home(props) {
-  // props.navigateClick('/preview')
   useEffect(() => {
     const selectors = [
       '.headerIcon',
@@ -59,21 +57,23 @@ export default function Home(props) {
           </div>
         </div>
         <div className={`${style.intro} ${style.center_v} ${style.center_h}`}>
-          <img
-            id="assistant_icon"
-            className={`${style.assistant_icon} `}
-            src="https://firebasestorage.googleapis.com/v0/b/agriscientist-ai.appspot.com/o/assets%2Fimages%2Fagriscientist-ai-assistant-2d.png?alt=media&token=18348ad1-e6e0-4627-ae35-e1af10242839"
-            alt="Agriscientist AI"
-          />
-          <div className={`${style.title} ${style.l} `}>
-            <h1 className="introTitle">
-              <span className="introTag">即將推出</span>
-              Agriscientist AI
-            </h1>
-            <p className="introDescription">
-              <span className="nowrap">農場的語音助理管家，</span>
-              <span className="nowrap">瞭解農場資訊只需要問他。</span>
-            </p>
+          <div className={style.introContainer}>
+            <img
+              id="assistant_icon"
+              className={`${style.assistant_icon} `}
+              src="https://firebasestorage.googleapis.com/v0/b/agriscientist-ai.appspot.com/o/assets%2Fimages%2Fagriscientist-ai-assistant-2d.png?alt=media&token=18348ad1-e6e0-4627-ae35-e1af10242839"
+              alt="Agriscientist AI"
+            />
+            <div className={`${style.title} ${style.l} `}>
+              <h1 className="introTitle">
+                <span className="introTag">即將推出</span>
+                Agriscientist AI
+              </h1>
+              <p className="introDescription">
+                <span className="nowrap">農場的語音助理管家，</span>
+                <span className="nowrap">瞭解農場資訊只需要問他。</span>
+              </p>
+            </div>
           </div>
         </div>
         {/* <div className={style.team}></div>

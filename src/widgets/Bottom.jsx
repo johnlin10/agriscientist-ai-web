@@ -10,7 +10,7 @@ export default function Bottom(props) {
   const location = useLocation()
   const pageLinks = [
     {
-      title: '關於',
+      title: 'About',
       path: '/about',
       class: style.aboutUs,
       child: [
@@ -19,7 +19,7 @@ export default function Bottom(props) {
       ],
     },
     {
-      title: '產品',
+      title: 'Products',
       path: '/products',
       class: style.product,
       child: [
@@ -28,7 +28,7 @@ export default function Bottom(props) {
       ],
     },
     {
-      title: '研究',
+      title: 'Research',
       path: '/researches',
       class: style.researches,
       child: [
@@ -137,7 +137,13 @@ export default function Bottom(props) {
               >
                 Johnlin
               </span>{' '}
-              保留一切權利。
+              保留一切權利。{' '}
+              <span
+                className={style.link}
+                onClick={() => navigateClick('/termsOfUse')}
+              >
+                使用條款
+              </span>{' '}
             </p>
           </div>
         </div>

@@ -1,8 +1,8 @@
-import style from "./styles/Software.module.scss";
-import MarkdownView from "../../widgets/MarkdownView";
-import { Helmet } from "react-helmet";
+import style from './styles/Software.module.scss'
+import MarkdownView from '../../widgets/MarkdownView'
+import { Helmet } from 'react-helmet'
 
-export default function Software(props) {
+export default function Software() {
   return (
     <div className={style.container}>
       <Helmet>
@@ -10,5 +10,5 @@ export default function Software(props) {
       </Helmet>
       <MarkdownView filePath="software" />
     </div>
-  );
+  )
 }
