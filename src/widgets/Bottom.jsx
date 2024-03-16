@@ -129,21 +129,16 @@ export default function Bottom(props) {
         </button> */}
         <div className={style.copyRight}>
           <div>
+            <p>Copyright © 2023-2024</p>
+          </div>
+          <div>
             <p>
-              Copyright © 2023-2024{' '}
-              <span
-                className={style.link}
-                onClick={() => window.open('https://johnlin.web.app')}
-              >
-                Johnlin
-              </span>{' '}
-              保留一切權利。{' '}
               <span
                 className={style.link}
                 onClick={() => navigateClick('/termsOfUse')}
               >
                 使用條款
-              </span>{' '}
+              </span>
             </p>
           </div>
         </div>

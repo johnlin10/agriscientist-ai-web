@@ -50,7 +50,7 @@ export default function Home(props) {
               並以語音交互為核心的<span className="nowrap">專題作品網站。</span>
             </p>
             <p className={`${style.countDownTimer}`} data-rellax-speed="-5">
-              距 全國專題競賽 結果出爐剩餘
+              【全國專題競賽-複賽】結果倒數
               <br />
               <CountdownTimer targetDate="2024-03-22 17:00:00" />
             </p>
