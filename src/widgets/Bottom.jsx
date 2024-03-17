@@ -1,13 +1,17 @@
 /* eslint-disable jsx-a11y/alt-text */
 import style from './css/Bottom.module.scss'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCopyright, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faYoutube,
+  faXTwitter,
+  faInstagram,
+} from '@fortawesome/free-brands-svg-icons'
 
-export default function Bottom(props) {
-  const location = useLocation()
+export default function Bottom() {
   const pageLinks = [
     {
       title: 'About',
@@ -70,6 +74,24 @@ export default function Bottom(props) {
     },
   ]
 
+  const socialMedias = [
+    {
+      name: 'YouTube',
+      icon: <FontAwesomeIcon icon={faYoutube} />,
+      url: 'https://www.youtube.com/@agriscientist-ai',
+    },
+    {
+      name: 'Instagram',
+      icon: <FontAwesomeIcon icon={faInstagram} />,
+      url: 'https://www.instagram.com/agriscientist.ai',
+    },
+    {
+      name: 'X',
+      icon: <FontAwesomeIcon icon={faXTwitter} />,
+      url: 'https://x.com/agriscintist_ai',
+    },
+  ]
+
   // 頁面跳轉
   const navigate = useNavigate()
   const navigateClick = (page) => {
@@ -88,6 +110,19 @@ export default function Bottom(props) {
             <h1>田野數據科學家</h1>
           </div>
         </div>
+        {/* 社群媒體帳號 */}
+        <div className={style.socialMedias}>
+          {socialMedias.map((item, index) => (
+            <div
+              className={style.media}
+              title={item.name}
+              onClick={() => window.open(item.url)}
+              key={index}
+            >
+              {item.icon}
+            </div>
+          ))}
+        </div>
         <div className={style.navigation}>
           {pageLinks.map((item, index) => (
             <div className={item.class} key={index}>
@@ -105,11 +140,9 @@ export default function Bottom(props) {
                     {child.title}
                     <FontAwesomeIcon
                       icon={faArrowRight}
-                      style={{
-                        transform: child.path.includes('https://')
-                          ? 'rotate(-45deg)'
-                          : '',
-                      }}
+                      className={
+                        child.path.includes('https://') ? style.outLink : ''
+                      }
                     />
                   </li>
                 ))}
