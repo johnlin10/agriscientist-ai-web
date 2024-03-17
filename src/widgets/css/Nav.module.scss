@@ -12,7 +12,7 @@
     &:hover {
       height: 72px;
       max-width: 720px;
-      bottom: 24px;
+      // bottom: 24px;
 
       &::after {
         content: '';
@@ -34,6 +34,12 @@
         -ms-border-radius: 36px;
         -o-border-radius: 36px;
       }
+      // 從原本的 bottom 控制底部間隙，改為使用 transform 來控制，可減少渲染負擔
+      transform: translateX(-50%) translateY(-24px);
+      -webkit-transform: translateX(-50%) translateY(-24px);
+      -moz-transform: translateX(-50%) translateY(-24px);
+      -ms-transform: translateX(-50%) translateY(-24px);
+      -o-transform: translateX(-50%) translateY(-24px);
     }
   }
 
@@ -139,7 +145,7 @@
             }
           }
           > ul {
-            bottom: 72px + 12px;
+            // bottom: 72px + 12px;
             opacity: 1;
             user-select: none;
             pointer-events: all;
@@ -164,6 +170,11 @@
               -ms-transform: translateY(100%);
               -o-transform: translateY(100%);
             }
+            transform: translateY(-48px);
+            -webkit-transform: translateY(-48px);
+            -moz-transform: translateY(-48px);
+            -ms-transform: translateY(-48px);
+            -o-transform: translateY(-48px);
           }
         }
 
@@ -299,11 +310,12 @@
             }
           }
 
-          transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-          -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-          -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-          -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-          -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+          // 統一動畫風格，新動畫擁有超出回彈效果，模擬真實物理狀態
+          transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+          -webkit-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+          -moz-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+          -ms-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+          -o-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
           border-radius: 13px;
           -webkit-border-radius: 13px;
           -moz-border-radius: 13px;
@@ -334,11 +346,11 @@
     -moz-border-radius: 36px;
     -ms-border-radius: 36px;
     -o-border-radius: 36px;
-    transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-    -webkit-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-    -moz-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-    -ms-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-    -o-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+    -webkit-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+    -moz-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+    -ms-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+    -o-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
   }
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
