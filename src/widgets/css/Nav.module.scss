@@ -5,7 +5,7 @@
   min-width: 270px;
   width: calc(100% - 48px);
   max-width: 640px;
-  bottom: 18px;
+  bottom: 0;
   left: 50%;
 
   @media (min-width: 553px) {
@@ -13,6 +13,27 @@
       height: 72px;
       max-width: 720px;
       bottom: 24px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        height: 24px;
+        width: 100%;
+        bottom: 0;
+        transform: translateY(100%);
+        -webkit-transform: translateY(100%);
+        -moz-transform: translateY(100%);
+        -ms-transform: translateY(100%);
+        -o-transform: translateY(100%);
+      }
+
+      > div {
+        border-radius: 36px;
+        -webkit-border-radius: 36px;
+        -moz-border-radius: 36px;
+        -ms-border-radius: 36px;
+        -o-border-radius: 36px;
+      }
     }
   }
 
@@ -148,6 +169,7 @@
 
         > p {
           font-size: 1.1rem;
+          font-weight: 600;
           white-space: nowrap;
           margin: 0 18px;
 
@@ -300,21 +322,32 @@
         -o-border-radius: 36px;
       }
     }
-
+    @media (min-width: 553px) {
+      border-radius: 36px 36px 0 0;
+      -webkit-border-radius: 36px 36px 0 0;
+      -moz-border-radius: 36px 36px 0 0;
+      -ms-border-radius: 36px 36px 0 0;
+      -o-border-radius: 36px 36px 0 0;
+    }
     border-radius: 36px;
     -webkit-border-radius: 36px;
     -moz-border-radius: 36px;
     -ms-border-radius: 36px;
     -o-border-radius: 36px;
+    transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+    -moz-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+    -ms-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+    -o-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
   }
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
-  transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-  -webkit-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-  -moz-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-  -ms-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
-  -o-transition: 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+  -webkit-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+  -moz-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+  -ms-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
+  -o-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
 }
