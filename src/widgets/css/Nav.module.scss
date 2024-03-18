@@ -122,9 +122,6 @@
         }
 
         &:hover {
-          > p {
-            font-family: ZenMaruGothic-Bold;
-          }
           > svg {
             &.more {
               top: 6px;
@@ -150,12 +147,12 @@
             user-select: none;
             pointer-events: all;
 
-            @media (max-width: 552px) {
-              bottom: 72px + 6px;
-            }
-            @media (max-width: 480px) {
-              bottom: 72px;
-            }
+            // @media (max-width: 552px) {
+            //   bottom: 72px + 6px;
+            // }
+            // @media (max-width: 480px) {
+            //   bottom: 72px;
+            // }
 
             &::after {
               content: '';
@@ -180,7 +177,7 @@
 
         > p {
           font-size: 1.1rem;
-          font-weight: 600;
+          // font-weight: 600;
           white-space: nowrap;
           margin: 0 18px;
 

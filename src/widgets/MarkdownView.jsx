@@ -2,7 +2,7 @@ import style from './css/MarkdownView.module.scss'
 // import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { onSnapshot, doc } from 'firebase/firestore'
-import { db, writeFirestoreDoc, getFirestoreData } from '../firebase'
+import { db, writeFirestoreDoc } from '../firebase'
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -15,36 +15,43 @@ import { AppContext } from '../AppContext'
 
 import Loading from './Loading'
 
+/**
+ * Markdown 顯示與編輯模組
+ * @param {string} filePath - Markdown 文檔在 Firestore 上的路徑
+ * @returns
+ */
 export default function MarkdownView({ filePath }) {
   const { adminPermit } = useContext(AppContext)
-  const [markdown, setMarkdown] = useState()
-  const [editMarkdown_actv, setEditMarkdown_actv] = useState(false)
-  const [editingMarkdown, setEditingMarkdown] = useState()
+  const [markdownContent, setMarkdown] = useState()
+  const [isEditing, setIsEditing] = useState(false)
+  const [editMarkdownContent, setEditingMarkdown] = useState()
 
+  // 在資料庫中搜尋 filePath 路徑的 Markdown 文檔
   useEffect(() => {
     const md_doc_ref = doc(db, `docs/${filePath}`)
     const unsubscribe = onSnapshot(md_doc_ref, async (doc) => {
       if (doc.data()) {
         const md = doc.data().doc
         setMarkdown(md)
-        if (!editingMarkdown) setEditingMarkdown(md)
+        if (!editMarkdownContent) setEditingMarkdown(md)
       } else {
         setMarkdown(`找不到文檔：docs/${filePath}`)
         console.log(`找不到文檔：docs/${filePath}`)
       }
     })
     return () => unsubscribe()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [editMarkdownContent, filePath])
 
+  // 為 H1 大標題 classList 添加 mdHeaderTitle
   useEffect(() => {
     const md_view = document.querySelector('.markdownView')
-    if (markdown && md_view) {
+    if (markdownContent && md_view) {
       const md_headerTitle = md_view.querySelector('h1')
       if (md_headerTitle) md_headerTitle.classList.add('mdHeaderTitle')
     }
-  }, [markdown, editingMarkdown])
+  }, [markdownContent, editMarkdownContent])
 
+  // 將 H2 標題的 id 設定為自身內容
   useEffect(() => {
     const h2Elements = document.querySelectorAll('h2')
     if (h2Elements.length > 0) {
@@ -52,7 +59,7 @@ export default function MarkdownView({ filePath }) {
         h2Element.id = `#${h2Element.textContent}`
       })
     }
-  }, [markdown, editingMarkdown])
+  }, [markdownContent, editMarkdownContent])
 
   // 將 code 區塊下一段文字樣式設定為 code 區塊的補充資訊欄
   useEffect(() => {
@@ -71,30 +78,30 @@ export default function MarkdownView({ filePath }) {
         }
       })
     }
-  }, [markdown, editingMarkdown])
+  }, [markdownContent, editMarkdownContent])
 
   // 將以編輯內容存入雲端
   const saveMarkdown = async () => {
     // 尋找文檔標題
-    const md_headerTitle_content = document
+    const mdHeaderTitleContent = document
       .querySelector('.markdownView')
       .querySelector('h1').textContent
 
-    // 保存文檔內容到雲端
+    // 將已編輯內容儲存到雲端
     await writeFirestoreDoc(
       `docs/${filePath}`,
-      { title: md_headerTitle_content, doc: editingMarkdown },
+      { title: mdHeaderTitleContent, doc: editMarkdownContent },
       false
     )
   }
 
-  // 進入 Markdown 編輯模式
+  // 切換 Markdown 編輯模式
   const editToMarkdown = () => {
-    if (!editMarkdown_actv) {
-      setEditMarkdown_actv(true)
-      setEditingMarkdown(markdown)
+    if (!isEditing) {
+      setIsEditing(true)
+      setEditingMarkdown(markdownContent)
     } else {
-      setEditMarkdown_actv(false)
+      setIsEditing(false)
     }
   }
 
@@ -102,25 +109,25 @@ export default function MarkdownView({ filePath }) {
     <>
       <div
         className={`${style.view}${
-          editMarkdown_actv ? ` ${style.edit}` : ''
+          isEditing ? ` ${style.edit}` : ''
         } markdownView`}
       >
         <div className={style.markdown}>
-          {markdown ? (
+          {markdownContent ? (
             <ReactMarkdown
               remarkPlugins={[gfm, remarkMath]}
               rehypePlugins={[rehypeKatex, rehypeHighlight, rehypeRaw]}
               components={{ a: LinkRenderer }}
             >
-              {editMarkdown_actv ? editingMarkdown : markdown}
+              {isEditing ? editMarkdownContent : markdownContent}
             </ReactMarkdown>
           ) : (
             <Loading loadingAniActv={true} type="local" />
           )}
         </div>
-        {editMarkdown_actv && (
+        {isEditing && (
           <EditMarkdownView
-            editingMarkdown={editingMarkdown}
+            editMarkdownContent={editMarkdownContent}
             setEditingMarkdown={setEditingMarkdown}
           />
         )}
@@ -128,7 +135,7 @@ export default function MarkdownView({ filePath }) {
 
       {adminPermit && (
         <div className={style.buttons}>
-          {editingMarkdown !== markdown && (
+          {editMarkdownContent !== markdownContent && (
             <button
               className={style.save}
               type="button"
@@ -142,7 +149,7 @@ export default function MarkdownView({ filePath }) {
             type="button"
             onClick={() => editToMarkdown()}
           >
-            {editMarkdown_actv ? '取消' : '編輯'}
+            {isEditing ? '取消' : '編輯'}
           </button>
         </div>
       )}
@@ -159,7 +166,7 @@ function EditMarkdownView(props) {
         id=""
         onChange={(e) => props.setEditingMarkdown(e.target.value)}
       >
-        {props.editingMarkdown}
+        {props.editMarkdownContent}
       </textarea>
     </div>
   )

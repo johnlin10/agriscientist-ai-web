@@ -53,6 +53,7 @@ import { ParallaxProvider, Parallax } from 'react-scroll-parallax'
 
 import Nav from './widgets/Nav'
 import TermsOfUse from './pages/TermsOfUse/TermsOfUse'
+import Feedback from './pages/Feedback/Feedback'
 
 function App() {
   const location = useLocation()
@@ -376,6 +377,7 @@ function App() {
               />
             </Route>
             <Route path="termsOfUse" element={<TermsOfUse />} />
+            <Route path="feedback" element={<Feedback />} />
           </Routes>
         </main>
 

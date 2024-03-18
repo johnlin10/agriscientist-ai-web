@@ -165,6 +165,14 @@ export default function Bottom() {
             <p>Copyright © 2023-2024</p>
           </div>
           <div>
+            {/* <p>
+              <span
+                className={style.link}
+                onClick={() => navigateClick('/feedback')}
+              >
+                Feedback
+              </span>
+            </p> */}
             <p>
               <span
                 className={style.link}

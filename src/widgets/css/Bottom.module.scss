@@ -178,13 +178,17 @@
       flex-direction: row;
       justify-content: space-between;
       margin-top: 12px;
-      padding: 15px;
+      padding: 15px 0;
       border-top: 2px solid #0000000f;
 
       > div {
+        display: flex;
+        flex-direction: row;
+
         > p {
           font-size: 0.8rem;
           color: #0000007f;
+          margin: 0 12px;
 
           > span.link {
             cursor: pointer;
