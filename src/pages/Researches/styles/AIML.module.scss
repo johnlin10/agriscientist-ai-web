@@ -4,5 +4,6 @@
   align-items: center;
   width: 100%;
   // max-width: 720px;
-  padding: 24px 12px 0 12px;
+  // 減少 padding 修復編輯狀態下出現不必要的頁面滾動
+  padding: 0 12px 0 12px;
 }
