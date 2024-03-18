@@ -1,3 +1,24 @@
+.testing {
+  z-index: 500;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 9px 18px;
+  background: var(--green_L7);
+  box-shadow: 0 12px 36px 0 hsla(0, 0%, 0%, 0.13),
+    0 0 6px 0 hsla(0, 0%, 0%, 0.05);
+
+  > p {
+    font-size: 1.5rem;
+    color: var(--green_D2);
+  }
+  border-radius: 36px;
+  -webkit-border-radius: 36px;
+  -moz-border-radius: 36px;
+  -ms-border-radius: 36px;
+  -o-border-radius: 36px;
+}
+
 .data_range {
   z-index: 5000;
   display: flex;

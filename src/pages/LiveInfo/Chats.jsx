@@ -3,6 +3,7 @@ import { db } from '../../firebase'
 import { doc, onSnapshot } from 'firebase/firestore'
 import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
+import TestingBlock from '../../widgets/TestingBlock/TestingBlock'
 
 export default function Chats(props) {
   const [chat_history, setChat_history] = useState([])
@@ -116,6 +117,7 @@ export default function Chats(props) {
       <Helmet>
         <title>農場助理｜田野數據科學家</title>
       </Helmet>
+      <TestingBlock title="服務暫停中" description="正在最佳化對話體驗。" />
       <div
         className={`${style.assistant}${
           assistanStatus === 'true' ? ` ${style.actv}` : ''

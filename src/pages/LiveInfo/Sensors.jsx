@@ -37,6 +37,7 @@ import {
   ReferenceLine,
   ResponsiveContainer,
 } from 'recharts'
+import TestingBlock from '../../widgets/TestingBlock/TestingBlock'
 
 export default function Sensors(props) {
   const [sensors, setSensors] = useState()
@@ -371,6 +372,8 @@ export default function Sensors(props) {
       <Helmet>
         <title>感測數據｜田野數據科學家</title>
       </Helmet>
+
+      <TestingBlock description="正在對數據分析及視覺化顯示進行改進。" />
 
       {/* 操控條 */}
       <div className={style.data_range}>
