@@ -39,7 +39,7 @@ import {
 } from 'recharts'
 import TestingBlock from '../../widgets/TestingBlock/TestingBlock'
 
-export default function Sensors(props) {
+export default function Sensors() {
   const [sensors, setSensors] = useState()
   const [sensors_actv, setSensors_actv] = useState(false)
   const [dataIndexes, setDataIndexes] = useState([]) // 選擇數據單位段落 - 用於尋找段落

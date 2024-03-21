@@ -30,7 +30,7 @@ import User from './pages/User' //
 import NotFound from './pages/NotFound'
 import ProjProgress from './pages/ProjProgress'
 import TimeLine from './pages/TimeLine'
-import LiveInfo from './pages/LiveInfo'
+import Realtime from './pages/Realtime/Realtime'
 import Contrals from './pages/LiveInfo/Controls'
 import Sensors from './pages/LiveInfo/Sensors'
 import Chats from './pages/LiveInfo/Chats'
@@ -54,6 +54,8 @@ import { ParallaxProvider, Parallax } from 'react-scroll-parallax'
 import Nav from './widgets/Nav'
 import TermsOfUse from './pages/TermsOfUse/TermsOfUse'
 import Feedback from './pages/Feedback/Feedback'
+import Dashboard from './pages/Realtime/DataView/Dashboard'
+import Post from './pages/Post/Post'
 
 function App() {
   const location = useLocation()
@@ -310,6 +312,8 @@ function App() {
               }
             />
 
+            <Route path="post" element={<Post />}></Route>
+
             <Route
               path="/progress"
               element={
@@ -359,16 +363,9 @@ function App() {
               element={<NotFound navigateClick={navigateClick} />}
             />
 
-            <Route
-              path="/realtime"
-              element={
-                <LiveInfo
-                  navigateClick={navigateClick}
-                  checkLocation={checkLocation}
-                />
-              }
-            >
+            <Route path="/realtime" element={<Realtime />}>
               <Route path="sensor" element={<Sensors />} />
+              <Route path="dashboard" element={<Dashboard />} />
               <Route path="control" element={<Contrals />} />
               <Route path="chat" element={<Chats />} />
               <Route

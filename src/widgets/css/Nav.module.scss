@@ -140,30 +140,30 @@
             }
           }
           > ul {
-            // bottom: 72px + 12px;
+            z-index: 100;
             opacity: 1;
             user-select: none;
             pointer-events: all;
 
-            // @media (max-width: 552px) {
-            //   bottom: 72px + 6px;
-            // }
-            // @media (max-width: 480px) {
-            //   bottom: 72px;
-            // }
-
             &::after {
+              // 此次調整了選項到彈出列表的扇形面積，讓用戶可以更輕鬆的使用鼠標滑動到列表選項，而不會收回
+              z-index: 1000;
               content: '';
               position: absolute;
               bottom: 3px;
               left: 0;
-              height: 18px;
+              height: 24px + 30px;
               width: 100%;
               transform: translateY(100%);
               -webkit-transform: translateY(100%);
               -moz-transform: translateY(100%);
               -ms-transform: translateY(100%);
               -o-transform: translateY(100%);
+              border-radius: 0 0 48px 48px;
+              -webkit-border-radius: 0 0 48px 48px;
+              -moz-border-radius: 0 0 48px 48px;
+              -ms-border-radius: 0 0 48px 48px;
+              -o-border-radius: 0 0 48px 48px;
             }
             transform: translateY(-48px);
             -webkit-transform: translateY(-48px);

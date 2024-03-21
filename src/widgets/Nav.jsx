@@ -5,9 +5,12 @@ import {
   faCaretUp,
   faLeaf,
   faMagnifyingGlassChart,
+  faChartSimple,
   faInbox,
+  faCube,
   faBook,
   faUsers,
+  faCircleInfo,
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -24,10 +27,11 @@ export default function Nav(props) {
           </li>
           <li onClick={() => props.navigateClick('/realtime/sensor')}>
             <p>
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faMagnifyingGlassChart}
                 className={style.icon}
-              />
+              /> */}
+              <FontAwesomeIcon icon={faChartSimple} className={style.icon} />
               <span>即時</span>
             </p>
             <FontAwesomeIcon icon={faCaretUp} className={style.more} />
@@ -81,7 +85,8 @@ export default function Nav(props) {
           </li>
           <li onClick={() => props.navigateClick('/products/microfarm')}>
             <p>
-              <FontAwesomeIcon icon={faInbox} className={style.icon} />
+              {/* <FontAwesomeIcon icon={faInbox} className={style.icon} /> */}
+              <FontAwesomeIcon icon={faCube} className={style.icon} />
               <span>產品</span>
             </p>
             <FontAwesomeIcon icon={faCaretUp} className={style.more} />
@@ -188,7 +193,8 @@ export default function Nav(props) {
           </li>
           <li onClick={() => props.navigateClick('/about')}>
             <p>
-              <FontAwesomeIcon icon={faUsers} className={style.icon} />
+              {/* <FontAwesomeIcon icon={faUsers} className={style.icon} /> */}
+              <FontAwesomeIcon icon={faCircleInfo} className={style.icon} />
               <span>關於</span>
             </p>
             <FontAwesomeIcon icon={faCaretUp} className={style.more} />
@@ -224,6 +230,17 @@ export default function Nav(props) {
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
+              {/* <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/post')
+                }}
+              >
+                <p>
+                  公告
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
+              </li> */}
             </ul>
           </li>
         </ul>

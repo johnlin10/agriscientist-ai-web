@@ -12,7 +12,7 @@ export default function Home(props) {
       '.headerIcon',
       '.headerTitle',
       '.headerDescription',
-      `.${style.countDownTimer}`,
+      // `.${style.countDownTimer}`,
     ]
 
     const titleRellaxes = selectors.map(
@@ -49,11 +49,11 @@ export default function Home(props) {
               <br />
               並以語音交互為核心的<span className="nowrap">專題作品網站。</span>
             </p>
-            <p className={`${style.countDownTimer}`} data-rellax-speed="-5">
+            {/* <p className={`${style.countDownTimer}`} data-rellax-speed="-5">
               【全國專題競賽-複賽】結果倒數
               <br />
-              <CountdownTimer targetDate="2024-03-22 17:00:00" />
-            </p>
+              <CountdownTimer targetDate="2024-03-19 17:00:00" />
+            </p> */}
           </div>
         </div>
         <div className={`${style.intro} ${style.center_v} ${style.center_h}`}>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import style from './style.module.scss'
 
 export default function CountdownTimer({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState(0)

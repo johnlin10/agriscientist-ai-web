@@ -1,0 +1,61 @@
+@import '../../mixin.scss';
+
+.view {
+  @include view_style;
+
+  > .container {
+    @include container_style;
+  }
+}
+
+.poster {
+}
+
+.postList {
+  padding: 24px 0 0 0;
+
+  > .post {
+    margin-bottom: 12px;
+    padding: 12px 18px;
+    background: var(--green_L9);
+
+    > .header {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 6px;
+
+      > .poster {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        > img {
+          margin-left: -6px;
+          margin-right: 9px;
+          height: 32px;
+          border-radius: 16px;
+          -webkit-border-radius: 16px;
+          -moz-border-radius: 16px;
+          -ms-border-radius: 16px;
+          -o-border-radius: 16px;
+        }
+
+        > p {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    > h1 {
+      font-size: 1.5rem;
+    }
+    > p {
+      font-size: 1rem;
+    }
+    border-radius: 19px;
+    -webkit-border-radius: 19px;
+    -moz-border-radius: 19px;
+    -ms-border-radius: 19px;
+    -o-border-radius: 19px;
+  }
+}
