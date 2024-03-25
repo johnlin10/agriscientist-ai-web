@@ -1,3 +1,47 @@
+// 佈局
+@mixin max_HW {
+  height: 100%;
+  width: 100%;
+}
+
+@mixin flex-layout($direction, $main-align, $cross-align) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $main-align;
+  justify-content: $cross-align;
+}
+
+@mixin set_HW($height, $width) {
+  height: $height;
+  width: $width;
+}
+
+// 樣式
+@mixin transition($value) {
+  transition: $value;
+  -webkit-transition: $value;
+  -moz-transition: $value;
+  -ms-transition: $value;
+  -o-transition: $value;
+}
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+}
+
+@mixin transform($value) {
+  transform: $value;
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  -ms-transform: $value;
+  -o-transform: $value;
+}
+
+// 通用組件樣式
 @mixin view_style {
   display: flex;
   flex-direction: column;
@@ -10,4 +54,17 @@
   width: 100%;
   max-width: 720px;
   padding: 0 12px;
+}
+
+@mixin input_style {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 13px;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
+}
+
+@mixin textArea {
 }

@@ -3,11 +3,13 @@ import styles from './styles.module.scss'
 
 import PageHeader from '../../widgets/PageHeader/PageHeader'
 import Sheet from '../../widgets/Sheet/Sheet'
+import TextInput from '../../widgets/Form/TextInput/TextInput'
+import TextArea from '../../widgets/Form/TextArea/TextArea'
 
 // 此頁面正在內部開發階段，尚未完成
 // 此公告可供所有人查看。發布功能僅供網站管理員發布官方公告，並不對外開放發布權限。
 export default function Post() {
-  const [showPostEditor, setShowPostEditor] = useState(false)
+  const [showPostEditor, setShowPostEditor] = useState(true)
   const pageHeaderActions = [
     {
       title: '發表新貼文',
@@ -25,7 +27,7 @@ export default function Post() {
       {showPostEditor && (
         <Sheet
           title="發布貼文"
-          childenView=""
+          childenView={PosterSheetView()}
           closeAction={() => setShowPostEditor(false)}
           controls={[]}
         />
@@ -35,7 +37,13 @@ export default function Post() {
 }
 
 function PosterSheetView() {
-  return <div className={styles.poster}></div>
+  return (
+    <div className={styles.poster}>
+      <div className={styles.contentInput}>
+        <TextArea />
+      </div>
+    </div>
+  )
 }
 
 /**
@@ -121,7 +129,7 @@ function PostView() {
 }
 
 /**
- * 貼文區塊
+ * 貼文串 中的 貼文區塊
  * @param {string} posterName - 貼文作者名稱
  * @param {string} posterImage - 貼文作者頭貼
  * @param {string} title - 貼文標題

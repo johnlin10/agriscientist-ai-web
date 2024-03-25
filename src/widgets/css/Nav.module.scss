@@ -1,3 +1,5 @@
+@import '../../mixin.scss';
+
 .nav {
   z-index: 9000;
   position: fixed;
@@ -18,32 +20,19 @@
         height: 24px;
         width: 100%;
         bottom: 0;
-        transform: translateY(100%);
-        -webkit-transform: translateY(100%);
-        -moz-transform: translateY(100%);
-        -ms-transform: translateY(100%);
-        -o-transform: translateY(100%);
+        @include transform(translateY(100%));
       }
 
       > div {
-        border-radius: 36px;
-        -webkit-border-radius: 36px;
-        -moz-border-radius: 36px;
-        -ms-border-radius: 36px;
-        -o-border-radius: 36px;
+        @include border-radius(36px);
       }
       // 從原本的 bottom 控制底部間隙，改為使用 transform 來控制，可減少渲染負擔
-      transform: translateX(-50%) translateY(-24px);
-      -webkit-transform: translateX(-50%) translateY(-24px);
-      -moz-transform: translateX(-50%) translateY(-24px);
-      -ms-transform: translateX(-50%) translateY(-24px);
-      -o-transform: translateX(-50%) translateY(-24px);
+      @include transform(translateX(-50%) translateY(-24px));
     }
   }
 
   @media (max-width: 552px) {
-    height: 60px;
-    bottom: 24px;
+    @include set_HW(60px, 24px);
   }
 
   * {

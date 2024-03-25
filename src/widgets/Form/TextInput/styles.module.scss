@@ -1,0 +1,5 @@
+@import '../../../mixin.scss';
+
+.textInput {
+  @include input_style;
+}

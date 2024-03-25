@@ -1,47 +1,37 @@
+@import '../../mixin.scss';
+
 .view {
   z-index: 9000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flex-layout(column, center, null);
+  @include set_HW(calc(100% - 60px), 100%);
   position: fixed;
   left: 50%;
   bottom: 0;
-  width: 100%;
-  height: calc(100% - 60px);
   padding-top: 24px;
+  @include transform(translateX(-50%));
+  @include transition(0.7s cubic-bezier(0.23, 1, 0.32, 1));
 
   > .container {
-    width: 100%;
-    height: 100%;
+    @include set_HW(100%, 100%);
     max-width: 720px;
     padding: 24px;
     background: var(--green_L9);
     box-shadow: 0 54px - 24px 54px 0 hsla(0, 0%, 0%, 0.1),
       0 0 12px 0 hsla(0, 0%, 0%, 0.05);
+    @include border-radius(19px 19px 0 0);
+    @include transition(0.6s cubic-bezier(0.53, 1.25, 0.45, 0.98));
 
     &.pageAnimation {
-      transform: translateY(100%);
-      -webkit-transform: translateY(100%);
-      -moz-transform: translateY(100%);
-      -ms-transform: translateY(100%);
-      -o-transform: translateY(100%);
+      @include transform(translateY(100%));
 
       @media (min-width: 823px) {
-        transform: translateY(100%) scale(0.9);
-        -webkit-transform: translateY(100%) scale(0.9);
-        -moz-transform: translateY(100%) scale(0.9);
-        -ms-transform: translateY(100%) scale(0.9);
-        -o-transform: translateY(100%) scale(0.9);
+        @include transform(translateY(100%) scale(0.9));
       }
     }
 
     > .header {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+      @include flex-layout(row, center, space-between);
       margin-bottom: 12px;
-      // height: 48px;
 
       > .title {
         > p {
@@ -50,15 +40,11 @@
         }
       }
       > .controls {
-        display: flex;
-        flex-direction: row;
+        @include flex-layout(row, null, null);
         height: 100%;
 
         > button {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
+          @include flex-layout(row, center, center);
           align-self: flex-start;
           height: 32px;
           min-width: 32px;
@@ -66,6 +52,7 @@
           margin-left: 6px;
           background: var(--green_L6);
           color: var(--green);
+          @include border-radius(18px);
 
           &.accent {
             background: var(--green);
@@ -75,36 +62,11 @@
           > span {
             margin: 0 2px 2px 3px;
           }
-
-          border-radius: 18px;
-          -webkit-border-radius: 18px;
-          -moz-border-radius: 18px;
-          -ms-border-radius: 18px;
-          -o-border-radius: 18px;
         }
       }
     }
     > .content {
+      @include set_HW(calc(100% - 48px), 100%);
     }
-    border-radius: 17px 17px 0 0;
-    -webkit-border-radius: 17px 17px 0 0;
-    -moz-border-radius: 17px 17px 0 0;
-    -ms-border-radius: 17px 17px 0 0;
-    -o-border-radius: 17px 17px 0 0;
-    transition: 0.6s cubic-bezier(0.53, 1.25, 0.45, 0.98);
-    -webkit-transition: 0.6s cubic-bezier(0.53, 1.25, 0.45, 0.98);
-    -moz-transition: 0.6s cubic-bezier(0.53, 1.25, 0.45, 0.98);
-    -ms-transition: 0.6s cubic-bezier(0.53, 1.25, 0.45, 0.98);
-    -o-transition: 0.6s cubic-bezier(0.53, 1.25, 0.45, 0.98);
   }
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  transition: 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-  -webkit-transition: 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-  -moz-transition: 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-  -ms-transition: 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-  -o-transition: 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }

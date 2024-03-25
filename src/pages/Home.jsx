@@ -4,7 +4,9 @@ import { Helmet } from 'react-helmet'
 import Bottom from '../widgets/Bottom'
 
 import Rellax from 'rellax'
-import CountdownTimer from '../widgets/CountdownTimer/CountdownTimer'
+// import CountdownTimer from '../widgets/CountdownTimer/CountdownTimer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThreads } from '@fortawesome/free-brands-svg-icons'
 
 export default function Home(props) {
   useEffect(() => {
@@ -12,7 +14,7 @@ export default function Home(props) {
       '.headerIcon',
       '.headerTitle',
       '.headerDescription',
-      // `.${style.countDownTimer}`,
+      `.${style.aboutProjectCompetition}`,
     ]
 
     const titleRellaxes = selectors.map(
@@ -54,6 +56,23 @@ export default function Home(props) {
               <br />
               <CountdownTimer targetDate="2024-03-19 17:00:00" />
             </p> */}
+            <div
+              className={style.aboutProjectCompetition}
+              data-rellax-speed="-5.5"
+              onClick={() =>
+                window.open(
+                  'https://www.threads.net/@johnolin10/post/C4s8ieNx5A6'
+                )
+              }
+            >
+              <div className={style.header}>
+                <FontAwesomeIcon icon={faThreads} />
+                <p>關於全國專題競賽</p>
+              </div>
+              <div className={style.description}>
+                <p>查看 Threads 串文</p>
+              </div>
+            </div>
           </div>
         </div>
         <div className={`${style.intro} ${style.center_v} ${style.center_h}`}>

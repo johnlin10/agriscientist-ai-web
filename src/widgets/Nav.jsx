@@ -230,7 +230,7 @@ export default function Nav(props) {
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
-              {/* <li
+              <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
                   props.navigateClick('/post')
@@ -240,7 +240,7 @@ export default function Nav(props) {
                   公告
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
-              </li> */}
+              </li>
             </ul>
           </li>
         </ul>

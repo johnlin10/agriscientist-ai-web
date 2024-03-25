@@ -9,6 +9,11 @@
 }
 
 .poster {
+  @include max_HW;
+
+  > .contentInput {
+    @include max_HW;
+  }
 }
 
 .postList {
@@ -18,26 +23,20 @@
     margin-bottom: 12px;
     padding: 12px 18px;
     background: var(--green_L9);
+    @include border-radius(19px);
 
     > .header {
-      display: flex;
-      flex-direction: row;
+      @include flex-layout(row, null, null);
       margin-bottom: 6px;
 
       > .poster {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        @include flex-layout(row, center, null);
 
         > img {
           margin-left: -6px;
           margin-right: 9px;
           height: 32px;
-          border-radius: 16px;
-          -webkit-border-radius: 16px;
-          -moz-border-radius: 16px;
-          -ms-border-radius: 16px;
-          -o-border-radius: 16px;
+          @include border-radius(16px);
         }
 
         > p {
@@ -52,10 +51,5 @@
     > p {
       font-size: 1rem;
     }
-    border-radius: 19px;
-    -webkit-border-radius: 19px;
-    -moz-border-radius: 19px;
-    -ms-border-radius: 19px;
-    -o-border-radius: 19px;
   }
 }
