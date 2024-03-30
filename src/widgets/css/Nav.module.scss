@@ -9,7 +9,8 @@
   max-width: 640px;
   bottom: 0;
   left: 50%;
-  @include transform(translateX(-50%) translateY(-24px));
+  // 緊急修復 nav 組件 rwd 動態設計
+  @include transform(translateX(-50%) translateY(0));
   @include transition(0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98));
 
   @media (min-width: 553px) {
@@ -36,6 +37,7 @@
   }
 
   @media (max-width: 552px) {
+    @include transform(translateX(-50%) translateY(-24px));
   }
 
   * {
