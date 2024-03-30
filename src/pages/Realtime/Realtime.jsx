@@ -12,10 +12,10 @@ export default function Realtime() {
           title: '感測數據',
           path: '/realtime/sensor',
         },
-        // {
-        //   title: '儀表板',
-        //   path: '/realtime/dashboard',
-        // },
+        {
+          title: '儀表板',
+          path: '/realtime/dashboard',
+        },
         {
           title: '控制台',
           path: '/realtime/control',

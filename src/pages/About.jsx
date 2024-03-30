@@ -1,7 +1,7 @@
-import style from "./css/About.module.scss";
-import Aside from "../widgets/Aside";
-import { Outlet } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import style from './css/About.module.scss'
+import Aside from '../widgets/Aside'
+import { Outlet } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 export default function About(props) {
   return (
@@ -26,7 +26,10 @@ export default function About(props) {
           <div className={style.members}>
             <div className={style.people}>
               <div className={style.header}>
-                <img src="/images/DreamingOfFlying-00150.jpeg" alt="陳冠諺" />
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/agriscientist-ai.appspot.com/o/assets%2Fimages%2Fmartin.jpeg?alt=media&token=f501a223-d021-4acb-8c59-231caa210a92"
+                  alt="陳冠諺"
+                />
               </div>
               <div className={style.content}>
                 <p className={style.name}>陳冠諺</p>
@@ -45,7 +48,7 @@ export default function About(props) {
             <div className={style.people}>
               <div className={style.header}>
                 <img
-                  src="https://fakeimg.pl/512x512/ffffff/?text=3"
+                  src="https://firebasestorage.googleapis.com/v0/b/agriscientist-ai.appspot.com/o/assets%2Fimages%2Ftailing.jpg?alt=media&token=f5d9b9bd-11ce-4d50-8273-54beaa57586b"
                   alt="趙泰齡"
                 />
               </div>
@@ -58,5 +61,5 @@ export default function About(props) {
         </div>
       </div>
     </>
-  );
+  )
 }

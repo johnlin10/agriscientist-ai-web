@@ -35,7 +35,7 @@
         background-color: #ffffff7f;
         -webkit-backdrop-filter: saturate(180%) blur(20px);
         backdrop-filter: saturate(180%) blur(20px);
-        @include border-radius(28px);
+        @include border_radius(28px);
 
         > button {
           &:hover {
@@ -113,7 +113,7 @@
 
         > img {
           width: 36px;
-          @include border-radius(18px);
+          @include border_radius(18px);
         }
         @include transition(0.3s cubic-bezier(0.23, 1, 0.32, 1));
       }

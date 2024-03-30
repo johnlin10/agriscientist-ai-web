@@ -301,7 +301,7 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="/preview"
               element={
                 <Preview
@@ -310,7 +310,7 @@ function App() {
                   headerTopScale={headerTopScale}
                 />
               }
-            />
+            /> */}
 
             <Route path="post" element={<Post />}></Route>
 

@@ -1,12 +1,15 @@
 @import '../../mixin.scss';
 
+// 彈出動畫填充補償
+$popAnimationCompensation: 24px;
+
 .view {
   z-index: 9000;
   @include flex-layout(column, center, null);
-  @include set_HW(calc(100% - 60px), 100%);
+  @include set_HW(calc(100% - 60px + $popAnimationCompensation), 100%);
   position: fixed;
   left: 50%;
-  bottom: 0;
+  bottom: -$popAnimationCompensation;
   padding-top: 24px;
   @include transform(translateX(-50%));
   @include transition(0.7s cubic-bezier(0.23, 1, 0.32, 1));
@@ -14,11 +17,11 @@
   > .container {
     @include set_HW(100%, 100%);
     max-width: 720px;
-    padding: 24px;
+    padding: 24px 24px 24px + $popAnimationCompensation 24px;
     background: var(--green_L9);
     box-shadow: 0 54px - 24px 54px 0 hsla(0, 0%, 0%, 0.1),
       0 0 12px 0 hsla(0, 0%, 0%, 0.05);
-    @include border-radius(19px 19px 0 0);
+    @include border_radius(19px 19px 0 0);
     @include transition(0.6s cubic-bezier(0.53, 1.25, 0.45, 0.98));
 
     &.pageAnimation {
@@ -52,7 +55,7 @@
           margin-left: 6px;
           background: var(--green_L6);
           color: var(--green);
-          @include border-radius(18px);
+          @include border_radius(18px);
 
           &.accent {
             background: var(--green);

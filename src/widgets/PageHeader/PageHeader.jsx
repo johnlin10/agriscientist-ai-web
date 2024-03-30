@@ -16,11 +16,15 @@ export default function PageHeader({ title, description, actions }) {
       </div>
       {actions && (
         <div className={styles.actions}>
-          {actions.map((item, index) => (
-            <button onClick={item.action} key={index}>
-              {item.title}
-            </button>
-          ))}
+          {actions.map((item, index) => {
+            if (item.auth) {
+              return (
+                <button onClick={item.action} key={index}>
+                  {item.title}
+                </button>
+              )
+            } else return null
+          })}
         </div>
       )}
     </div>

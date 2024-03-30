@@ -1,7 +1,11 @@
+@import '../../mixin.scss';
+
+// action button height
+$actionButtonHeight: 36px;
+
 .container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  z-index: 100;
+  @include flex-layout(row, null, space-between);
   position: sticky;
   top: 12px;
   padding: 6px 12px;
@@ -11,8 +15,7 @@
 
   > .header {
     > h1 {
-      font-size: 2rem;
-      font-family: ZenMaruGothic-Bold;
+      @include font(2rem, 600);
     }
     > p {
       font-size: 1rem;
@@ -20,8 +23,8 @@
   }
   > .actions {
     > button {
-      padding: 6px 12px;
-      font-size: 1rem;
+      @include buttonDynamicSize($actionButtonHeight);
+      @include font_bg_Color(var(--green_D5), var(--green_L6));
     }
   }
 }

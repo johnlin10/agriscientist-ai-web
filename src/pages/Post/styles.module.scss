@@ -13,17 +13,37 @@
 
   > .contentInput {
     @include max_HW;
+
+    > textarea {
+      font-size: 0.9rem;
+      font-family: MartianMono, monospace;
+    }
   }
 }
 
 .postList {
+  position: relative;
+  @include flex-layout(column-reverse, null, null);
   padding: 24px 0 0 0;
 
   > .post {
-    margin-bottom: 12px;
-    padding: 12px 18px;
-    background: var(--green_L9);
-    @include border-radius(19px);
+    position: relative;
+    padding: 24px 12px;
+    overflow: hidden;
+
+    &:not(:first-child) {
+      border-bottom: 1px solid #00000015;
+    }
+
+    // 展開更多內容
+    &:global(.more) {
+      padding-bottom: 60px;
+
+      &::before {
+        top: inherit;
+        bottom: -60px;
+      }
+    }
 
     > .header {
       @include flex-layout(row, null, null);
@@ -33,14 +53,28 @@
         @include flex-layout(row, center, null);
 
         > img {
-          margin-left: -6px;
           margin-right: 9px;
           height: 32px;
-          @include border-radius(16px);
+          @include border_radius(16px);
+          pointer-events: none;
         }
 
         > p {
           font-size: 1.2rem;
+        }
+      }
+
+      > .actions {
+        @include flex-layout(row, center, null);
+        > button {
+          @include buttonDynamicSize(32px);
+          background: var(--green_L8);
+          color: var(--green_D3);
+
+          &:hover {
+            background: var(--green_L9);
+            color: var(--green);
+          }
         }
       }
     }
@@ -51,5 +85,66 @@
     > p {
       font-size: 1rem;
     }
+
+    > .markdownDisplay {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      max-height: 720px;
+      overflow-y: hidden;
+
+      // 展開更多內容
+      &:global(.more) {
+        max-height: unset;
+        padding-bottom: 60px;
+
+        &::before {
+          top: inherit;
+          bottom: -60px;
+        }
+      }
+
+      $maskHeight: 80px;
+      &::before {
+        z-index: 90;
+        content: '';
+        position: absolute;
+        top: 720px - $maskHeight;
+        left: 0;
+        min-height: $maskHeight;
+        width: 100%;
+        background: linear-gradient(
+          0deg,
+          var(--green_L8),
+          var(--green_L8),
+          #ffffff00
+        );
+      }
+
+      $buttonHeight: 36px;
+      > .showMoreBtn {
+        @include buttonDynamicSize($buttonHeight);
+        z-index: 100;
+        @include flex-layout(column, null, center);
+        position: absolute;
+        top: 720px - $buttonHeight;
+        left: 0;
+        width: fit-content;
+        color: var(--green);
+        background: var(--green_L7);
+        @include border-radius($buttonHeight/2);
+
+        &:global(.bottom) {
+          top: inherit;
+          bottom: 0;
+        }
+      }
+    }
   }
+}
+
+// 發布文章彈窗中的 Markdown Proview
+.markdownPreview {
+  height: 100%;
+  overflow-y: scroll;
 }

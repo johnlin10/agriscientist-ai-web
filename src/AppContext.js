@@ -11,15 +11,17 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setUser(user)
-      if (
-        user &&
-        (user.uid === process.env.REACT_APP_ADMIN_ACCOUNT ||
-          user.uid === process.env.REACT_APP_PROJECT_USER1)
-      ) {
-        setAdminPermit(true)
-      } else {
-        setAdminPermit(false)
-      }
+
+      // 確認是否為管理員
+      const adminUids = [
+        process.env.REACT_APP_ADMIN_ACCOUNT,
+        process.env.REACT_APP_ADMIN_ACCOUNT2,
+        process.env.REACT_APP_PROJECT_USER1,
+        process.env.REACT_APP_PROJECT_USER2,
+      ]
+      setAdminPermit(user && adminUids.includes(user.uid))
+
+      // 備份用戶基本資料至雲端
       if (user) {
         const userInfo = {
           email: user.email,
@@ -27,7 +29,6 @@ export const AppProvider = ({ children }) => {
           headSticker: user.photoURL,
           uid: user.uid,
         }
-
         await writeFirestoreDoc(`user/${user.uid}`, userInfo, true)
       }
     })

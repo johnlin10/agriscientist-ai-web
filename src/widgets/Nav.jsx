@@ -210,14 +210,14 @@ export default function Nav(props) {
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
-              <li
+              {/* <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
                   // props.navigateClick('/about')
                 }}
               >
                 <p>我們的理念</p>
-              </li>
+              </li> */}
               <hr />
               <li
                 onClick={(event) => {

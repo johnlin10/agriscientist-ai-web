@@ -4,13 +4,17 @@
   z-index: 9000;
   position: fixed;
   height: 60px;
-  min-width: 270px;
+  min-width: 320px;
   width: calc(100% - 48px);
   max-width: 640px;
   bottom: 0;
   left: 50%;
+  @include transform(translateX(-50%) translateY(-24px));
+  @include transition(0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98));
 
   @media (min-width: 553px) {
+    width: calc(100% - 48px);
+
     &:hover {
       height: 66px;
 
@@ -24,15 +28,14 @@
       }
 
       > div {
-        @include border-radius(36px);
+        @include border_radius(36px);
       }
-      // 從原本的 bottom 控制底部間隙，改為使用 transform 來控制，可減少渲染負擔
-      @include transform(translateX(-50%) translateY(-24px));
+      // 縮小過渡位移距離，讓使用者更便於操作
+      @include transform(translateX(-50%) translateY(-12px));
     }
   }
 
   @media (max-width: 552px) {
-    @include set_HW(60px, 24px);
   }
 
   * {
@@ -40,8 +43,7 @@
   }
 
   > div {
-    display: flex;
-    flex-direction: row;
+    @include flex-layout(row, null, null);
     height: 100%;
     background-color: var(--opacity_w_7);
     border-top: 1px solid var(--opacity_w_5);
@@ -51,6 +53,12 @@
     backdrop-filter: saturate(180%) blur(20px);
     -ms-overflow-style: none; /* IE 和 Edge */
     scrollbar-width: none; /* Firefox */
+    @include border-radius(36px);
+    @include transition(0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98));
+
+    @media (min-width: 553px) {
+      @include border-radius(36px 36px 0 0);
+    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -247,17 +255,18 @@
             width: 100%;
             cursor: pointer;
 
+            // margin 改為使用 padding（避免列表元素之間存在間隙，更利於使用者點擊）
             &:not(:first-child, :last-child) {
-              margin: 6px 0;
+              padding: 6px 0;
             }
             &:first-child {
-              margin-top: 6px;
+              padding-top: 6px;
             }
             &:last-child {
-              margin-bottom: 6px;
+              padding-bottom: 6px;
             }
             &:is(:first-child):is(:last-child) {
-              margin: 0;
+              padding: 0;
             }
 
             &:hover {
@@ -318,32 +327,5 @@
         -o-border-radius: 36px;
       }
     }
-    @media (min-width: 553px) {
-      border-radius: 36px 36px 0 0;
-      -webkit-border-radius: 36px 36px 0 0;
-      -moz-border-radius: 36px 36px 0 0;
-      -ms-border-radius: 36px 36px 0 0;
-      -o-border-radius: 36px 36px 0 0;
-    }
-    border-radius: 36px;
-    -webkit-border-radius: 36px;
-    -moz-border-radius: 36px;
-    -ms-border-radius: 36px;
-    -o-border-radius: 36px;
-    transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-    -webkit-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-    -moz-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-    -ms-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-    -o-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
   }
-  transform: translateX(-50%) translateY(0);
-  -webkit-transform: translateX(-50%) translateY(0);
-  -moz-transform: translateX(-50%) translateY(0);
-  -ms-transform: translateX(-50%) translateY(0);
-  -o-transform: translateX(-50%) translateY(0);
-  transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-  -webkit-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-  -moz-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-  -ms-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
-  -o-transition: 0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98);
 }

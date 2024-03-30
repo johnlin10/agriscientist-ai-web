@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import {
+  faThreads,
   faYoutube,
   faXTwitter,
   faInstagram,
+  faGithub,
+  faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
 
 export default function Bottom() {
@@ -76,9 +79,9 @@ export default function Bottom() {
 
   const socialMedias = [
     {
-      name: 'YouTube',
-      icon: <FontAwesomeIcon icon={faYoutube} />,
-      url: 'https://www.youtube.com/@agriscientist-ai',
+      name: 'Threads',
+      icon: <FontAwesomeIcon icon={faThreads} />,
+      url: 'https://www.threads.net/@agriscientist.ai',
     },
     {
       name: 'Instagram',
@@ -89,6 +92,21 @@ export default function Bottom() {
       name: 'X',
       icon: <FontAwesomeIcon icon={faXTwitter} />,
       url: 'https://x.com/agriscintist_ai',
+    },
+    {
+      name: 'GitHub',
+      icon: <FontAwesomeIcon icon={faGithub} />,
+      url: 'https://github.com/johnlin10/agriscientist-ai-web',
+    },
+    {
+      name: 'Facebook',
+      icon: <FontAwesomeIcon icon={faFacebook} />,
+      url: 'https://www.facebook.com/agriscientistai',
+    },
+    {
+      name: 'YouTube',
+      icon: <FontAwesomeIcon icon={faYoutube} />,
+      url: 'https://www.youtube.com/@agriscientist-ai',
     },
   ]
 

@@ -17,6 +17,26 @@
 }
 
 // 樣式
+@function font_weight($weight) {
+  @if ($weight == 700) {
+    @return ZenMaruGothic-Black;
+  } @else if ($weight == 600) {
+    @return ZenMaruGothic-Bold;
+  } @else if ($weight == 500) {
+    @return ZenMaruGothic-Medium;
+  } @else if ($weight == 400) {
+    @return ZenMaruGothic-Regular;
+  } @else if ($weight == 300) {
+    @return ZenMaruGothic-Light;
+  } @else {
+    @return ZenMaruGothic-Medium;
+  }
+}
+@mixin font($size, $weight) {
+  font-size: $size;
+  font-family: font_weight($weight);
+}
+
 @mixin transition($value) {
   transition: $value;
   -webkit-transition: $value;
@@ -25,7 +45,7 @@
   -o-transition: $value;
 }
 
-@mixin border-radius($radius) {
+@mixin border_radius($radius) {
   border-radius: $radius;
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
@@ -41,7 +61,19 @@
   -o-transform: $value;
 }
 
+@mixin font_bg_Color($fontColor, $bgColor) {
+  color: $fontColor;
+  background: $bgColor;
+}
+
 // 通用組件樣式
+@mixin buttonDynamicSize($height) {
+  height: $height;
+  padding: 0 $height/2.5;
+  font-size: $height/2.5;
+  @include border_radius($height/2);
+}
+
 @mixin view_style {
   display: flex;
   flex-direction: column;
