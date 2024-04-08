@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+
+  > .aside {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    min-width: 240px;
+    height: 100%;
+    background: var(--green_L8);
+
+    @media (max-width: 900px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      min-height: 60px;
+      height: 60px;
+    }
+
+    > h1 {
+      font-family: ZenMaruGothic-Bold;
+      margin-bottom: 12px;
+      color: var(--green_D3);
+      cursor: default;
+
+      @media (max-width: 900px) {
+        margin-bottom: 0;
+      }
+    }
+    > ul {
+      @media (max-width: 900px) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      > li {
+        list-style: none;
+        padding: 6px 12px;
+        margin-bottom: 6px;
+        background: #ffffff;
+        border: 3px solid var(--opacity_w_0);
+        cursor: pointer;
+
+        @media (max-width: 900px) {
+          height: 100%;
+          margin-left: 6px;
+          margin-bottom: 0;
+        }
+
+        &.actv {
+          color: #fff;
+          font-weight: bold;
+          background: var(--green_L4);
+          border: 3px solid var(--green_L4);
+        }
+
+        border-radius: 13px;
+        -webkit-border-radius: 13px;
+        -moz-border-radius: 13px;
+        -ms-border-radius: 13px;
+        -o-border-radius: 13px;
+      }
+    }
+  }
+  > .view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 0 180px 0;
+    width: 100%;
+    overflow-y: scroll;
+
+    &::before {
+      z-index: 10;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 24px;
+      background: linear-gradient(
+        180deg,
+        var(--bg_base_light),
+        var(--opacity_w_0)
+      );
+
+      @media (max-width: 600px) {
+        top: 60px;
+      }
+    }
+    &::after {
+      z-index: 10;
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      min-height: 108px;
+      background: linear-gradient(
+        0deg,
+        var(--bg_base_light),
+        var(--opacity_w_0)
+      );
+    }
+
+    @media (max-width: 600px) {
+      padding: 12px 0 200px 0;
+    }
+  }
+}

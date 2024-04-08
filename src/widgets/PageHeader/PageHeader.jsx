@@ -1,4 +1,4 @@
-import styles from './styles.module.scss'
+import styles from './PageHeader.module.scss'
 
 /**
  * 常規頁面中的粘駐式標題欄

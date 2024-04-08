@@ -1,17 +1,26 @@
-import MarkdownView from '../../widgets/MarkdownView'
-import style from './style.module.scss'
+import MarkdownView from '../../widgets/MarkdownView/MarkdownView'
+import style from './Feedback.module.scss'
 import Sheet from '../../widgets/Sheet/Sheet'
 import { useState } from 'react'
 
 export default function Feedback() {
   const [showFeedbackSheet, setShowFeedbackSheet] = useState(false)
-  const feedbackControls = [
+  const controls = [
     {
       title: '發布',
       accent: true, // 強調按鈕
       action: () => {},
     },
   ]
+
+  const [formData, setFormData] = useState({
+    userName: '',
+    message: '',
+    type: '',
+  })
+
+  function handleFormChange() {}
+
   return (
     <>
       <div className={style.view}>
@@ -25,7 +34,7 @@ export default function Feedback() {
           title="問題反饋"
           childenView=""
           closeAction={() => setShowFeedbackSheet(false)}
-          controls={feedbackControls}
+          controls={controls}
         />
       )}
     </>

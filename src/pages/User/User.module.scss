@@ -1,0 +1,171 @@
+@import '../../mixin.scss';
+
+.content {
+  @include flex-layout(column, center, center);
+  position: relative;
+  padding: 24px 0;
+  width: 100%;
+  height: 100%;
+
+  > p {
+    &.createdAt {
+      padding: 9px 12px;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--black_opacity_3);
+
+      > time {
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: var(--black_opacity_3);
+      }
+    }
+  }
+}
+
+.userInfo {
+  @include flex-layout(row, center, flex-start);
+  position: relative;
+  padding: 18px;
+  padding: 18px 24px 18px 18px;
+  width: fit-content;
+  max-width: calc(100% - 36px);
+  background-color: #fff;
+  box-shadow: 0 3px 10px 0 #0000000f, 0 6px 50px 0 #0000000a;
+  @include border_radius(17px);
+
+  &.notSignUp {
+    padding: 18px 24px 18px 18px;
+    border: 3px solid var(--opacity_w);
+    background-color: #ffffff;
+    // box-shadow: 0 0 0 0 #00000000;
+    @include border_radius(17px);
+
+    > img {
+      width: 10vw;
+      height: 100%;
+      min-width: 72px;
+      max-width: 96px;
+    }
+  }
+
+  > img {
+    margin-right: 18px;
+    width: 15vw;
+    height: 100%;
+    min-width: 90px;
+    max-width: 120px;
+    @include border_radius(50%);
+    user-select: none;
+  }
+  > div {
+    overflow: hidden;
+
+    > p {
+      position: relative;
+      &.userName {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--green_D8);
+      }
+      &.userEmail {
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 300;
+        color: var(--green_D8);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        @media (max-width: 600px) {
+          font-size: 0.8rem;
+        }
+      }
+      &.userUID {
+        margin-top: 6px;
+        padding: 0 5px 0 29px;
+        width: fit-content;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.7rem;
+        color: var(--green_D2);
+        border: 1px solid var(--green_L3);
+        background: var(--green_L7);
+
+        > span.id {
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 24px;
+          text-align: center;
+          user-select: none;
+          color: var(--green_L7);
+          background: var(--green_L3);
+          @include border_radius(24px 0 0 24px);
+        }
+
+        @include border_radius(24px);
+      }
+
+      &.projUser {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 6px 9px;
+        width: fit-content;
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: var(--white);
+        background: var(--projet-user);
+        @include border_radius(0 13px 0 13px);
+
+        > svg {
+          margin-right: 3px;
+          margin-left: -3px;
+          width: 18px;
+          height: 18px;
+          color: #fff;
+          @include transform(rotate(-15deg));
+        }
+      }
+      &.guest {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 6px 9px;
+        width: fit-content;
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: var(--font-white);
+        background: var(--guest);
+        @include border_radius(0 13px 0 13px);
+      }
+    }
+  }
+}
+
+.signOut_Btn {
+  margin-top: 48px;
+  padding: 12px 18px;
+  font-family: ZenMaruGothic-Medium;
+  color: var(--opacity_w);
+  background: var(--green_L4);
+  font-size: 1.2rem;
+  border-radius: 28px;
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
+  -ms-border-radius: 28px;
+  -o-border-radius: 28px;
+}
+
+.signOut_Btn.logout {
+  font-weight: 600;
+  color: var(--yellow_D3);
+  background: var(--yellow_L6);
+  @include transition(var(--transition-normal));
+
+  &:hover {
+    color: var(--white);
+    background: var(--red);
+  }
+}

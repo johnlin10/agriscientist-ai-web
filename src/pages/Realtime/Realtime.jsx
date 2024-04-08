@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import style from './style.module.scss'
-import Aside from '../../widgets/Aside'
+import style from './Realtime.module.scss'
+import Aside from '../../widgets/Aside/Aside'
 import { Helmet } from 'react-helmet'
 
 export default function Realtime() {
@@ -12,10 +12,10 @@ export default function Realtime() {
           title: '感測數據',
           path: '/realtime/sensor',
         },
-        {
-          title: '儀表板',
-          path: '/realtime/dashboard',
-        },
+        // {
+        //   title: '儀表板',
+        //   path: '/realtime/dashboard',
+        // },
         {
           title: '控制台',
           path: '/realtime/control',

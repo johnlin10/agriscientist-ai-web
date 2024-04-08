@@ -1,0 +1,130 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  padding: 24px 0 108px 0;
+
+  > div {
+    padding: 0 18px 0 18px;
+  }
+
+  > .header {
+    z-index: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    padding: 12px;
+    top: 0;
+    width: 100%;
+    background: var(--bg_base_light);
+    box-shadow: 0 -12px 24px 36px var(--bg_base_light);
+
+    > img {
+      height: 54px;
+    }
+    > h1 {
+      font-family: ZenMaruGothic-Black;
+      color: var(--green_D2);
+    }
+  }
+
+  > h1 {
+    margin: 48px 0 24px 0;
+    font-family: ZenMaruGothic-Bold;
+    color: var(--green_D5);
+  }
+
+  > .intro {
+    > p {
+      font-size: 1rem;
+      letter-spacing: 1px;
+      line-height: 1.5rem;
+      color: var(--green_D7);
+    }
+  }
+
+  > .team {
+    justify-content: space-between;
+    width: 100%;
+
+    @media (max-width: 900px) {
+      overflow-x: auto;
+    }
+
+    > .members {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      @media (max-width: 720px) {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+
+      > .people {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        height: fit-content;
+        background-color: #fff;
+        box-shadow: 0 6px 10px 0 #21592d0f, 0 6px 50px 0 #21592d0a;
+        overflow: hidden;
+
+        @media (max-width: 720px) {
+          margin-bottom: 24px;
+          width: calc(100% - 24px);
+          max-width: 360px;
+        }
+
+        > .header {
+          z-index: 100;
+          height: fit-content;
+          max-height: 360px;
+          background: var(--green_L6);
+
+          > img {
+            margin: 12px 12px -24px 12px;
+            height: 72px;
+            width: 72px;
+            object-fit: cover;
+            object-position: center;
+            box-shadow: 0 3px 5px 0 #21592d0f, 0 3px 30px 0 #21592d0a;
+            border-radius: 36px;
+            -webkit-border-radius: 36px;
+            -moz-border-radius: 36px;
+            -ms-border-radius: 36px;
+            -o-border-radius: 36px;
+            user-select: none;
+            pointer-events: none;
+          }
+        }
+
+        > .content {
+          height: fit-content;
+          padding: 15px + 9px 18px 15px 18px;
+
+          > .name {
+            font-size: 1.2rem;
+            font-family: ZenMaruGothic-Bold;
+            color: var(--green_D4);
+          }
+          > .intro {
+            font-size: 0.9rem;
+            color: var(--green_D2);
+          }
+        }
+
+        border-radius: 13px;
+        -webkit-border-radius: 13px;
+        -moz-border-radius: 13px;
+        -ms-border-radius: 13px;
+        -o-border-radius: 13px;
+      }
+    }
+  }
+}

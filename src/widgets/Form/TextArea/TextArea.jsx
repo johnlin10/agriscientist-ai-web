@@ -1,4 +1,4 @@
-import styles from './styles.module.scss'
+import styles from './TextArea.module.scss'
 
 export default function TextArea({ title, value, onchange }) {
   return (

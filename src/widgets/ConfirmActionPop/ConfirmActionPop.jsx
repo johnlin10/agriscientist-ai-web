@@ -1,4 +1,4 @@
-import styles from './styles.module.scss'
+import styles from './ConfirmActionPop.module.scss'
 
 export default function ConfirmActionPop() {
   return (

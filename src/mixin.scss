@@ -66,6 +66,25 @@
   background: $bgColor;
 }
 
+@mixin background_opacity($color-var-name, $opacity) {
+  background: rgba($color-var-name, $opacity);
+}
+
+@mixin desaturate_color($property, $color, $amount) {
+  // 确保 $amount 是一个从 0 到 1 的值
+  $grayscale-value: $amount / 100;
+
+  @if $property == 'background' {
+    background: $color;
+    filter: grayscale($grayscale-value);
+    -webkit-filter: grayscale($grayscale-value);
+  } @else if $property == 'color' {
+    color: $color;
+    filter: grayscale($grayscale-value);
+    -webkit-filter: grayscale($grayscale-value);
+  }
+}
+
 // 通用組件樣式
 @mixin buttonDynamicSize($height) {
   height: $height;

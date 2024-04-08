@@ -10,9 +10,11 @@ import { AppContext } from './AppContext'
 import { useLocation } from 'react-router-dom'
 import { useNavigate, Navigate, Route, Routes, Outlet } from 'react-router-dom'
 import css from './App.module.scss'
+
 // Service Worker
 import { serviceWorkerRegistration } from './serviceWorkerRegistration'
 import { getRegistration } from './serviceWorkerRegistration'
+
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -20,41 +22,39 @@ import {
   faMoon,
   faCircleHalfStroke,
   faCircleUp,
-  faCircleUser,
-  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons'
+
 // Pages
-import Home from './pages/Home'
-import Preview from './pages/Preview'
-import User from './pages/User' //
-import NotFound from './pages/NotFound'
-import ProjProgress from './pages/ProjProgress'
-import TimeLine from './pages/TimeLine'
+import Home from './pages/Home/Home'
+import User from './pages/User/User'
+
 import Realtime from './pages/Realtime/Realtime'
-import Contrals from './pages/LiveInfo/Controls'
-import Sensors from './pages/LiveInfo/Sensors'
-import Chats from './pages/LiveInfo/Chats'
-import SmartSwitch from './pages/SmartSwitch'
-import Products from './pages/Products'
-import MicroFarm from './pages/Products/MicroFarm'
-import MicroFarmPro from './pages/Products/MicroFarmPro'
-import Researches from './pages/Researches'
-import Software from './pages/Researches/Software'
-import Hardware from './pages/Researches/Hardware'
-import Crops from './pages/Researches/Crops'
-import DataProcessing from './pages/Researches/DataProcessing'
-import AIML from './pages/Researches/AIML'
-import ResearchesIntro from './pages/Researches/Intro'
-import About from './pages/About'
+import Contrals from './pages/Realtime/Content/Controls/Controls'
+import Sensors from './pages/Realtime/Content/Sensors/Sensors'
+import Chats from './pages/Realtime/Content/Chats/Chats'
+import SmartSwitch from './pages/Realtime/Content/SmartSwich/SmartSwitch'
+import Dashboard from './pages/Realtime/Content/Dashboard/Dashboard'
 
-import Loading from './widgets/Loading'
+import Products from './pages/Products/Products'
+import MicroFarm from './pages/Products/Content/MicroFarm/MicroFarm'
+import MicroFarmPro from './pages/Products/Content/MicroFarmPro/MicroFarmPro'
 
-import { ParallaxProvider, Parallax } from 'react-scroll-parallax'
+import Researches from './pages/Researches/Researches'
+import Software from './pages/Researches/Content/Software/Software'
+import Hardware from './pages/Researches/Content/Hardware/Hardware'
+import Crops from './pages/Researches/Content/Crops/Crops'
+import DataProcessing from './pages/Researches/Content/DataProcessing/DataProcessing'
+import AIML from './pages/Researches/Content/AIML/AIML'
+import ResearchesIntro from './pages/Researches/Content/Intro/Intro'
+import About from './pages/About/About'
 
-import Nav from './widgets/Nav'
+import Loading from './widgets/Loading/Loading'
+import NotFound from './pages/NotFound/NotFound'
+
+// Widgets
+import Nav from './widgets/Navigator/Nav'
 import TermsOfUse from './pages/TermsOfUse/TermsOfUse'
 import Feedback from './pages/Feedback/Feedback'
-import Dashboard from './pages/Realtime/DataView/Dashboard'
 import Post from './pages/Post/Post'
 
 function App() {
@@ -313,18 +313,6 @@ function App() {
             /> */}
 
             <Route path="post" element={<Post />}></Route>
-
-            <Route
-              path="/progress"
-              element={
-                <ProjProgress
-                  navigateClick={navigateClick}
-                  adminPermit={adminPermit}
-                />
-              }
-            >
-              <Route path="timeLine" element={<TimeLine />}></Route>
-            </Route>
 
             <Route
               path="/products"

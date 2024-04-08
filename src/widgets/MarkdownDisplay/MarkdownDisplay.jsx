@@ -1,4 +1,4 @@
-import styles from './styles.module.scss'
+import styles from './MarkdownDisplay.module.scss'
 // import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'

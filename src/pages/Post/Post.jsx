@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import styles from './styles.module.scss'
+import styles from './Post.module.scss'
 
 import PageHeader from '../../widgets/PageHeader/PageHeader'
 import Sheet from '../../widgets/Sheet/Sheet'
@@ -21,9 +21,8 @@ import { AppContext } from '../../AppContext'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
-import Loading from '../../widgets/Loading'
+import Loading from '../../widgets/Loading/Loading'
 
-// 本次更新，完善了公告的功能。
 // 此公告可供所有人查看。發布功能僅供網站管理員發布官方公告，並不對外開放發布權限。
 export default function Post() {
   const { user, adminPermit } = useContext(AppContext)

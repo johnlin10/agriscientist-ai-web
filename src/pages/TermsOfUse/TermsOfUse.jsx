@@ -1,5 +1,5 @@
-import MarkdownView from '../../widgets/MarkdownView'
-import style from './style.module.scss'
+import MarkdownView from '../../widgets/MarkdownView/MarkdownView'
+import style from './TermsOfUse.module.scss'
 
 export default function TermsOfUse() {
   return (
