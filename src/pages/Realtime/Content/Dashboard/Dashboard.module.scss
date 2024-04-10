@@ -1,15 +1,17 @@
 @import '../../../../mixin.scss';
 
 .view {
+  @include flex-layout(row, null, center);
   width: 100%;
   padding: 0 0 80px + 24px 0;
 
   > .container {
     padding: 0 12px;
     width: 100%;
-    max-width: 1080px;
+    max-width: 1400px;
 
     > .header {
+      z-index: 100;
       position: sticky;
       top: 0;
       width: 100%;
@@ -28,27 +30,38 @@
   flex-wrap: wrap;
   width: 100%;
   height: fit-content;
+  margin-top: 12px;
+
+  * {
+    cursor: pointer;
+  }
 
   > .dashboardBlock {
-    width: calc(50% - 24px);
-    margin: 12px;
+    width: calc(50% - 12px);
+    margin: 6px;
     padding: 12px 12px;
     height: 100%;
     position: relative;
     background: var(--white);
 
-    @media (min-width: 1120px) {
-      width: calc(33.333333% - 24px);
-      margin: 12px;
-    }
-    @media (max-width: 600px) {
-      width: calc(50% - 12px);
-      margin: 6px;
-    }
-    @media (max-width: 450px) {
+    @media (max-width: 385px) {
       width: calc(100% - 12px);
-      margin: 6px;
     }
+    @media (min-width: 700px) {
+      width: calc(33.333333% - 12px);
+    }
+    @media (min-width: 1100px) {
+      width: calc(25% - 12px);
+    }
+    @media (min-width: 1300px) {
+      width: calc(20% - 12px);
+    }
+    // @media (max-width: 600px) {
+    //   width: calc(50% - 12px);
+    // }
+    // @media (max-width: 450px) {
+    //   width: calc(100% - 12px);
+    // }
 
     > .header {
       @include flex-layout(row, center, null);
@@ -65,10 +78,6 @@
           font-size: 1rem;
           color: var(--green_L5);
         }
-
-        &.data {
-          @include font(2rem, 600);
-        }
       }
     }
 
@@ -78,7 +87,7 @@
       > p {
         &.data {
           margin: 0 6px;
-          @include font(2rem, 600);
+          @include font(2.2rem, 600);
           color: var(--green_D7);
         }
         &.time {

@@ -56,6 +56,7 @@ export default function Dashboard() {
           <SensorDashboardBlock name="光照度" sensor="light" unit="Lux" />
           <SensorDashboardBlock name="水位高度" sensor="water" unit="" />
         </div>
+        <div className={style.dataAnalysisBoard}></div>
       </div>
     </div>
   )
@@ -65,22 +66,22 @@ function SensorDashboardBlock({ name, sensor, unit }) {
   const [latestData, setLatestData] = useState(null)
   const [sensors_actv, setSensors_actv] = useState(null)
 
+  // 獲取當週的第一天（星期一）
   function getCurrentWeekStartDate() {
-    // 设置星期一为一周的第一天
     moment.locale('en', {
       week: {
-        dow: 1, // Monday is the first day of the week.
+        dow: 1,
       },
     })
-    // 获取当前日期所在周的第一天（星期一）
     return moment().startOf('week')
   }
 
   useEffect(() => {
-    // 假设你已经有一个函数来获取当前周的开始日期
+    // 獲取當週第一天（星期一）為Document名稱
     const currentWeekStart = getCurrentWeekStartDate()
     const docName = currentWeekStart.format('YYYYMMDD')
-    console.log(docName)
+
+    // 獲取當週的Document，並取得最新數據
     const sonsorDataRef = doc(db, 'sensors_data', docName)
     const unsubscribe = onSnapshot(
       sonsorDataRef,
@@ -90,32 +91,33 @@ function SensorDashboardBlock({ name, sensor, unit }) {
           const data = doc.data().data
           const latest = data[data.length - 1] // 获取最新的一条数据
           setLatestData(latest)
-          console.log(latest)
         } else {
-          // 处理文档不存在的情况
           setLatestData(null)
         }
       },
       (error) => {
-        // 处理监听错误
         console.error('Failed to subscribe to sensor data:', error)
       }
     )
 
-    // 组件卸载时取消订阅
     return () => unsubscribe()
-  }, [name]) // 如果name变化，重新订阅
+  }, [name])
 
-  // 檢測感測器在線狀態
+  /**
+   * 檢測感測器在線狀態
+   * @param {timestamp} timestamp
+   * @returns - 感測器是否在線
+   */
   const checkSensorStatus = (timestamp) => {
-    // 获取当前时间
+    // 獲取當前時間
     const now = new Date().getTime()
-    // 将Firestore时间戳转换为毫秒
+    // 將Firestore時間戳轉換為毫秒
     const sensorTimestamp =
       timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6
-    // 检查时间差
+    // 檢查時間差
     return now - sensorTimestamp > 360000
   }
+  // 持續間隔檢測感測器在線狀態
   useEffect(() => {
     if (latestData && checkSensorStatus(latestData.timestamp)) {
       setSensors_actv(false)
@@ -136,7 +138,11 @@ function SensorDashboardBlock({ name, sensor, unit }) {
     }
   }, [latestData])
 
-  // 將timestamp時間格式化
+  /**
+   * 將timestamp時間格式化
+   * @param {number} seconds - timestamp.seconds
+   * @returns - YYYY/MM/DD 上/下午HH:mm:ss
+   */
   function formatTimestamp(seconds) {
     const date = new Date(seconds * 1000)
     return date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
@@ -164,6 +170,14 @@ function SensorDashboardBlock({ name, sensor, unit }) {
             : 'Loading...'}
         </p>
       </div>
+    </div>
+  )
+}
+
+function SensorDataChartBlock({ name, sensor, unit }) {
+  return (
+    <div>
+      <div></div>
     </div>
   )
 }
