@@ -43,7 +43,18 @@ export default function Nav(props) {
                 }}
               >
                 <p>
-                  感測數據
+                  感測數據（即將棄用）
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </p>
+              </li>
+              <li
+                onClick={(event) => {
+                  event.stopPropagation() // 阻止事件冒泡
+                  props.navigateClick('/realtime/dashboard')
+                }}
+              >
+                <p>
+                  儀表板 Beta
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>

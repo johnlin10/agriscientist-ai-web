@@ -1,10 +1,13 @@
+@import '../../../../mixin.scss';
+
 .view {
   width: 100%;
   padding: 0 0 80px + 24px 0;
 
   > .container {
-    width: 100%;
     padding: 0 12px;
+    width: 100%;
+    max-width: 1080px;
 
     > .header {
       position: sticky;
@@ -12,8 +15,7 @@
       width: 100%;
 
       > p {
-        font-size: 1.5rem;
-        font-weight: 400;
+        @include font(1.5rem, 600);
         color: var(--green_D4);
       }
     }
@@ -25,23 +27,65 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  height: fit-content;
 
   > .dashboardBlock {
     width: calc(50% - 24px);
     margin: 12px;
-    height: 240px;
-    background: var(--green_L9);
+    padding: 12px 12px;
+    height: 100%;
+    position: relative;
+    background: var(--white);
 
+    @media (min-width: 1120px) {
+      width: calc(33.333333% - 24px);
+      margin: 12px;
+    }
     @media (max-width: 600px) {
       width: calc(50% - 12px);
       margin: 6px;
     }
+    @media (max-width: 450px) {
+      width: calc(100% - 12px);
+      margin: 6px;
+    }
 
     > .header {
-      padding: 12px 16px;
-      > p.name {
-        font-size: 1rem;
-        color: var(--green_D2);
+      @include flex-layout(row, center, null);
+      > span.status {
+        margin-right: 6px;
+        padding: 2px 7px;
+        @include font(0.8rem, 500);
+        color: var(--white);
+        background: var(--green_L5);
+        @include border_radius(12px);
+      }
+      > p {
+        &.name {
+          font-size: 1rem;
+          color: var(--green_L5);
+        }
+
+        &.data {
+          @include font(2rem, 600);
+        }
+      }
+    }
+
+    > .dashboardData {
+      @include flex-layout(column, flex-start, space-between);
+
+      > p {
+        &.data {
+          margin: 0 6px;
+          @include font(2rem, 600);
+          color: var(--green_D7);
+        }
+        &.time {
+          align-self: flex-end;
+          @include font(0.8rem, 400);
+          color: var(--black_opacity_3);
+        }
       }
     }
 

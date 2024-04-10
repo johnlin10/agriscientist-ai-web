@@ -116,16 +116,6 @@ export default function Sensors() {
     ]
   }
 
-  const checkSensorStatus = (timestamp) => {
-    // 获取当前时间
-    const now = new Date().getTime()
-    // 将Firestore时间戳转换为毫秒
-    const sensorTimestamp =
-      timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6
-    // 检查时间差
-    return now - sensorTimestamp > 360000
-  }
-
   // 感測器數據即時同步
   useEffect(() => {
     const sensorsDataRef = doc(db, 'sensors_data', 'sensors_2')
@@ -331,6 +321,15 @@ export default function Sensors() {
     }
   }, [])
 
+  const checkSensorStatus = (timestamp) => {
+    // 获取当前时间
+    const now = new Date().getTime()
+    // 将Firestore时间戳转换为毫秒
+    const sensorTimestamp =
+      timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6
+    // 检查时间差
+    return now - sensorTimestamp > 360000
+  }
   // 感測器在線狀態
   useEffect(() => {
     const lastData = sensors ? sensors[sensors.length - 1] : ''

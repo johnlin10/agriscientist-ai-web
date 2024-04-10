@@ -117,7 +117,10 @@ export default function Chats(props) {
       <Helmet>
         <title>農場助理｜田野數據科學家</title>
       </Helmet>
-      <TestingBlock title="服務暫停中" description="正在最佳化對話體驗。" />
+      <TestingBlock
+        title="服務暫停中"
+        description="正在與數據分析進行全面整合。"
+      />
       <div
         className={`${style.assistant}${
           assistanStatus === 'true' ? ` ${style.actv}` : ''
@@ -162,9 +165,9 @@ export default function Chats(props) {
               >
                 <span>
                   {item.role === 'assistant'
-                    ? '專題助理'
+                    ? 'Agriscientist AI'
                     : item.role === 'user'
-                    ? '用戶'
+                    ? 'User'
                     : ''}
                 </span>
                 {item.audio_url && item.role === 'assistant' ? (
