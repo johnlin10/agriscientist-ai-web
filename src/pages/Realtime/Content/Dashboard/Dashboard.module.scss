@@ -12,6 +12,7 @@
 
     > .header {
       z-index: 100;
+      position: -webkit-sticky;
       position: sticky;
       top: 0;
       width: 100%;
@@ -29,6 +30,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
   margin-top: 12px;
 
@@ -103,5 +106,23 @@
     -moz-border-radius: 19px;
     -ms-border-radius: 19px;
     -o-border-radius: 19px;
+  }
+}
+
+.dataAnalysisBoard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-top: 12px;
+
+  * {
+    cursor: pointer;
+  }
+
+  > .dataAnalysisBlock {
   }
 }

@@ -1,11 +1,12 @@
 node_modules/
-/dist
-/.cache
-react-scripts
+dist/
+react-scripts/
+.vscode/
+**/.cache
 .env
 
 # Firebase
-.firebase
+.firebase/
 .firebaserc
 storage.rules
 firebase.json

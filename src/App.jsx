@@ -148,90 +148,6 @@ function App() {
     // })
   }, [])
 
-  // 外觀模式切換
-  const [theme, setTheme] = useState()
-  const [themeMode, setThemeMode] = useState(() => {
-    const savedThemeMode = localStorage.getItem('themeMode')
-    return savedThemeMode !== null ? 0 : 0 // 預設為「根據系統」 parseInt(savedThemeMode)
-  })
-  const [modeValue, setModeValue] = useState([])
-  // 監測系統外觀模式變化
-  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
-  // 變更狀態，並且在檢測到系統狀態變化後執行
-  useEffect(() => {
-    if (themeMode === 1) {
-      if (prefersDarkMode.matches) {
-        setTheme('dark')
-        setModeValue([
-          <FontAwesomeIcon icon={faCircleHalfStroke} />,
-          '根據系統',
-        ])
-      } else if (!prefersDarkMode.matches) {
-        setTheme('')
-        setModeValue([
-          <FontAwesomeIcon icon={faCircleHalfStroke} />,
-          '根據系統',
-        ])
-      }
-    } else if (themeMode === 2) {
-      setTheme('dark')
-      setModeValue([<FontAwesomeIcon icon={faMoon} />, '深色模式'])
-    } else if (themeMode === 0) {
-      setTheme('')
-      setModeValue([<FontAwesomeIcon icon={faSun} />, '淺色模式'])
-    }
-
-    prefersDarkMode.addEventListener('change', systemThemeChange)
-    return () => {
-      prefersDarkMode.removeEventListener('change', systemThemeChange)
-    }
-  }, [themeMode])
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [theme])
-  // 監測並使用 localStorage 儲存狀態
-  useEffect(() => {
-    localStorage.setItem('themeMode', themeMode.toString())
-  }, [themeMode])
-
-  //「根據系統」選項，檢測系統主題並切換狀態
-  const systemThemeChange = useCallback(() => {
-    if (themeMode === 1) {
-      if (prefersDarkMode.matches) {
-        setTheme('dark')
-        setModeValue([
-          <FontAwesomeIcon icon={faCircleHalfStroke} />,
-          '根據系統',
-        ])
-      } else if (!prefersDarkMode.matches) {
-        setTheme('')
-        setModeValue([
-          <FontAwesomeIcon icon={faCircleHalfStroke} />,
-          '根據系統',
-        ])
-      }
-    }
-  }, [themeMode, prefersDarkMode])
-
-  // 狀態切換輪迴
-  const handleThemeChange = (event) => {
-    if (themeMode === 1) {
-      setTheme('dark')
-      setThemeMode(2)
-      setModeValue([<FontAwesomeIcon icon={faMoon} />, '淺色模式'])
-    } else if (themeMode === 2) {
-      setTheme('')
-      setThemeMode(0)
-      setModeValue([<FontAwesomeIcon icon={faSun} />, '淺色模式'])
-    } else if (themeMode === 0) {
-      setThemeMode(1)
-      setModeValue([<FontAwesomeIcon icon={faCircleHalfStroke} />, '根據系統'])
-    }
-  }
   const [pathname, setPathname] = useState('')
   useEffect(() => {
     let page = location.pathname
@@ -292,12 +208,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Home
-                  navigateClick={navigateClick}
-                  adminPermit={adminPermit}
-                  handleThemeChange={handleThemeChange}
-                  modeValue={modeValue}
-                />
+                <Home navigateClick={navigateClick} adminPermit={adminPermit} />
               }
             />
 

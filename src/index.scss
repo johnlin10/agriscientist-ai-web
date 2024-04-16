@@ -17,6 +17,10 @@
 :focus {
   outline: none;
 }
+::-moz-selection {
+  background: var(--green_L5);
+  color: var(--green_D5);
+}
 ::selection {
   background: var(--green_L5);
   color: var(--green_D5);

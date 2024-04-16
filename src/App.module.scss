@@ -27,6 +27,9 @@
       > ul.header_title > h1 {
         margin: 48px 12px 0 12px;
         opacity: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
         user-select: none;
         pointer-events: none;
         cursor: default;
@@ -69,6 +72,8 @@
     @include flex-layout(row, center, center);
     position: relative;
     height: 100%;
+    width: -webkit-max-content;
+    width: -moz-max-content;
     width: max-content;
     overflow: hidden;
 
@@ -85,6 +90,9 @@
         text-overflow: ellipsis;
         color: var(--green_D3);
         @include transition(0.4s cubic-bezier(0.23, 1, 0.32, 1));
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
         user-select: text;
         cursor: pointer;
       }
@@ -140,6 +148,8 @@
   right: 6px;
   top: 6px;
   padding: 18px 18px 18px 18px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
   height: 42px;
   max-height: 42px;
@@ -150,6 +160,9 @@
   -ms-border-radius: 21px;
   -o-border-radius: 21px;
   opacity: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   -webkit-transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -217,6 +230,8 @@
     padding: 12px 27px 12px 18px;
     height: 42px;
     font-size: 1.2rem;
+    width: -webkit-max-content;
+    width: -moz-max-content;
     width: max-content;
     color: #ffffffd1;
     // background: #ffffff00;
@@ -263,6 +278,9 @@
   height: 100%;
   background: var(--green_L8);
   opacity: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   pointer-events: none;
 
@@ -300,11 +318,47 @@
     min-width: 72px;
     width: 35%;
     max-width: 142px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     pointer-events: none;
 
     animation: loading_1 1.1333s ease-in-out 0s none infinite;
     -webkit-animation: loading_1 1.1333s ease-in-out 0s none infinite;
+
+    @-webkit-keyframes loading_1 {
+      0% {
+        transform-origin: bottom left;
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+      }
+      35% {
+        transform: rotate(5deg);
+        -webkit-transform: rotate(5deg);
+        -moz-transform: rotate(5deg);
+        -ms-transform: rotate(5deg);
+        -o-transform: rotate(5deg);
+      }
+      65% {
+        transform: rotate(-5deg);
+        -webkit-transform: rotate(-5deg);
+        -moz-transform: rotate(-5deg);
+        -ms-transform: rotate(-5deg);
+        -o-transform: rotate(-5deg);
+      }
+      100% {
+        transform-origin: bottom left;
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+      }
+    }
 
     @keyframes loading_1 {
       0% {
