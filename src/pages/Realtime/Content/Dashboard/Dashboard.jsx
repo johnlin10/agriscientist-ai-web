@@ -7,8 +7,8 @@ import { collection, doc, onSnapshot, query } from 'firebase/firestore'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faCircleChevronLeft,
-  faCircleChevronRight,
+  faAngleLeft,
+  faChevronRight,
   faAnglesRight,
 } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
@@ -35,6 +35,7 @@ import {
   Label,
   ReferenceLine,
   ResponsiveContainer,
+  LabelList,
 } from 'recharts'
 import TestingBlock from '../../../../widgets/TestingNoticeBlock/TestingNoticeBlock'
 import Loading from '../../../../widgets/Loading/Loading'
@@ -48,28 +49,49 @@ export default function Dashboard() {
       name: '空氣溫度',
       type: 'temperature',
       unit: '℃',
+      fixed: 1,
+      chartType: 'line',
+      color: 'var(--green_L4)',
+      accentColor: 'var(--green_D2)',
     },
     {
       name: '空氣濕度',
       type: 'humidity',
       unit: '%',
+      fixed: 1,
+      chartType: 'bar',
+      color: 'var(--blue_L5)',
+      accentColor: 'var(--blue_D3)',
     },
     {
       name: '土壤濕度',
       type: 'soilHumidity',
       unit: '%',
+      fixed: 1,
+      chartType: 'bar',
+      color: 'var(--blue_L5)',
+      accentColor: 'var(--blue_D3)',
     },
     {
       name: '光照度',
       type: 'light',
       unit: 'Lux',
+      fixed: 0,
+      chartType: 'bar',
+      color: 'var(--yellow_L4)',
+      accentColor: 'var(--yellow_D3)',
     },
     {
       name: '水位高度',
       type: 'water',
       unit: '',
+      fixed: 0,
+      chartType: 'bar',
+      color: 'var(--blue_L5)',
+      accentColor: 'var(--blue_D3)',
     },
   ]
+  const dataAnalysisType = ['平均', '中位']
 
   // 感測器原始資料
   const [sensorsData, setSensorsData] = useState(null)
@@ -80,11 +102,12 @@ export default function Dashboard() {
   const [dataIndexes, setDataIndexes] = useState([]) // 選擇數據單位段落 - 用於尋找段落
   const [selectDataIndex, setSelectDataIndex] = useState(0)
   const [dataUnit, setDataUnit] = useState('hour') // 選擇數據單位 - hour/day/week/month
+  const [selectAnalysisDataType, setSelectAnalysisDataType] = useState(0)
 
   // 圖表數據是否已初始化（初始化後，讓數據分組圖表不因數據更新而返回顯示最新數據）
   const [isIndexesInitialized, setIsIndexesInitialized] = useState(false)
 
-  // *=== 數據獲取及處理 ===============================================================
+  // *=== 數據處理 ===============================================================
   /**
    * 獲取當週的第一天（星期一）
    * @returns {Date} YYYYMMDD
@@ -97,42 +120,6 @@ export default function Dashboard() {
     })
     return moment().startOf('week')
   }
-
-  // GET Current Week Sensors Data -
-  useEffect(() => {
-    // 獲取當週第一天為欲查詢的 Document 名稱
-    const currentWeekStart = getCurrentWeekStartDate()
-    const docName = currentWeekStart.format('YYYYMMDD')
-
-    // 獲取當週的 Document，並取得最新數據
-    const sonsorDataRef = doc(db, 'sensors_data', docName)
-    const unsubscribe = onSnapshot(
-      sonsorDataRef,
-      (doc) => {
-        if (doc && doc.exists()) {
-          console.log('Document data:', doc.data())
-          const rawData = doc.data().data
-          // 將數值字串轉換為浮點數
-          const formattedData = rawData.map((item) => ({
-            ...item,
-            soilHumidity: parseFloat(item.soilHumidity).toFixed(1),
-            temperature: parseFloat(item.temperature).toFixed(1),
-            humidity: parseFloat(item.humidity).toFixed(1),
-            light: parseInt(item.light, 10),
-            water: parseInt(item.water, 10),
-          }))
-          setCurrentWeekSensorData(formattedData)
-        } else {
-          setCurrentWeekSensorData(null)
-        }
-      },
-      (error) => {
-        console.error('Failed to subscribe to sensor data:', error)
-      }
-    )
-
-    return () => unsubscribe()
-  }, [])
 
   /**
    * 根據日期取得週數
@@ -373,6 +360,42 @@ export default function Dashboard() {
     }
   }, [sensorsData, dataUnit, isIndexesInitialized])
 
+  // *=== 數據獲取 ===============================================================
+  // 獲取 current week sensors data - currentWeekSensorData
+  useEffect(() => {
+    // 獲取當週第一天為欲查詢的 Document 名稱
+    const currentWeekStart = getCurrentWeekStartDate()
+    const docName = currentWeekStart.format('YYYYMMDD')
+
+    // 獲取當週的 Document，並取得最新數據
+    const sonsorDataRef = doc(db, 'sensors_data', docName)
+    const unsubscribe = onSnapshot(
+      sonsorDataRef,
+      (doc) => {
+        if (doc && doc.exists()) {
+          console.log('Document data:', doc.data())
+          const rawData = doc.data().data
+          // 將數值字串轉換為浮點數
+          const formattedData = rawData.map((item) => ({
+            ...item,
+            soilHumidity: parseFloat(item.soilHumidity).toFixed(1),
+            temperature: parseFloat(item.temperature).toFixed(1),
+            humidity: parseFloat(item.humidity).toFixed(1),
+            light: parseInt(item.light, 10),
+            water: parseInt(item.water, 10),
+          }))
+          setCurrentWeekSensorData(formattedData)
+        } else {
+          setCurrentWeekSensorData(null)
+        }
+      },
+      (error) => {
+        console.error('Failed to subscribe to sensor data:', error)
+      }
+    )
+
+    return () => unsubscribe()
+  }, [])
   // 獲取並整合所有數據 - sensorsData
   useEffect(() => {
     const collectionRef = collection(db, 'sensors_data')
@@ -444,26 +467,22 @@ export default function Dashboard() {
       setIsIndexesInitialized(false)
     }
   }
+  // 分析資料切換
+  const changeAnalysisData = (type) => {
+    setSelectAnalysisDataType(type)
+  }
 
   return (
     <div className={style.view}>
-      {/* <TestingBlock
-        title="全新數據儀表板即將登場！"
-        description="將使用更佳美觀易用的數據介面，提供更全面的可視化數據及數據分析結果。"
-      /> */}
       <div className={style.container}>
-        <div className={style.header}>
-          <p>MicroFarm Pro</p>
-        </div>
+        <PageHeader title="MicroFarm Pro" />
         <div className={style.dashboardView}>
           {/* 最新數據顯示 */}
           {sensors.map((sensor, index) => (
             <SensorDashboardBlock
               key={index}
-              name={sensor.name}
-              type={sensor.type}
+              sensor={sensor}
               data={currentWeekSensorsData} // 當週數據
-              unit={sensor.unit}
             />
           ))}
         </div>
@@ -474,7 +493,7 @@ export default function Dashboard() {
             className={style.switchData}
             onClick={() => handlePrevDay()}
           >
-            <FontAwesomeIcon icon={faCircleChevronLeft} />
+            <FontAwesomeIcon icon={faAngleLeft} />
           </button>
           {/* 數據單位控制 */}
           <div>
@@ -490,6 +509,18 @@ export default function Dashboard() {
                 <option value="day">日</option>
                 <option value="week">週</option>
                 <option value="month">月</option>
+              </optgroup>
+            </select>
+            <select
+              name=""
+              className={style.dataUnitSelection}
+              value={selectAnalysisDataType}
+              onChange={(e) => changeAnalysisData(e.target.value)}
+            >
+              <optgroup label="基礎運算">
+                {dataAnalysisType.map((type, index) => (
+                  <option value={index}>{type}</option>
+                ))}
               </optgroup>
             </select>
             {isIndexesInitialized && (
@@ -509,21 +540,23 @@ export default function Dashboard() {
             data-isLast={!isIndexesInitialized}
             onClick={() => handleNextDay()}
           >
-            <FontAwesomeIcon icon={faCircleChevronRight} />
+            <FontAwesomeIcon icon={faChevronRight} />
           </button>
         </div>
         <div className={style.dataAnalysisBoard}>
           {sensors.map((sensor, index) => (
             <SensorDataChartBlock
               key={index}
-              name={sensor.name}
-              type={sensor.type}
+              sensor={sensor}
               data={
                 sensorGroupData
                   ? sensorGroupData[dataIndexes[selectDataIndex]]
                   : null
               }
-              unit={sensor.unit}
+              analysisType={{
+                typeName: dataAnalysisType[selectAnalysisDataType],
+                index: selectAnalysisDataType,
+              }}
             />
           ))}
         </div>
@@ -532,7 +565,13 @@ export default function Dashboard() {
   )
 }
 
-function SensorDashboardBlock({ name, type, data, unit }) {
+/**
+ *
+ * @param {Array} sensor - 感測器資訊
+ * @param {*} data - 感測器資料
+ * @returns
+ */
+function SensorDashboardBlock({ sensor, data }) {
   const [latestData, setLatestData] = useState(null)
   const [sensors_actv, setSensors_actv] = useState(null)
 
@@ -592,13 +631,13 @@ function SensorDashboardBlock({ name, type, data, unit }) {
         <span className={style.status} data-actv={sensors_actv}>
           {sensors_actv ? '即時' : '離線'}
         </span>
-        <p className={style.name}>{name}</p>
+        <p className={style.name}>{sensor.name}</p>
       </div>
       <div className={style.dashboardData}>
         {latestData ? (
           <p className={style.data}>
-            {latestData[type]}
-            {unit}
+            {latestData[sensor.type]}
+            {sensor.unit}
           </p>
         ) : (
           <Loading loadingAniActv={true} type="local" />
@@ -614,24 +653,35 @@ function SensorDashboardBlock({ name, type, data, unit }) {
   )
 }
 
-function SensorDataChartBlock({ name, type, data, unit }) {
-  const [latestData, setLatestData] = useState(null)
-  const [sensors_actv, setSensors_actv] = useState(null)
-
-  useEffect(() => {
-    const latest = data ? data[data.length - 1] : null
-    setLatestData(latest)
-  }, [data])
-
+function SensorDataChartBlock({ sensor, data, analysisType }) {
+  const SelectChart = () => {
+    if (sensor.chartType === 'line') {
+      return (
+        <SensorLineChart
+          sensor={sensor}
+          data={data}
+          analysisType={analysisType}
+        />
+      )
+    } else if (sensor.chartType === 'bar') {
+      return (
+        <SensorBarChart
+          sensor={sensor}
+          data={data}
+          analysisType={analysisType}
+        />
+      )
+    }
+  }
   return (
     <div className={style.chartBlock}>
       <div className={style.header}>
-        <p className={style.name}>{name}</p>
+        <p className={style.name}>{sensor.name}</p>
         {/* <p className={style.unit}>{data}</p> */}
       </div>
       <div className={style.chart}>
         {data ? (
-          <Chart name={name} type={type} data={data} unit={unit} />
+          <SelectChart />
         ) : (
           <Loading loadingAniActv={true} type="local" />
         )}
@@ -640,7 +690,52 @@ function SensorDataChartBlock({ name, type, data, unit }) {
   )
 }
 
-function Chart({ name, type, data, unit }) {
+/**
+ * 計算中位數
+ * @param {Array} data
+ * @param {Number} key
+ * @returns
+ */
+function calculateMedian(data, key) {
+  const sortedValues = data.map((item) => item[key]).sort((a, b) => a - b)
+  const middleIndex = Math.floor(sortedValues.length / 2)
+  if (sortedValues.length % 2 !== 0) {
+    return sortedValues[middleIndex]
+  }
+  return (sortedValues[middleIndex - 1] + sortedValues[middleIndex]) / 2
+}
+
+/**
+ * 計算平均值
+ * @param {Array} data - 數據數組
+ * @param {Number} key - 感測器代號
+ * @returns
+ */
+function calculateAverage(data, key) {
+  const sum = data.reduce((acc, item) => acc + item[key], 0)
+  return sum / data.length
+}
+
+function SensorLineChart({ sensor, data, analysisType }) {
+  const [displayDataAnalysis, setDisplayDataAnalysis] = useState(null)
+
+  useEffect(() => {
+    // 根據傳入的 sensor.type 計算平均值和中位數
+    const average = calculateAverage(data, sensor.type)
+    const median = calculateMedian(data, sensor.type)
+
+    // 根据 analysisType 设置要显示的数据分析类型
+    let analysisValue
+    if (analysisType.index === '0') {
+      analysisValue = average
+    } else if (analysisType.index === '1') {
+      analysisValue = median
+    }
+
+    // 設定要顯示的數據分析結果
+    setDisplayDataAnalysis(analysisValue)
+  }, [data, sensor, analysisType])
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
@@ -662,9 +757,10 @@ function Chart({ name, type, data, unit }) {
           }
         />
         <YAxis
-          dataKey={type}
+          dataKey={sensor.type}
           type="number"
-          domain={[0, (dataMax) => dataMax + 5]}
+          domain={[0, (dataMax) => dataMax * 1.2]}
+          tickFormatter={(data) => data.toFixed(sensor.fixed)}
         />
 
         <Tooltip
@@ -674,8 +770,124 @@ function Chart({ name, type, data, unit }) {
             moment(unixTime * 1000).format('MM/DD HH:mm')
           }
         />
-        <Line type="monotone" dataKey={type} stroke="#ebcd3b" />
+        <Line type="monone" dataKey={sensor.type} stroke={sensor.color}>
+          {/* <LabelList dataKey={type} position="top" /> */}
+        </Line>
+
+        <ReferenceLine
+          y={displayDataAnalysis ? displayDataAnalysis : ''}
+          isFront={true}
+          position="start"
+          fill={sensor.accentColor}
+          stroke={sensor.accentColor}
+          strokeWidth="1px"
+          strokeDasharray="7 3"
+        >
+          <Label
+            value={
+              displayDataAnalysis
+                ? `${analysisType.typeName} ${displayDataAnalysis.toFixed(
+                    sensor.fixed
+                  )}${sensor.unit}`
+                : ''
+            }
+            position="insideBottomLeft"
+            fill={sensor.accentColor}
+          />
+        </ReferenceLine>
       </LineChart>
+    </ResponsiveContainer>
+  )
+}
+
+function SensorBarChart({ sensor, data, analysisType }) {
+  const [displayDataAnalysis, setDisplayDataAnalysis] = useState(null)
+
+  useEffect(() => {
+    // 根据传入的 sensor.type 计算平均值和中位数
+    const average = calculateAverage(data, sensor.type)
+    const median = calculateMedian(data, sensor.type)
+
+    // 根据 analysisType 设置要显示的数据分析类型
+    let analysisValue
+    if (analysisType.index === '0') {
+      analysisValue = average
+    } else if (analysisType.index === '1') {
+      analysisValue = median
+    }
+
+    // 设置要显示的数据分析结果
+    setDisplayDataAnalysis(analysisValue)
+  }, [data, sensor, analysisType])
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{
+          top: 12,
+          right: 12,
+          left: -12,
+          bottom: 0,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="timestamp.seconds"
+          tickFormatter={(unixTime) =>
+            moment(unixTime * 1000).format('MM/DD HH:mm')
+          }
+        />
+        <YAxis
+          dataKey={sensor.type}
+          type="number"
+          domain={[0, (dataMax) => dataMax * 1.2]}
+          tickFormatter={(data) => data.toFixed(sensor.fixed)}
+        />
+        <Tooltip
+          animationDuration={50}
+          animationEasing="ease-in-out"
+          labelFormatter={(unixTime) => {
+            const date = new Date(unixTime * 1000)
+            const month = date.getMonth() + 1 // 月份是從 0 開始的，所以要加 1
+            const day = date.getDate()
+            const hours = date.getHours()
+            const minutes = date.getMinutes()
+
+            // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
+            const formattedMonth = month.toString().padStart(2, '0')
+            const formattedDay = day.toString().padStart(2, '0')
+            const formattedHours = hours.toString().padStart(2, '0')
+            const formattedMinutes = minutes.toString().padStart(2, '0')
+
+            return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
+          }}
+        />
+        <Bar dataKey={sensor.type} fill={sensor.color} />
+
+        <ReferenceLine
+          y={displayDataAnalysis ? displayDataAnalysis : ''}
+          isFront={true}
+          position="start"
+          fill={sensor.accentColor}
+          stroke={sensor.accentColor}
+          strokeWidth="1px"
+          strokeDasharray="7 3"
+        >
+          <Label
+            value={
+              displayDataAnalysis
+                ? `${analysisType.typeName} ${displayDataAnalysis.toFixed(
+                    sensor.fixed
+                  )}${sensor.unit}`
+                : ''
+            }
+            position="insideBottomLeft"
+            fill={sensor.accentColor}
+          />
+        </ReferenceLine>
+      </BarChart>
     </ResponsiveContainer>
   )
 }

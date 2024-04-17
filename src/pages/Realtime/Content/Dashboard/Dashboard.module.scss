@@ -6,32 +6,17 @@
   padding: 0 0 80px + 24px 0;
 
   > .container {
+    @include flex-layout(column, null, center);
     padding: 0 12px;
     width: 100%;
     max-width: 1400px;
-
-    > .header {
-      z-index: 100;
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      width: 100%;
-
-      > p {
-        @include font(1.5rem, 600);
-        color: var(--green_D4);
-      }
-    }
 
     > .dashboardView {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       width: 100%;
-      height: -webkit-fit-content;
-      height: -moz-fit-content;
-      height: fit-content;
-      margin-top: 12px;
+      margin-top: 24px;
 
       * {
         cursor: default;
@@ -41,7 +26,7 @@
         width: calc(50% - 12px);
         margin: 6px;
         padding: 12px 12px;
-        height: 100%;
+        height: 120px;
         position: relative;
         background: var(--white);
 
@@ -57,12 +42,6 @@
         @media (min-width: 1300px) {
           width: calc(20% - 12px);
         }
-        // @media (max-width: 600px) {
-        //   width: calc(50% - 12px);
-        // }
-        // @media (max-width: 450px) {
-        //   width: calc(100% - 12px);
-        // }
 
         > .header {
           @include flex-layout(row, center, null);
@@ -114,7 +93,9 @@
     > .data_range {
       @include flex-layout(row, null, space-between);
       @include set-HW(42px, calc(100% - 12px));
-      margin: 24px 0 6px 6px;
+      max-width: 720px;
+      align-self: center;
+      margin: 48px 0 6px 6px;
       border: 3px solid var(--yellow_L7);
       background: var(--yellow_L8);
       @include border-radius(21px);
@@ -152,6 +133,7 @@
         > button {
           @include buttonDynamicSize(28px);
           border: 2px solid var(--yellow_L7);
+          margin: 0 3px;
           background: var(--yellow_L9);
           color: var(--yellow_D2);
           @include border-radius(14px);
@@ -177,11 +159,11 @@
           width: fit-content;
           padding: 0 6px;
           background: #ffffff00;
-          color: var(--yellow_L5);
+          color: var(--yellow_L3);
           font-size: 1.2rem;
 
           &:hover {
-            color: var(--yellow);
+            color: var(--yellow_D2);
           }
         }
 
@@ -198,9 +180,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
+  height: max-content;
 
   * {
     cursor: default;
@@ -210,7 +190,6 @@
     width: calc(50% - 12px);
     margin: 6px;
     padding: 12px 12px;
-    height: 100%;
     min-height: 240px;
     position: relative;
     background: var(--white);
