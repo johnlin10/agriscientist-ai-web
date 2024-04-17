@@ -121,41 +121,6 @@ export default function SmartSwitch(props) {
     }
   }, [])
 
-  // 原本的 Firestore 方案
-  // useEffect(() => {
-  //   const unsubscribe = onSnapshot(sensorsDataRef, (docSnap) => {
-  //     setSwitch1(docSnap.data().switch_1)
-  //     setControl1(docSnap.data().switch_1)
-  //     setSwitch2(docSnap.data().switch_2)
-  //     setControl2(docSnap.data().switch_2)
-  //     setSwitchAuth(docSnap.data().auth)
-  //   })
-
-  //   return () => {
-  //     unsubscribe()
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       await writeFirestoreDoc(
-  //         'test_database/smartswitch',
-  //         {
-  //           switch_1: control1,
-  //           switch_2: control2,
-  //           auth: switchAuth,
-  //         },
-  //         true
-  //       )
-  //     } catch (error) {
-  //       console.error('Error writing to Firestore:', error)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [control1, control2, switchAuth])
-
   return (
     <>
       <div className={style.container}>

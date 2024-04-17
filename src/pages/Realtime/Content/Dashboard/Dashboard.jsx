@@ -2,8 +2,7 @@
 import { useEffect, useState } from 'react'
 import style from './Dashboard.module.scss'
 import { db } from '../../../../firebase'
-import useCollectionAllDocData from '../../../../script/useCollectionAllDocData'
-import { collection, doc, onSnapshot, query } from 'firebase/firestore'
+import { collection, onSnapshot, query } from 'firebase/firestore'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -95,7 +94,6 @@ export default function Dashboard() {
 
   // 感測器原始資料
   const [sensorsData, setSensorsData] = useState(null)
-  const [currentWeekSensorsData, setCurrentWeekSensorData] = useState(null)
 
   // 感測器當前分組資料
   const [sensorGroupData, setSensorGroupData] = useState(null)
@@ -108,18 +106,6 @@ export default function Dashboard() {
   const [isIndexesInitialized, setIsIndexesInitialized] = useState(false)
 
   // *=== 數據處理 ===============================================================
-  /**
-   * 獲取當週的第一天（星期一）
-   * @returns {Date} YYYYMMDD
-   */
-  function getCurrentWeekStartDate() {
-    moment.locale('en', {
-      week: {
-        dow: 1,
-      },
-    })
-    return moment().startOf('week')
-  }
 
   /**
    * 根據日期取得週數
@@ -219,7 +205,6 @@ export default function Dashboard() {
           acc[0].push(data)
           return acc
         }, {})
-        console.log(groupedByRecord)
         return groupedByRecord
 
       default:
@@ -282,8 +267,6 @@ export default function Dashboard() {
       // 講採樣後的數據添加到結果數組
       sampledData[group] = groupSample
     })
-
-    console.log('Sampled Data:', sampledData)
     return sampledData
   }
 
@@ -358,44 +341,10 @@ export default function Dashboard() {
         setSelectDataIndex(availableDates.length - 1)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sensorsData, dataUnit, isIndexesInitialized])
 
   // *=== 數據獲取 ===============================================================
-  // 獲取 current week sensors data - currentWeekSensorData
-  useEffect(() => {
-    // 獲取當週第一天為欲查詢的 Document 名稱
-    const currentWeekStart = getCurrentWeekStartDate()
-    const docName = currentWeekStart.format('YYYYMMDD')
-
-    // 獲取當週的 Document，並取得最新數據
-    const sonsorDataRef = doc(db, 'sensors_data', docName)
-    const unsubscribe = onSnapshot(
-      sonsorDataRef,
-      (doc) => {
-        if (doc && doc.exists()) {
-          console.log('Document data:', doc.data())
-          const rawData = doc.data().data
-          // 將數值字串轉換為浮點數
-          const formattedData = rawData.map((item) => ({
-            ...item,
-            soilHumidity: parseFloat(item.soilHumidity).toFixed(1),
-            temperature: parseFloat(item.temperature).toFixed(1),
-            humidity: parseFloat(item.humidity).toFixed(1),
-            light: parseInt(item.light, 10),
-            water: parseInt(item.water, 10),
-          }))
-          setCurrentWeekSensorData(formattedData)
-        } else {
-          setCurrentWeekSensorData(null)
-        }
-      },
-      (error) => {
-        console.error('Failed to subscribe to sensor data:', error)
-      }
-    )
-
-    return () => unsubscribe()
-  }, [])
   // 獲取並整合所有數據 - sensorsData
   useEffect(() => {
     const collectionRef = collection(db, 'sensors_data')
@@ -418,8 +367,12 @@ export default function Dashboard() {
             water: parseInt(item.water, 10),
           }))
 
-          // 将当前文档的数据添加到数组中
+          // 將當前文檔的數據添加到數組中
           documents = documents.concat(formattedData)
+        })
+
+        documents.sort((a, b) => {
+          return a.timestamp - b.timestamp
         })
 
         // 更新所有doc的數據
@@ -482,7 +435,7 @@ export default function Dashboard() {
             <SensorDashboardBlock
               key={index}
               sensor={sensor}
-              data={currentWeekSensorsData} // 當週數據
+              data={sensorsData} // 當週數據
             />
           ))}
         </div>
@@ -519,7 +472,9 @@ export default function Dashboard() {
             >
               <optgroup label="基礎運算">
                 {dataAnalysisType.map((type, index) => (
-                  <option value={index}>{type}</option>
+                  <option value={index} key={index}>
+                    {type}
+                  </option>
                 ))}
               </optgroup>
             </select>
@@ -537,7 +492,7 @@ export default function Dashboard() {
           <button
             title={isIndexesInitialized ? '查看下一頁數據' : '目前是最新數據'}
             className={style.switchData}
-            data-isLast={!isIndexesInitialized}
+            data-islast={!isIndexesInitialized}
             onClick={() => handleNextDay()}
           >
             <FontAwesomeIcon icon={faChevronRight} />
@@ -730,6 +685,8 @@ function SensorLineChart({ sensor, data, analysisType }) {
       analysisValue = average
     } else if (analysisType.index === '1') {
       analysisValue = median
+    } else {
+      analysisValue = average
     }
 
     // 設定要顯示的數據分析結果
@@ -804,19 +761,21 @@ function SensorBarChart({ sensor, data, analysisType }) {
   const [displayDataAnalysis, setDisplayDataAnalysis] = useState(null)
 
   useEffect(() => {
-    // 根据传入的 sensor.type 计算平均值和中位数
+    // 根據傳入的 sensor.type 計算平均值和中位數
     const average = calculateAverage(data, sensor.type)
     const median = calculateMedian(data, sensor.type)
 
-    // 根据 analysisType 设置要显示的数据分析类型
+    // 根據 analysisType 設定要顯示的數據分析類型
     let analysisValue
     if (analysisType.index === '0') {
       analysisValue = average
     } else if (analysisType.index === '1') {
       analysisValue = median
+    } else {
+      analysisValue = average
     }
 
-    // 设置要显示的数据分析结果
+    // 設定要顯示的數據分析結果
     setDisplayDataAnalysis(analysisValue)
   }, [data, sensor, analysisType])
   return (

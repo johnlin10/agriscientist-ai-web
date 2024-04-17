@@ -105,55 +105,49 @@ export default function Aside({ list }) {
   return (
     <aside>
       {list?.map((item, index) => (
-        <>
+        <div key={index}>
           <h1>{item.title}</h1>
-          <ul key={index}>
+          <ul>
             {item.ul.map((li, index) => (
-              <>
-                <li
-                  className={checkLocation([`${li.path}`]) ? style.actv : ''}
-                  onClick={() => navigateClick(li.path)}
-                  key={index}
-                >
-                  <p>{li.title}</p>
-                  {li.child ? (
-                    <div
-                      className={
-                        checkLocation([`${li.path}`]) ? style.actv : ''
-                      }
-                    >
-                      {li.child.map((li, index) => (
-                        <>
-                          <p onClick={() => moveToPassage(index)} key={index}>
-                            {li.title}
-                          </p>
-                          {li.child ? (
-                            <div>
-                              {li.child.map((li, index) => (
-                                <>
-                                  <p
-                                    onClick={() => moveToChildPassage(index)}
-                                    key={index}
-                                  >
-                                    {li.title}
-                                  </p>
-                                </>
-                              ))}
-                            </div>
-                          ) : (
-                            ''
-                          )}
-                        </>
-                      ))}
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                </li>
-              </>
+              <li
+                key={index}
+                className={checkLocation([`${li.path}`]) ? style.actv : ''}
+                onClick={() => navigateClick(li.path)}
+              >
+                <p>{li.title}</p>
+                {li.child ? (
+                  <div
+                    className={checkLocation([`${li.path}`]) ? style.actv : ''}
+                  >
+                    {li.child.map((li, index) => (
+                      <>
+                        <p key={index} onClick={() => moveToPassage(index)}>
+                          {li.title}
+                        </p>
+                        {li.child ? (
+                          <div>
+                            {li.child.map((li, index) => (
+                              <p
+                                key={index}
+                                onClick={() => moveToChildPassage(index)}
+                              >
+                                {li.title}
+                              </p>
+                            ))}
+                          </div>
+                        ) : (
+                          ''
+                        )}
+                      </>
+                    ))}
+                  </div>
+                ) : (
+                  ''
+                )}
+              </li>
             ))}
           </ul>
-        </>
+        </div>
       ))}
     </aside>
   )

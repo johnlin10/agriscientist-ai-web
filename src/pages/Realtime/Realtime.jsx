@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import style from './Realtime.module.scss'
 import Aside from '../../widgets/Aside/Aside'
-import { Helmet } from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 export default function Realtime() {
   const aside = [
@@ -38,9 +38,11 @@ export default function Realtime() {
   ]
   return (
     <div className={style.container}>
-      <Helmet>
-        <title>即時｜田野數據科學家</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>即時｜田野數據科學家</title>
+        </Helmet>
+      </HelmetProvider>
       <Aside list={aside}></Aside>
       <div className={`${style.view} chat_container`}>
         <Outlet />

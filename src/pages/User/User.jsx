@@ -28,7 +28,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth'
-import { app, db, writeFirestoreDoc } from '../../firebase'
+import { app, db } from '../../firebase'
 
 export const auth = getAuth(app)
 
@@ -52,25 +52,6 @@ export default function User(props) {
         )
       })
   }
-
-  //updateDoc
-
-  // 上傳用戶基本資料
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userInfo = {
-          email: user.email,
-          name: user.displayName,
-          headSticker: user.photoURL,
-          uid: user.uid,
-        }
-
-        await writeFirestoreDoc(`user/${user.uid}`, userInfo, true)
-      }
-    })
-    return unsubscribe
-  }, [user])
 
   const handleSignOut = async () => {
     try {

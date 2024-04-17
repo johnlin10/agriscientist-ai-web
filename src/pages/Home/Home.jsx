@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import style from './Home.module.scss'
-import { Helmet } from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import Bottom from '../../widgets/Bottom/Bottom'
 
 import Rellax from 'rellax'
@@ -27,13 +27,15 @@ export default function Home(props) {
   }, [])
   return (
     <>
-      <Helmet>
-        <title>田野數據科學家｜首頁</title>
-        <meta
-          name="description"
-          content="基於農場數據分析為基礎，並以語音交互為核心的專題作品網站。"
-        />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>田野數據科學家｜首頁</title>
+          <meta
+            name="description"
+            content="基於農場數據分析為基礎，並以語音交互為核心的專題作品網站。"
+          />
+        </Helmet>
+      </HelmetProvider>
       <div className={style.container}>
         <div className={style.header}>
           <div className={`${style.title}`}>
