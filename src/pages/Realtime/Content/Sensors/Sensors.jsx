@@ -130,8 +130,6 @@ export default function Sensors() {
           return timestampA - timestampB
         })
         setSensors(sortData)
-        // console.log(sortData)
-        // setDataDisplayArea(sortData.length)
       }
     })
 
@@ -148,7 +146,6 @@ export default function Sensors() {
       const availableDates = getAvailableDates(groupedData, dataUnit)
       setDataIndexes(availableDates)
       setSelectDataIndex(availableDates.length - 1)
-      console.log(availableDates.length - 1)
     }
   }, [sensors, dataUnit])
 
@@ -288,12 +285,6 @@ export default function Sensors() {
         return []
     }
   }
-
-  // useEffect(() => {
-  //   if (dataDates && dataDates.length > 0) {
-  //     setSelectDates(dataDates.length - 1)
-  //   }
-  // }, [dataDates])
 
   const handlePrevDay = () => {
     if (selectDataIndex > 0) {
@@ -579,7 +570,14 @@ export default function Sensors() {
                     return `${formattedMonth}${formattedDay} ${formattedHours}${formattedMinutes}`
                   }}
                 />
-                <YAxis type="number" domain={[0, 'dataMax + 5']} />
+                <YAxis
+                  type="number"
+                  domain={[0, 'dataMax + 5']}
+                  tickFormatter={[
+                    0,
+                    (dataMax) => Math.ceil(dataMax / 10) * 10 + 5,
+                  ]}
+                />
                 <Tooltip
                   animationDuration={50}
                   animationEasing="ease-in-out"

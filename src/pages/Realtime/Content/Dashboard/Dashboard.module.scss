@@ -22,90 +22,174 @@
         color: var(--green_D4);
       }
     }
-  }
-}
 
-.dashboardView {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  margin-top: 12px;
+    > .dashboardView {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      height: -webkit-fit-content;
+      height: -moz-fit-content;
+      height: fit-content;
+      margin-top: 12px;
 
-  * {
-    cursor: pointer;
-  }
-
-  > .dashboardBlock {
-    width: calc(50% - 12px);
-    margin: 6px;
-    padding: 12px 12px;
-    height: 100%;
-    position: relative;
-    background: var(--white);
-
-    @media (max-width: 385px) {
-      width: calc(100% - 12px);
-    }
-    @media (min-width: 700px) {
-      width: calc(33.333333% - 12px);
-    }
-    @media (min-width: 1100px) {
-      width: calc(25% - 12px);
-    }
-    @media (min-width: 1300px) {
-      width: calc(20% - 12px);
-    }
-    // @media (max-width: 600px) {
-    //   width: calc(50% - 12px);
-    // }
-    // @media (max-width: 450px) {
-    //   width: calc(100% - 12px);
-    // }
-
-    > .header {
-      @include flex-layout(row, center, null);
-      > span.status {
-        margin-right: 6px;
-        padding: 2px 7px;
-        @include font(0.8rem, 500);
-        color: var(--white);
-        background: var(--green_L5);
-        @include border_radius(12px);
+      * {
+        cursor: default;
       }
-      > p {
-        &.name {
-          font-size: 1rem;
-          color: var(--green_L5);
+
+      > .dashboardBlock {
+        width: calc(50% - 12px);
+        margin: 6px;
+        padding: 12px 12px;
+        height: 100%;
+        position: relative;
+        background: var(--white);
+
+        @media (max-width: 385px) {
+          width: calc(100% - 12px);
+        }
+        @media (min-width: 700px) {
+          width: calc(33.333333% - 12px);
+        }
+        @media (min-width: 1100px) {
+          width: calc(25% - 12px);
+        }
+        @media (min-width: 1300px) {
+          width: calc(20% - 12px);
+        }
+        // @media (max-width: 600px) {
+        //   width: calc(50% - 12px);
+        // }
+        // @media (max-width: 450px) {
+        //   width: calc(100% - 12px);
+        // }
+
+        > .header {
+          @include flex-layout(row, center, null);
+          > span.status {
+            margin-right: 6px;
+            padding: 2px 7px;
+            @include font(0.8rem, 500);
+            color: var(--white);
+            background: var(--black_opacity_2);
+            @include border_radius(12px);
+
+            &[data-actv='true'] {
+              background: var(--green_L5);
+            }
+          }
+          > p {
+            &.name {
+              font-size: 1rem;
+              color: var(--green_L5);
+            }
+          }
+        }
+
+        > .dashboardData {
+          @include flex-layout(column, flex-start, space-between);
+
+          > p {
+            &.data {
+              margin: 0 6px;
+              @include font(2.2rem, 600);
+              color: var(--green_D7);
+            }
+            &.time {
+              align-self: flex-end;
+              @include font(0.8rem, 400);
+              color: var(--black_opacity_3);
+            }
+          }
+        }
+
+        border-radius: 19px;
+        -webkit-border-radius: 19px;
+        -moz-border-radius: 19px;
+        -ms-border-radius: 19px;
+        -o-border-radius: 19px;
+      }
+    }
+
+    > .data_range {
+      @include flex-layout(row, null, space-between);
+      @include set-HW(42px, calc(100% - 12px));
+      margin: 24px 0 6px 6px;
+      border: 3px solid var(--yellow_L7);
+      background: var(--yellow_L8);
+      @include border-radius(21px);
+
+      > div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        > p {
+          padding: 0 12px;
+          color: var(--yellow_D3);
+          @include font(1.2rem, 600);
+        }
+
+        > select {
+          margin: 0 3px;
+          padding: 0 3px;
+          height: 28px;
+          font-size: 0.9rem;
+          background: #ffffff00;
+          color: var(--yellow_D2);
+          border: 2px solid var(--yellow_L7);
+          background: var(--yellow_L9);
+          @include border-radius(24px);
+          @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+
+          &:hover {
+            color: var(--white);
+            border: 2px solid var(--yellow_L3);
+            background: var(--yellow_L3);
+          }
+        }
+
+        > button {
+          @include buttonDynamicSize(28px);
+          border: 2px solid var(--yellow_L7);
+          background: var(--yellow_L9);
+          color: var(--yellow_D2);
+          @include border-radius(14px);
+          @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+
+          &:hover {
+            color: var(--white);
+            border: 2px solid var(--yellow_L3);
+            background: var(--yellow_L3);
+          }
+        }
+      }
+
+      > button {
+        width: 50%;
+        padding: 3px 0;
+        margin: 0 3px;
+
+        @include border-radius(12px);
+        @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+
+        &.switchData {
+          width: fit-content;
+          padding: 0 6px;
+          background: #ffffff00;
+          color: var(--yellow_L5);
+          font-size: 1.2rem;
+
+          &:hover {
+            color: var(--yellow);
+          }
+        }
+
+        &[data-isLast='true'] {
+          opacity: 0;
         }
       }
     }
-
-    > .dashboardData {
-      @include flex-layout(column, flex-start, space-between);
-
-      > p {
-        &.data {
-          margin: 0 6px;
-          @include font(2.2rem, 600);
-          color: var(--green_D7);
-        }
-        &.time {
-          align-self: flex-end;
-          @include font(0.8rem, 400);
-          color: var(--black_opacity_3);
-        }
-      }
-    }
-
-    border-radius: 19px;
-    -webkit-border-radius: 19px;
-    -moz-border-radius: 19px;
-    -ms-border-radius: 19px;
-    -o-border-radius: 19px;
   }
 }
 
@@ -117,12 +201,59 @@
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  margin-top: 12px;
 
   * {
-    cursor: pointer;
+    cursor: default;
   }
 
-  > .dataAnalysisBlock {
+  > .chartBlock {
+    width: calc(50% - 12px);
+    margin: 6px;
+    padding: 12px 12px;
+    height: 100%;
+    min-height: 240px;
+    position: relative;
+    background: var(--white);
+
+    @media (max-width: 1080px) {
+      width: calc(100% - 12px);
+    }
+    @media (min-width: 1300px) {
+      width: calc(33.333333% - 12px);
+    }
+    @media (min-width: 1700px) {
+      width: calc(25% - 12px);
+    }
+
+    @include border-radius(19px);
+
+    > .header {
+      @include flex-layout(row, center, null);
+      > span.status {
+        margin-right: 6px;
+        padding: 2px 7px;
+        @include font(0.8rem, 500);
+        color: var(--white);
+        background: var(--black_opacity_2);
+        @include border_radius(12px);
+
+        &[data-actv='true'] {
+          background: var(--green_L5);
+        }
+      }
+      > p {
+        &.name {
+          font-size: 1rem;
+          color: var(--black_opacity_3);
+        }
+      }
+    }
+
+    > .chart {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      margin-top: 6px;
+    }
   }
 }

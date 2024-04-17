@@ -96,7 +96,7 @@ export default function Bottom() {
     {
       name: 'GitHub',
       icon: <FontAwesomeIcon icon={faGithub} />,
-      url: 'https://github.com/johnlin10/agriscientist-ai-web',
+      url: 'https://github.com/agriscientist-ai',
     },
     {
       name: 'Facebook',
