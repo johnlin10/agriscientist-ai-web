@@ -36,7 +36,7 @@ export default function Nav(props) {
             </p>
             <FontAwesomeIcon icon={faCaretUp} className={style.more} />
             <ul>
-              <li
+              {/* <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
                   props.navigateClick('/realtime/sensor')
@@ -46,7 +46,7 @@ export default function Nav(props) {
                   感測數據（即將棄用）
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
-              </li>
+              </li> */}
               <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
@@ -58,7 +58,7 @@ export default function Nav(props) {
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
               </li>
-              <li
+              {/* <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡
                   props.navigateClick('/realtime/control')
@@ -68,7 +68,7 @@ export default function Nav(props) {
                   控制台
                   <FontAwesomeIcon icon={faArrowRight} />
                 </p>
-              </li>
+              </li> */}
               <li
                 onClick={(event) => {
                   event.stopPropagation() // 阻止事件冒泡

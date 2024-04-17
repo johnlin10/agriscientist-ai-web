@@ -8,18 +8,18 @@ export default function Realtime() {
     {
       title: '即時資訊',
       ul: [
-        {
-          title: '感測數據（即將棄用）',
-          path: '/realtime/sensor',
-        },
+        // {
+        //   title: '感測數據（即將棄用）',
+        //   path: '/realtime/sensor',
+        // },
         {
           title: '儀表板 Beta',
           path: '/realtime/dashboard',
         },
-        {
-          title: '控制台',
-          path: '/realtime/control',
-        },
+        // {
+        //   title: '控制台',
+        //   path: '/realtime/control',
+        // },
         {
           title: '農場助理',
           path: '/realtime/chat',

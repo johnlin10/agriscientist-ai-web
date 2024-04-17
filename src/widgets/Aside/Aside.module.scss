@@ -1,8 +1,5 @@
 aside {
   z-index: 5000;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
   min-width: 240px;
   height: 100%;
   background: var(--bg_base_light);
@@ -12,13 +9,28 @@ aside {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0 12px 18px;
     min-height: 60px;
     height: 60px;
     box-shadow: 0 6px 12px 12px var(--bg_base_light);
   }
 
   > div {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    min-width: 240px;
+    height: 100%;
+
+    @media (max-width: 900px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 12px 18px;
+      min-height: 60px;
+      height: 60px;
+      box-shadow: 0 6px 12px 12px var(--bg_base_light);
+    }
+
     > h1 {
       font-family: ZenMaruGothic-Bold;
       margin-bottom: 12px;
