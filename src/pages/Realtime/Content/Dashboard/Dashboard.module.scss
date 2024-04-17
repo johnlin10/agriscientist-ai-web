@@ -75,13 +75,13 @@
             @include border_radius(12px);
 
             &[data-actv='true'] {
-              background: var(--green_L5);
+              background: var(--green_L3);
             }
           }
           > p {
             &.name {
-              font-size: 1rem;
-              color: var(--green_L5);
+              @include font(1rem, 500);
+              color: var(--green_L3);
             }
           }
         }
