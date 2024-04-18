@@ -22,7 +22,7 @@ export default function Realtime() {
         // },
         {
           title: '農場助理',
-          path: '/realtime/chat',
+          path: '/realtime/assistant',
         },
       ],
     },

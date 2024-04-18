@@ -40,6 +40,19 @@ import TestingBlock from '../../../../widgets/TestingNoticeBlock/TestingNoticeBl
 import Loading from '../../../../widgets/Loading/Loading'
 import PageHeader from '../../../../widgets/PageHeader/PageHeader'
 
+const analysisTimeRange = {
+  hour: '一小時',
+  three_hours: '三小時',
+  six_hours: '六小時',
+  twelve_hours: '十二小時',
+  day: '一天',
+  three_days: '三天',
+  week: '一週',
+  three_week: '三週',
+  month: '一個月',
+  three_month: '三個月',
+}
+
 // 此頁面正在內部開發中，尚未完工
 export default function Dashboard() {
   // 感測器資訊
@@ -49,7 +62,7 @@ export default function Dashboard() {
       type: 'temperature',
       unit: '℃',
       fixed: 1,
-      chartType: 'line',
+      chartType: 'area',
       color: 'var(--green_L4)',
       accentColor: 'var(--green_D2)',
     },
@@ -58,7 +71,7 @@ export default function Dashboard() {
       type: 'humidity',
       unit: '%',
       fixed: 1,
-      chartType: 'bar',
+      chartType: 'area',
       color: 'var(--blue_L5)',
       accentColor: 'var(--blue_D3)',
     },
@@ -67,7 +80,7 @@ export default function Dashboard() {
       type: 'soilHumidity',
       unit: '%',
       fixed: 1,
-      chartType: 'bar',
+      chartType: 'area',
       color: 'var(--blue_L5)',
       accentColor: 'var(--blue_D3)',
     },
@@ -94,6 +107,7 @@ export default function Dashboard() {
 
   // 感測器原始資料
   const [sensorsData, setSensorsData] = useState(null)
+  const [trendAnalysis, setTrendAnalysis] = useState(null)
 
   // 感測器當前分組資料
   const [sensorGroupData, setSensorGroupData] = useState(null)
@@ -101,6 +115,7 @@ export default function Dashboard() {
   const [selectDataIndex, setSelectDataIndex] = useState(0)
   const [dataUnit, setDataUnit] = useState('hour') // 選擇數據單位 - hour/day/week/month
   const [selectAnalysisDataType, setSelectAnalysisDataType] = useState(0)
+  const [maxTrendsBySensor, setMaxTrendsBySensor] = useState({})
 
   // 圖表數據是否已初始化（初始化後，讓數據分組圖表不因數據更新而返回顯示最新數據）
   const [isIndexesInitialized, setIsIndexesInitialized] = useState(false)
@@ -344,6 +359,29 @@ export default function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sensorsData, dataUnit, isIndexesInitialized])
 
+  /**
+   * 找出最大的數據趨勢分析結果
+   * @param {Array} trendsByTimeRange - 數據趨勢分析結果
+   * @returns {Array} - 變化率最大的趨勢
+   */
+  function findMaxSlopeTrend(trendsByTimeRange) {
+    let maxTrend = null
+    let maxSlope = 0
+
+    // 便利每個時間範圍的趨勢分析
+    Object.values(trendsByTimeRange).forEach((trends) => {
+      trends.forEach((trend) => {
+        const currentSlopeAbs = Math.abs(trend.slope)
+        if (currentSlopeAbs > maxSlope) {
+          maxSlope = currentSlopeAbs
+          maxTrend = trend
+        }
+      })
+    })
+
+    return maxTrend
+  }
+
   // *=== 數據獲取 ===============================================================
   // 獲取並整合所有數據 - sensorsData
   useEffect(() => {
@@ -377,6 +415,44 @@ export default function Dashboard() {
 
         // 更新所有doc的數據
         setSensorsData(documents)
+      },
+      (error) => {
+        console.error('Failed to subscribe to collection:', error)
+      }
+    )
+    return () => unsubscribe()
+  }, [])
+
+  // 獲取數據趨勢分析結果 - trendAnalysis-所有分析結果, maxTrendsBySensor-變化最大的分析結果
+  useEffect(() => {
+    const collectionRef = collection(db, 'trend_analysis')
+    const q = query(collectionRef)
+
+    // 監聽整個集合的變更
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        let documents = []
+
+        snapshot.forEach((doc) => {
+          // 用doc.id做為索引，用doc.data()做為值
+          documents[doc.id] = doc.data()
+        })
+
+        // 更新所有doc的數據
+        setTrendAnalysis(documents)
+
+        // 提取個想感測器變化最大的分析結果
+        let maxTrends = {}
+        for (const sensorType in documents) {
+          const sensorData = documents[sensorType]
+          if (sensorData && sensorData.trends_by_time_range) {
+            maxTrends[sensorType] = findMaxSlopeTrend(
+              sensorData.trends_by_time_range
+            )
+          }
+        }
+        setMaxTrendsBySensor(maxTrends)
       },
       (error) => {
         console.error('Failed to subscribe to collection:', error)
@@ -512,6 +588,11 @@ export default function Dashboard() {
                 typeName: dataAnalysisType[selectAnalysisDataType],
                 index: selectAnalysisDataType,
               }}
+              trends={
+                maxTrendsBySensor[sensor.type]
+                  ? maxTrendsBySensor[sensor.type]
+                  : {}
+              }
             />
           ))}
         </div>
@@ -608,7 +689,8 @@ function SensorDashboardBlock({ sensor, data }) {
   )
 }
 
-function SensorDataChartBlock({ sensor, data, analysisType }) {
+function SensorDataChartBlock({ sensor, data, analysisType, trends }) {
+  const [trendText, setTrendText] = useState(null)
   const SelectChart = () => {
     if (sensor.chartType === 'line') {
       return (
@@ -626,14 +708,42 @@ function SensorDataChartBlock({ sensor, data, analysisType }) {
           analysisType={analysisType}
         />
       )
+    } else if (sensor.chartType === 'area') {
+      return (
+        <SensorAreaChart
+          sensor={sensor}
+          data={data}
+          analysisType={analysisType}
+        />
+      )
+    } else {
+      return (
+        <SensorLineChart
+          sensor={sensor}
+          data={data}
+          analysisType={analysisType}
+        />
+      )
     }
   }
+
+  useEffect(() => {
+    if (trends.timeRange) {
+      setTrendText(
+        `最近${analysisTimeRange[trends.timeRange]}的${sensor.name}${
+          trends.trendDirection
+        }`
+      )
+    }
+  }, [sensor, trends])
+
   return (
     <div className={style.chartBlock}>
       <div className={style.header}>
         <p className={style.name}>{sensor.name}</p>
         {/* <p className={style.unit}>{data}</p> */}
       </div>
+      {trendText && <p className={style.trend}>{trendText}</p>}
       <div className={style.chart}>
         {data ? (
           <SelectChart />
@@ -847,6 +957,105 @@ function SensorBarChart({ sensor, data, analysisType }) {
           />
         </ReferenceLine>
       </BarChart>
+    </ResponsiveContainer>
+  )
+}
+
+function SensorAreaChart({ sensor, data, analysisType }) {
+  const [displayDataAnalysis, setDisplayDataAnalysis] = useState(null)
+
+  useEffect(() => {
+    // 根據傳入的 sensor.type 計算平均值和中位數
+    const average = calculateAverage(data, sensor.type)
+    const median = calculateMedian(data, sensor.type)
+
+    // 根據 analysisType 設定要顯示的數據分析類型
+    let analysisValue
+    if (analysisType.index === '0') {
+      analysisValue = average
+    } else if (analysisType.index === '1') {
+      analysisValue = median
+    } else {
+      analysisValue = average
+    }
+
+    // 設定要顯示的數據分析結果
+    setDisplayDataAnalysis(analysisValue)
+  }, [data, sensor, analysisType])
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{
+          top: 12,
+          right: 12,
+          left: -12,
+          bottom: 0,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="timestamp.seconds"
+          tickFormatter={(unixTime) =>
+            moment(unixTime * 1000).format('MM/DD HH:mm')
+          }
+        />
+        <YAxis
+          dataKey={sensor.type}
+          type="number"
+          domain={[0, (dataMax) => dataMax * 1.2]}
+          tickFormatter={(data) => data.toFixed(sensor.fixed)}
+        />
+        <Tooltip
+          animationDuration={50}
+          animationEasing="ease-in-out"
+          labelFormatter={(unixTime) => {
+            const date = new Date(unixTime * 1000)
+            const month = date.getMonth() + 1 // 月份是從 0 開始的，所以要加 1
+            const day = date.getDate()
+            const hours = date.getHours()
+            const minutes = date.getMinutes()
+
+            // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
+            const formattedMonth = month.toString().padStart(2, '0')
+            const formattedDay = day.toString().padStart(2, '0')
+            const formattedHours = hours.toString().padStart(2, '0')
+            const formattedMinutes = minutes.toString().padStart(2, '0')
+
+            return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
+          }}
+        />
+        <Area
+          type="monotone"
+          dataKey={sensor.type}
+          stroke={sensor.color}
+          fill={sensor.color}
+        />
+
+        <ReferenceLine
+          y={displayDataAnalysis ? displayDataAnalysis : ''}
+          isFront={true}
+          position="start"
+          fill={sensor.accentColor}
+          stroke={sensor.accentColor}
+          strokeWidth="1px"
+          strokeDasharray="7 3"
+        >
+          <Label
+            value={
+              displayDataAnalysis
+                ? `${analysisType.typeName} ${displayDataAnalysis.toFixed(
+                    sensor.fixed
+                  )}${sensor.unit}`
+                : ''
+            }
+            position="insideBottomLeft"
+            fill={sensor.accentColor}
+          />
+        </ReferenceLine>
+      </AreaChart>
     </ResponsiveContainer>
   )
 }

@@ -14,246 +14,135 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
 
+const navItems = [
+  {
+    title: '首頁',
+    icon: faLeaf,
+    path: '/',
+  },
+  {
+    title: '即時',
+    icon: faChartSimple,
+    path: '/realtime/dashboard',
+    child: [
+      {
+        title: '儀表板 Beta',
+        path: '/realtime/dashboard',
+      },
+      {
+        title: '農場助理',
+        path: '/realtime/assistant',
+      },
+    ],
+  },
+  {
+    title: '產品',
+    icon: faCube,
+    path: '/products/microfarm',
+    child: [
+      {
+        title: 'MicroFarm',
+        path: '/products/microfarm',
+      },
+      {
+        title: 'MicroFarm Pro',
+        path: '/products/microfarm-pro',
+      },
+    ],
+  },
+  {
+    title: '研究',
+    icon: faBook,
+    path: '/researches/intro',
+    child: [
+      {
+        title: '前言',
+        path: '/researches/intro',
+      },
+      {
+        title: 'hr',
+        path: '',
+      },
+      {
+        title: '硬體準備',
+        path: '/researches/hardware',
+      },
+      {
+        title: '軟體環境',
+        path: '/researches/software',
+      },
+      {
+        title: '農作物',
+        path: '/researches/crops',
+      },
+      {
+        title: '數據處理',
+        path: '/researches/dataProcess',
+      },
+      {
+        title: '人工智慧與機器學習',
+        path: '/researches/aiml',
+      },
+    ],
+  },
+  {
+    title: '關於',
+    icon: faUsers,
+    path: '/about',
+    child: [
+      {
+        title: '關於我們',
+        path: '/about',
+      },
+      {
+        title: 'hr',
+        path: '',
+      },
+      {
+        title: '帳號',
+        path: '/user',
+      },
+      {
+        title: '公告',
+        path: '/post',
+      },
+    ],
+  },
+]
+
 export default function Nav(props) {
   return (
     <nav className={style.nav}>
       <div className={style.view}>
         <ul>
-          <li onClick={() => props.navigateClick('/')}>
-            <p>
-              <FontAwesomeIcon icon={faLeaf} className={style.icon} />
-              <span>首頁</span>
-            </p>
-          </li>
-          <li onClick={() => props.navigateClick('/realtime/sensor')}>
-            <p>
-              {/* <FontAwesomeIcon
-                icon={faMagnifyingGlassChart}
-                className={style.icon}
-              /> */}
-              <FontAwesomeIcon icon={faChartSimple} className={style.icon} />
-              <span>即時</span>
-            </p>
-            <FontAwesomeIcon icon={faCaretUp} className={style.more} />
-            <ul>
-              {/* <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/realtime/sensor')
-                }}
-              >
-                <p>
-                  感測數據（即將棄用）
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li> */}
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/realtime/dashboard')
-                }}
-              >
-                <p>
-                  儀表板 Beta
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              {/* <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/realtime/control')
-                }}
-              >
-                <p>
-                  控制台
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li> */}
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/realtime/chat')
-                }}
-              >
-                <p>
-                  農場助理
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              {/* <hr />
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/realtime/smartSwitch')
-                }}
-              >
-                <p>
-                  智慧插座
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li> */}
-            </ul>
-          </li>
-          <li onClick={() => props.navigateClick('/products/microfarm')}>
-            <p>
-              {/* <FontAwesomeIcon icon={faInbox} className={style.icon} /> */}
-              <FontAwesomeIcon icon={faCube} className={style.icon} />
-              <span>產品</span>
-            </p>
-            <FontAwesomeIcon icon={faCaretUp} className={style.more} />
-            <ul>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/products/microfarm')
-                }}
-              >
-                <p>
-                  MicroFarm
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/products/microfarm-pro')
-                }}
-              >
-                <p>
-                  MicroFarm Pro
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-            </ul>
-          </li>
-          <li onClick={() => props.navigateClick('/researches/intro')}>
-            <p>
-              <FontAwesomeIcon icon={faBook} className={style.icon} />
-              <span>研究</span>
-            </p>
-            <FontAwesomeIcon icon={faCaretUp} className={style.more} />
-            <ul>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/researches/intro')
-                }}
-              >
-                <p>
-                  前言
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              <hr />
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/researches/hardware')
-                }}
-              >
-                <p>
-                  硬體準備
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/researches/software')
-                }}
-              >
-                <p>
-                  軟體環境
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/researches/crops')
-                }}
-              >
-                <p>
-                  農作物
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/researches/dataProcessing')
-                }}
-              >
-                <p>
-                  數據處理
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/researches/aiAndMachinelearning')
-                }}
-              >
-                <p>
-                  人工智慧與機器學習
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-            </ul>
-          </li>
-          <li onClick={() => props.navigateClick('/about')}>
-            <p>
-              {/* <FontAwesomeIcon icon={faUsers} className={style.icon} /> */}
-              <FontAwesomeIcon icon={faCircleInfo} className={style.icon} />
-              <span>關於</span>
-            </p>
-            <FontAwesomeIcon icon={faCaretUp} className={style.more} />
-            <ul>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/about')
-                }}
-              >
-                <p>
-                  關於我們
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              {/* <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  // props.navigateClick('/about')
-                }}
-              >
-                <p>我們的理念</p>
-              </li> */}
-              <hr />
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/user')
-                }}
-              >
-                <p>
-                  帳號
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-              <li
-                onClick={(event) => {
-                  event.stopPropagation() // 阻止事件冒泡
-                  props.navigateClick('/post')
-                }}
-              >
-                <p>
-                  公告
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </p>
-              </li>
-            </ul>
-          </li>
+          {navItems.map((navItem, index) => (
+            <li key={index}>
+              <a href={`/#${navItem.path}`}>
+                <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
+                <span>{navItem.title}</span>
+              </a>
+              {navItem.child && (
+                <>
+                  <FontAwesomeIcon icon={faCaretUp} className={style.more} />
+                  <ul>
+                    {navItem.child.map((list, index) => {
+                      if (list.title === 'hr') {
+                        return <hr />
+                      }
+                      return (
+                        <li>
+                          <a href={`/#${list.path}`}>
+                            {list.title}
+                            <FontAwesomeIcon icon={faArrowRight} />
+                          </a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     </nav>

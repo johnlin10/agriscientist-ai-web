@@ -246,8 +246,8 @@ function App() {
               <Route path="software" element={<Software />} />
               <Route path="hardware" element={<Hardware />} />
               <Route path="crops" element={<Crops />} />
-              <Route path="dataProcessing" element={<DataProcessing />} />
-              <Route path="aiAndMachinelearning" element={<AIML />} />
+              <Route path="dataProcess" element={<DataProcessing />} />
+              <Route path="aiml" element={<AIML />} />
             </Route>
 
             <Route path="/about" element={<About />}></Route>
@@ -266,7 +266,7 @@ function App() {
               <Route path="sensor" element={<Sensors />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="control" element={<Contrals />} />
-              <Route path="chat" element={<Chats />} />
+              <Route path="assistant" element={<Chats />} />
               <Route
                 path="smartSwitch"
                 element={<SmartSwitch navigateClick={navigateClick} />}

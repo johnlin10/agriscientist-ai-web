@@ -5,6 +5,7 @@
   --bg_base_light: #fdf9e4;
   --bg_base_light_green: #f2fff6;
   --system-noti: linear-gradient(150deg, #4ba2e9, #4ee19f);
+  --ai: linear-gradient(150deg, #894ceb, #4bafe9);
 
   /* 用戶認證 */
   --projet-user: linear-gradient(150deg, #4ee19f, #4bafe9, #894ceb);

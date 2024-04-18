@@ -172,11 +172,13 @@
           }
         }
 
-        > p {
+        > a {
+          @include flex-layout(row, center, center);
           font-size: 1.1rem;
           // font-weight: 600;
           white-space: nowrap;
-          margin: 0 18px;
+          height: 100%;
+          width: 100%;
 
           > svg.icon {
             margin-right: 6px;
@@ -272,7 +274,8 @@
             }
 
             &:hover {
-              > p {
+              > p,
+              a {
                 font-family: 'ZenMaruGothic-Medium';
                 color: var(--green_D2);
                 > svg {
@@ -281,11 +284,14 @@
                 }
               }
             }
-            > p {
+            > p,
+            a {
               font-family: 'ZenMaruGothic-Medium';
               width: 100%;
               white-space: nowrap;
               color: var(--green_D8);
+              margin: 0;
+              border: 0;
 
               > svg {
                 color: var(--green_D2);

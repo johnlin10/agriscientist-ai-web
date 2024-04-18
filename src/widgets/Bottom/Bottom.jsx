@@ -42,10 +42,10 @@ export default function Bottom() {
         { title: '硬體', path: '/researches/hardware' },
         { title: '軟體', path: '/researches/software' },
         { title: '農作', path: '/researches/crops' },
-        { title: '數據', path: '/researches/dataProcessing' },
+        { title: '數據', path: '/researches/dataProcess' },
         {
           title: '人工智慧與機器學習',
-          path: '/researches/aiAndMachinelearning',
+          path: '/researches/aiml',
         },
       ],
     },
@@ -56,11 +56,11 @@ export default function Bottom() {
       child: [
         {
           title: 'Raspberry Pi',
-          path: 'https://github.com/johnlin10/agriscientist-ai-raspberrypi',
+          path: 'https://github.com/agriscientist-ai/raspberrypi-engine',
         },
         {
           title: 'Website',
-          path: 'https://github.com/johnlin10/agriscientist-ai-web',
+          path: 'https://github.com/agriscientist-ai/web',
         },
       ],
     },
@@ -131,13 +131,10 @@ export default function Bottom() {
         {/* 社群媒體帳號 */}
         <div className={style.socialMedias}>
           {socialMedias.map((item, index) => (
-            <div
-              className={style.media}
-              title={item.name}
-              onClick={() => window.open(item.url)}
-              key={index}
-            >
-              {item.icon}
+            <div className={style.media} title={item.name} key={index}>
+              <a href={item.url} target="_blank" rel="noreferrer">
+                {item.icon}
+              </a>
             </div>
           ))}
         </div>
@@ -147,21 +144,24 @@ export default function Bottom() {
               <p>{item.title}</p>
               <ul>
                 {item.child?.map((child, index) => (
-                  <li
-                    onClick={() =>
-                      child.path.includes('https://')
-                        ? window.open(child.path)
-                        : navigateClick(child.path)
-                    }
-                    key={index}
-                  >
-                    {child.title}
-                    <FontAwesomeIcon
-                      icon={faArrowRight}
-                      className={
-                        child.path.includes('https://') ? style.outLink : ''
+                  <li key={index}>
+                    <a
+                      href={
+                        child.path.includes('https://')
+                          ? child.path
+                          : `/#${child.path}`
                       }
-                    />
+                      target={child.path.includes('https://') ? '_blank' : ''}
+                      rel="noreferrer"
+                    >
+                      {child.title}
+                      <FontAwesomeIcon
+                        icon={faArrowRight}
+                        className={
+                          child.path.includes('https://') ? style.outLink : ''
+                        }
+                      />
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -170,7 +170,7 @@ export default function Bottom() {
         </div>
         <div className={style.copyRight}>
           <div>
-            <p>Copyright © 2023-2024</p>
+            <p>Copyright © 2023-2024 | Agriscientist AI</p>
           </div>
           <div>
             {/* <p>

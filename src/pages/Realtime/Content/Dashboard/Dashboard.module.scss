@@ -156,6 +156,8 @@
         @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
 
         &.switchData {
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
           width: fit-content;
           padding: 0 6px;
           background: #ffffff00;
@@ -180,6 +182,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
   height: max-content;
 
   * {
@@ -190,7 +194,9 @@
     width: calc(50% - 12px);
     margin: 6px;
     padding: 12px 12px;
-    min-height: 240px;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
     position: relative;
     background: var(--white);
 
@@ -228,11 +234,26 @@
       }
     }
 
+    > p.trend {
+      @include font(0.8rem, 500);
+      width: fit-content;
+      margin: 6px 0;
+      padding: 3px 9px;
+      background: var(--ai);
+      color: var(--white);
+      @include border_radius(18px);
+    }
+
     > .chart {
       position: relative;
       width: 100%;
       height: 240px;
-      margin-top: 6px;
+      margin-top: 12px;
+      // margin-bottom: 18px;
+
+      * {
+        @include transition(0.7s cubic-bezier(0.23, 1, 0.32, 1));
+      }
     }
   }
 }

@@ -66,7 +66,7 @@ export default function Researches(props) {
         },
         {
           title: '數據處理',
-          path: '/researches/dataProcessing',
+          path: '/researches/dataProcess',
           child: [
             { title: '蒐集', click: '' },
             { title: '結構', click: '' },
@@ -77,7 +77,7 @@ export default function Researches(props) {
         },
         {
           title: '人工智慧與機器學習',
-          path: '/researches/aiAndMachinelearning',
+          path: '/researches/aiml',
           child: [
             { title: '語音助理', click: '' },
             { title: '模型訓練', click: '' },
