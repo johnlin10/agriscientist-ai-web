@@ -21,16 +21,24 @@
         cursor: default;
       }
 
+      // 感測器即時數據方塊
       > .dashboardBlock {
         width: calc(50% - 12px);
         margin: 6px;
         padding: 12px 12px;
         height: 120px;
-        position: relative;
         background: var(--white);
+        box-shadow: 3px 0 12px 9px var(--yellow_L9);
 
         @media (max-width: 385px) {
           width: calc(100% - 12px);
+        }
+        @media (max-width: 700px) {
+          position: sticky;
+          top: 88px;
+        }
+        @media (max-width: 435px) {
+          top: 72px;
         }
         @media (min-width: 700px) {
           width: calc(33.333333% - 12px);
