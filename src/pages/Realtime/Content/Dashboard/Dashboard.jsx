@@ -65,6 +65,8 @@ export default function Dashboard() {
       chartType: 'area',
       color: 'var(--green_L4)',
       accentColor: 'var(--green_D2)',
+      maxScaleFactor: 1.1,
+      minScaleFactor: 0.8,
     },
     {
       name: '空氣濕度',
@@ -74,6 +76,8 @@ export default function Dashboard() {
       chartType: 'area',
       color: 'var(--blue_L5)',
       accentColor: 'var(--blue_D3)',
+      maxScaleFactor: 1.1,
+      minScaleFactor: 0.8,
     },
     {
       name: '土壤濕度',
@@ -83,6 +87,8 @@ export default function Dashboard() {
       chartType: 'area',
       color: 'var(--blue_L5)',
       accentColor: 'var(--blue_D3)',
+      maxScaleFactor: 1.1,
+      minScaleFactor: 0.8,
     },
     {
       name: '光照度',
@@ -92,6 +98,8 @@ export default function Dashboard() {
       chartType: 'bar',
       color: 'var(--yellow_L4)',
       accentColor: 'var(--yellow_D3)',
+      maxScaleFactor: 1.2,
+      minScaleFactor: '',
     },
     {
       name: '水位高度',
@@ -101,6 +109,8 @@ export default function Dashboard() {
       chartType: 'bar',
       color: 'var(--blue_L5)',
       accentColor: 'var(--blue_D3)',
+      maxScaleFactor: 1.2,
+      minScaleFactor: '',
     },
   ]
   const dataAnalysisType = ['平均', '中位']
@@ -828,7 +838,14 @@ function SensorLineChart({ sensor, data, analysisType }) {
         <YAxis
           dataKey={sensor.type}
           type="number"
-          domain={[0, (dataMax) => dataMax * 1.2]}
+          domain={[
+            sensor.minScaleFactor !== ''
+              ? (dataMin) => dataMin * sensor.minScaleFactor
+              : 0,
+            sensor.maxScaleFactor !== ''
+              ? (dataMax) => dataMax * sensor.maxScaleFactor
+              : (dataMax) => dataMax * 1.2,
+          ]}
           tickFormatter={(data) => data.toFixed(sensor.fixed)}
         />
 
@@ -836,7 +853,7 @@ function SensorLineChart({ sensor, data, analysisType }) {
           animationDuration={50}
           animationEasing="ease-in-out"
           labelFormatter={(unixTime) =>
-            moment(unixTime * 1000).format('MM/DD HH:mm')
+            moment(unixTime * 1000).format('MM月DD日 HH:mm')
           }
         />
         <Line type="monone" dataKey={sensor.type} stroke={sensor.color}>
@@ -913,27 +930,23 @@ function SensorBarChart({ sensor, data, analysisType }) {
         <YAxis
           dataKey={sensor.type}
           type="number"
-          domain={[0, (dataMax) => dataMax * 1.2]}
+          domain={[
+            sensor.minScaleFactor !== ''
+              ? (dataMin) => dataMin * sensor.minScaleFactor
+              : 0,
+            sensor.maxScaleFactor !== ''
+              ? (dataMax) => dataMax * sensor.maxScaleFactor
+              : (dataMax) => dataMax * 1.2,
+          ]}
           tickFormatter={(data) => data.toFixed(sensor.fixed)}
         />
+
         <Tooltip
           animationDuration={50}
           animationEasing="ease-in-out"
-          labelFormatter={(unixTime) => {
-            const date = new Date(unixTime * 1000)
-            const month = date.getMonth() + 1 // 月份是從 0 開始的，所以要加 1
-            const day = date.getDate()
-            const hours = date.getHours()
-            const minutes = date.getMinutes()
-
-            // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-            const formattedMonth = month.toString().padStart(2, '0')
-            const formattedDay = day.toString().padStart(2, '0')
-            const formattedHours = hours.toString().padStart(2, '0')
-            const formattedMinutes = minutes.toString().padStart(2, '0')
-
-            return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
-          }}
+          labelFormatter={(unixTime) =>
+            moment(unixTime * 1000).format('MM月DD日 HH:mm')
+          }
         />
         <Bar dataKey={sensor.type} fill={sensor.color} />
 
@@ -1007,27 +1020,23 @@ function SensorAreaChart({ sensor, data, analysisType }) {
         <YAxis
           dataKey={sensor.type}
           type="number"
-          domain={[0, (dataMax) => dataMax * 1.2]}
+          domain={[
+            sensor.minScaleFactor !== ''
+              ? (dataMin) => dataMin * sensor.minScaleFactor
+              : 0,
+            sensor.maxScaleFactor !== ''
+              ? (dataMax) => dataMax * sensor.maxScaleFactor
+              : (dataMax) => dataMax * 1.2,
+          ]}
           tickFormatter={(data) => data.toFixed(sensor.fixed)}
         />
+
         <Tooltip
           animationDuration={50}
           animationEasing="ease-in-out"
-          labelFormatter={(unixTime) => {
-            const date = new Date(unixTime * 1000)
-            const month = date.getMonth() + 1 // 月份是從 0 開始的，所以要加 1
-            const day = date.getDate()
-            const hours = date.getHours()
-            const minutes = date.getMinutes()
-
-            // 使用 padStart 來確保月份、日期、小時和分鐘是兩位數
-            const formattedMonth = month.toString().padStart(2, '0')
-            const formattedDay = day.toString().padStart(2, '0')
-            const formattedHours = hours.toString().padStart(2, '0')
-            const formattedMinutes = minutes.toString().padStart(2, '0')
-
-            return `${formattedMonth}月${formattedDay}日 ${formattedHours}:${formattedMinutes}`
-          }}
+          labelFormatter={(unixTime) =>
+            moment(unixTime * 1000).format('MM月DD日 HH:mm')
+          }
         />
         <Area
           type="monotone"
