@@ -3,7 +3,6 @@
 .view {
   @include flex-layout(row, null, center);
   width: 100%;
-  padding: 0 0 80px + 24px 0;
 
   > .container {
     @include flex-layout(column, null, center);
@@ -91,58 +90,75 @@
     }
 
     > .data_range {
+      z-index: 100;
       @include flex-layout(row, null, space-between);
       @include set-HW(42px, calc(100% - 12px));
+      position: sticky;
+      top: 72px;
       max-width: 720px;
       align-self: center;
-      margin: 48px 0 6px 6px;
+      margin: 48px 0 6px 0;
       border: 3px solid var(--yellow_L7);
       background: var(--yellow_L8);
       @include border-radius(21px);
+
+      @media (max-width: 435px) {
+        top: 54px;
+        height: fit-content;
+      }
 
       > div {
         display: flex;
         flex-direction: row;
         align-items: center;
 
-        > p {
-          padding: 0 12px;
-          color: var(--yellow_D3);
-          @include font(1.2rem, 600);
-        }
+        @media (max-width: 435px) {
+          flex-direction: column;
 
-        > select {
-          margin: 0 3px;
-          padding: 0 3px;
-          height: 28px;
-          font-size: 0.9rem;
-          background: #ffffff00;
-          color: var(--yellow_D2);
-          border: 2px solid var(--yellow_L7);
-          background: var(--yellow_L9);
-          @include border-radius(24px);
-          @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
-
-          &:hover {
-            color: var(--white);
-            border: 2px solid var(--yellow_L3);
-            background: var(--yellow_L3);
+          > p {
+            margin: 3px 0;
           }
         }
 
-        > button {
-          @include buttonDynamicSize(28px);
-          border: 2px solid var(--yellow_L7);
-          margin: 0 3px;
-          background: var(--yellow_L9);
+        > p {
+          padding: 0 12px;
           color: var(--yellow_D2);
-          @include border-radius(14px);
-          @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+          @include font(1.2rem, 600);
+        }
+        > div {
+          > select {
+            margin: 0 3px;
+            padding: 0 3px;
+            height: 28px;
+            font-size: 0.9rem;
+            background: #ffffff00;
+            color: var(--yellow_D2);
+            border: 2px solid var(--yellow_L7);
+            background: var(--yellow_L9);
+            @include border-radius(24px);
+            @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
 
-          &:hover {
-            color: var(--white);
-            border: 2px solid var(--yellow_L3);
-            background: var(--yellow_L3);
+            &:hover {
+              color: var(--white);
+              border: 2px solid var(--yellow_L3);
+              background: var(--yellow_L3);
+            }
+          }
+
+          > button {
+            @include buttonDynamicSize(28px);
+            border: 2px solid var(--yellow_L7);
+            margin: 0 3px;
+            background: var(--yellow_L9);
+            color: var(--yellow_D2);
+            @include border-radius(14px);
+            @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+
+            &:hover {
+              color: var(--white);
+              border: 2px solid var(--yellow_L3);
+              background: var(--yellow_L3);
+            }
           }
         }
       }

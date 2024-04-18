@@ -527,42 +527,44 @@ export default function Dashboard() {
           {/* 數據單位控制 */}
           <div>
             <p>{dataIndexes[selectDataIndex]}</p>
-            <select
-              name="數據顯示單位"
-              className={style.dataUnitSelection}
-              value={dataUnit}
-              onChange={(e) => changeDataUnit(e.target.value)}
-            >
-              <optgroup label="根據時間">
-                <option value="hour">小時</option>
-                <option value="day">日</option>
-                <option value="week">週</option>
-                <option value="month">月</option>
-              </optgroup>
-            </select>
-            <select
-              name=""
-              className={style.dataUnitSelection}
-              value={selectAnalysisDataType}
-              onChange={(e) => changeAnalysisData(e.target.value)}
-            >
-              <optgroup label="基礎運算">
-                {dataAnalysisType.map((type, index) => (
-                  <option value={index} key={index}>
-                    {type}
-                  </option>
-                ))}
-              </optgroup>
-            </select>
-            {isIndexesInitialized && (
-              <button
-                className={style.switchData}
-                onClick={() => goToLatestData()}
-                title="回到最新數據"
+            <div>
+              <select
+                name="數據顯示單位"
+                className={style.dataUnitSelection}
+                value={dataUnit}
+                onChange={(e) => changeDataUnit(e.target.value)}
               >
-                <FontAwesomeIcon icon={faAnglesRight} />
-              </button>
-            )}
+                <optgroup label="根據時間">
+                  <option value="hour">小時</option>
+                  <option value="day">日</option>
+                  <option value="week">週</option>
+                  <option value="month">月</option>
+                </optgroup>
+              </select>
+              <select
+                name=""
+                className={style.dataUnitSelection}
+                value={selectAnalysisDataType}
+                onChange={(e) => changeAnalysisData(e.target.value)}
+              >
+                <optgroup label="基礎運算">
+                  {dataAnalysisType.map((type, index) => (
+                    <option value={index} key={index}>
+                      {type}
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
+              {isIndexesInitialized && (
+                <button
+                  className={style.switchData}
+                  onClick={() => goToLatestData()}
+                  title="回到最新數據"
+                >
+                  <FontAwesomeIcon icon={faAnglesRight} />
+                </button>
+              )}
+            </div>
           </div>
           {/* 下一筆資料 */}
           <button
