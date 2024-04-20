@@ -525,88 +525,94 @@ export default function Dashboard() {
             />
           ))}
         </div>
-        <div className={style.data_range}>
-          {/* 上一筆資料 */}
-          <button
-            title="查看上一頁數據"
-            className={style.switchData}
-            onClick={() => handlePrevDay()}
-          >
-            <FontAwesomeIcon icon={faAngleLeft} />
-          </button>
-          {/* 數據單位控制 */}
-          <div>
-            <p>{dataIndexes[selectDataIndex]}</p>
-            <div>
-              <select
-                name="數據顯示單位"
-                className={style.dataUnitSelection}
-                value={dataUnit}
-                onChange={(e) => changeDataUnit(e.target.value)}
+        <div className={style.dataAnalysisView}>
+          <div className={style.data_range}>
+            <div className={style.data_range_controls}>
+              {/* 上一筆資料 */}
+              <button
+                title="查看上一頁數據"
+                className={style.switchData}
+                onClick={() => handlePrevDay()}
               >
-                <optgroup label="根據時間">
-                  <option value="hour">小時</option>
-                  <option value="day">日</option>
-                  <option value="week">週</option>
-                  <option value="month">月</option>
-                </optgroup>
-              </select>
-              <select
-                name=""
-                className={style.dataUnitSelection}
-                value={selectAnalysisDataType}
-                onChange={(e) => changeAnalysisData(e.target.value)}
+                <FontAwesomeIcon icon={faAngleLeft} />
+              </button>
+              {/* 數據單位控制 */}
+              <div>
+                <p>{dataIndexes[selectDataIndex]}</p>
+                <div>
+                  <select
+                    name="數據顯示單位"
+                    className={style.dataUnitSelection}
+                    value={dataUnit}
+                    onChange={(e) => changeDataUnit(e.target.value)}
+                  >
+                    <optgroup label="根據時間">
+                      <option value="hour">小時</option>
+                      <option value="day">日</option>
+                      <option value="week">週</option>
+                      <option value="month">月</option>
+                    </optgroup>
+                  </select>
+                  <select
+                    name=""
+                    className={style.dataUnitSelection}
+                    value={selectAnalysisDataType}
+                    onChange={(e) => changeAnalysisData(e.target.value)}
+                  >
+                    <optgroup label="基礎運算">
+                      {dataAnalysisType.map((type, index) => (
+                        <option value={index} key={index}>
+                          {type}
+                        </option>
+                      ))}
+                    </optgroup>
+                  </select>
+                  {isIndexesInitialized && (
+                    <button
+                      className={style.switchData}
+                      onClick={() => goToLatestData()}
+                      title="回到最新數據"
+                    >
+                      <FontAwesomeIcon icon={faAnglesRight} />
+                    </button>
+                  )}
+                </div>
+              </div>
+              {/* 下一筆資料 */}
+              <button
+                title={
+                  isIndexesInitialized ? '查看下一頁數據' : '目前是最新數據'
+                }
+                className={style.switchData}
+                data-islast={!isIndexesInitialized}
+                onClick={() => handleNextDay()}
               >
-                <optgroup label="基礎運算">
-                  {dataAnalysisType.map((type, index) => (
-                    <option value={index} key={index}>
-                      {type}
-                    </option>
-                  ))}
-                </optgroup>
-              </select>
-              {isIndexesInitialized && (
-                <button
-                  className={style.switchData}
-                  onClick={() => goToLatestData()}
-                  title="回到最新數據"
-                >
-                  <FontAwesomeIcon icon={faAnglesRight} />
-                </button>
-              )}
+                <FontAwesomeIcon icon={faChevronRight} />
+              </button>
             </div>
           </div>
-          {/* 下一筆資料 */}
-          <button
-            title={isIndexesInitialized ? '查看下一頁數據' : '目前是最新數據'}
-            className={style.switchData}
-            data-islast={!isIndexesInitialized}
-            onClick={() => handleNextDay()}
-          >
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
-        </div>
-        <div className={style.dataAnalysisBoard}>
-          {sensors.map((sensor, index) => (
-            <SensorDataChartBlock
-              key={index}
-              sensor={sensor}
-              data={
-                sensorGroupData
-                  ? sensorGroupData[dataIndexes[selectDataIndex]]
-                  : null
-              }
-              analysisType={{
-                typeName: dataAnalysisType[selectAnalysisDataType],
-                index: selectAnalysisDataType,
-              }}
-              trends={
-                maxTrendsBySensor[sensor.type]
-                  ? maxTrendsBySensor[sensor.type]
-                  : {}
-              }
-            />
-          ))}
+          <div className={style.dataAnalysisBoard}>
+            {sensors.map((sensor, index) => (
+              <SensorDataChartBlock
+                key={index}
+                sensor={sensor}
+                data={
+                  sensorGroupData
+                    ? sensorGroupData[dataIndexes[selectDataIndex]]
+                    : null
+                }
+                analysisType={{
+                  typeName: dataAnalysisType[selectAnalysisDataType],
+                  index: selectAnalysisDataType,
+                }}
+                trends={
+                  maxTrendsBySensor[sensor.type]
+                    ? maxTrendsBySensor[sensor.type]
+                    : {}
+                }
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -674,7 +680,7 @@ function SensorDashboardBlock({ sensor, data }) {
   }
 
   return (
-    <div className={style.dashboardBlock}>
+    <div className={style.dashboardBlock} data-actv={sensors_actv}>
       <div className={style.header}>
         <span className={style.status} data-actv={sensors_actv}>
           {sensors_actv ? '即時' : '離線'}

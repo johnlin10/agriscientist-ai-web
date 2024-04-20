@@ -86,6 +86,17 @@
 }
 
 // 通用組件樣式
+// 浮凸效果
+@mixin biconvex($height, $color) {
+  box-shadow: 0 0 0 0 $color;
+
+  &:hover {
+    box-shadow: 0 $height 0 0 $color;
+    @include transform(translateY(-$height));
+    @include transition(var(--transition-normal));
+  }
+}
+
 @mixin buttonDynamicSize($height) {
   height: $height;
   padding: 0 $height/2.5;

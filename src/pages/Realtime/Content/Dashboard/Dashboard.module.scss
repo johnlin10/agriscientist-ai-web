@@ -11,11 +11,11 @@
     max-width: 1400px;
 
     > .dashboardView {
-      display: flex;
-      flex-direction: row;
+      @include flex-layout(row, null, null);
       flex-wrap: wrap;
       width: 100%;
-      margin-top: 24px;
+      margin-top: 36px;
+      @include border_radius(23px);
 
       * {
         cursor: default;
@@ -28,15 +28,32 @@
         padding: 12px 12px;
         height: 120px;
         background: var(--white);
-        box-shadow: 3px 0 12px 9px var(--yellow_L9);
+        @include border_radius(13px);
+
+        border: 2px solid var(--black_opacity_1);
+        @include biconvex(3px, var(--black_opacity_1));
+
+        &:hover {
+          background: var(--green_L9);
+        }
+
+        &[data-actv='true'] {
+          border: 2px solid var(--green_L8);
+          @include biconvex(3px, var(--green_L8));
+
+          &:hover {
+            border: 2px solid var(--green_L7);
+            @include biconvex(3px, var(--green_L7));
+          }
+        }
 
         @media (max-width: 385px) {
           width: calc(100% - 12px);
         }
-        @media (max-width: 700px) {
-          position: sticky;
-          top: 88px;
-        }
+        // @media (max-width: 700px) {
+        //   position: sticky;
+        //   top: 88px;
+        // }
         @media (max-width: 435px) {
           top: 72px;
         }
@@ -88,193 +105,204 @@
             }
           }
         }
-
-        border-radius: 19px;
-        -webkit-border-radius: 19px;
-        -moz-border-radius: 19px;
-        -ms-border-radius: 19px;
-        -o-border-radius: 19px;
       }
     }
 
-    > .data_range {
-      z-index: 100;
-      @include flex-layout(row, null, space-between);
-      @include set-HW(42px, calc(100% - 12px));
-      position: sticky;
-      top: 72px;
-      max-width: 720px;
-      align-self: center;
-      margin: 48px 0 6px 0;
-      border: 3px solid var(--yellow_L7);
-      background: var(--yellow_L8);
-      @include border-radius(21px);
+    > .dataAnalysisView {
+      @include flex-layout(column, center, null);
+      margin-top: 36px;
+      padding: 6px;
+      @include border_radius(23px);
 
-      @media (max-width: 435px) {
-        top: 54px;
-        height: fit-content;
-      }
+      > .data_range {
+        z-index: 100;
+        @include flex-layout(row, null, center);
+        position: sticky;
+        top: 72px;
+        width: 100%;
+        max-width: 720px;
+        margin: 6px 0 12px 0;
+        background: var(--yellow_L8);
+        @include border-radius(21px);
+        @include biconvex(3px, var(--yellow_L6));
+        border: 2px solid var(--yellow_L6);
 
-      > div {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 3px 0;
-
-        @media (max-width: 435px) {
-          flex-direction: column;
+        @media (max-width: 900px) {
+          top: 54px;
+          height: fit-content;
         }
 
-        > p {
-          padding: 0 12px;
-          color: var(--yellow_D2);
-          @include font(1.2rem, 600);
-        }
-        > div {
-          @include flex-layout(row, center, null);
-          > select {
-            margin: 0 3px;
-            padding: 0 3px;
-            height: 28px;
-            font-size: 0.9rem;
-            background: #ffffff00;
-            color: var(--yellow_D2);
-            border: 2px solid var(--yellow_L7);
-            background: var(--yellow_L9);
-            @include border-radius(24px);
-            @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+        > div.data_range_controls {
+          @include flex-layout(row, null, space-between);
+          @include set-HW(42px, calc(100% - 12px));
+          align-self: center;
 
-            &:hover {
-              color: var(--white);
-              border: 2px solid var(--yellow_L3);
-              background: var(--yellow_L3);
+          @media (max-width: 435px) {
+            top: 54px;
+            height: fit-content;
+          }
+
+          > div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 3px 0;
+
+            @media (max-width: 435px) {
+              flex-direction: column;
+            }
+
+            > p {
+              padding: 0 12px;
+              color: var(--yellow_D2);
+              @include font(1.2rem, 600);
+            }
+            > div {
+              @include flex-layout(row, center, null);
+              > select {
+                margin: 0 3px;
+                padding: 0 3px;
+                height: 28px;
+                font-size: 0.9rem;
+                background: #ffffff00;
+                color: var(--yellow_D2);
+                border: 2px solid var(--yellow_L7);
+                background: var(--yellow_L9);
+                @include border-radius(24px);
+                @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+
+                &:hover {
+                  color: var(--white);
+                  border: 2px solid var(--yellow_L3);
+                  background: var(--yellow_L3);
+                }
+              }
+
+              > button {
+                @include buttonDynamicSize(28px);
+                border: 2px solid var(--yellow_L7);
+                margin: 0 3px;
+                background: var(--yellow_L9);
+                color: var(--yellow_D2);
+                @include border-radius(14px);
+                @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+
+                &:hover {
+                  color: var(--white);
+                  border: 2px solid var(--yellow_L3);
+                  background: var(--yellow_L3);
+                }
+              }
             }
           }
 
           > button {
-            @include buttonDynamicSize(28px);
-            border: 2px solid var(--yellow_L7);
+            width: 50%;
+            padding: 3px 0;
             margin: 0 3px;
-            background: var(--yellow_L9);
-            color: var(--yellow_D2);
-            @include border-radius(14px);
+
+            @include border-radius(12px);
             @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
 
-            &:hover {
-              color: var(--white);
-              border: 2px solid var(--yellow_L3);
-              background: var(--yellow_L3);
+            &.switchData {
+              width: -webkit-fit-content;
+              width: -moz-fit-content;
+              width: fit-content;
+              padding: 0 6px;
+              background: #ffffff00;
+              color: var(--yellow_L3);
+              font-size: 1.2rem;
+
+              &:hover {
+                color: var(--yellow_D2);
+              }
+            }
+
+            &[data-islast='true'] {
+              opacity: 0;
             }
           }
         }
       }
 
-      > button {
-        width: 50%;
-        padding: 3px 0;
-        margin: 0 3px;
+      > .dataAnalysisBoard {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        height: -webkit-max-content;
+        height: -moz-max-content;
+        height: max-content;
 
-        @include border-radius(12px);
-        @include transition(0.25s cubic-bezier(0.23, 1, 0.32, 1));
+        * {
+          cursor: default;
+        }
 
-        &.switchData {
-          width: -webkit-fit-content;
-          width: -moz-fit-content;
-          width: fit-content;
-          padding: 0 6px;
-          background: #ffffff00;
-          color: var(--yellow_L3);
-          font-size: 1.2rem;
+        > .chartBlock {
+          width: calc(50% - 12px);
+          margin: 6px;
+          padding: 12px 12px;
+          height: -webkit-fit-content;
+          height: -moz-fit-content;
+          height: fit-content;
+          position: relative;
+          background: var(--white);
+          border: 2px solid var(--blue_L8);
+          @include biconvex(3px, var(--blue_L8));
 
           &:hover {
-            color: var(--yellow_D2);
+            border: 2px solid var(--blue_L7);
+            @include biconvex(3px, var(--blue_L7));
+            // background: var(--blue_L9);
+          }
+
+          @media (max-width: 1080px) {
+            width: calc(100% - 12px);
+          }
+          @media (min-width: 1300px) {
+            width: calc(33.333333% - 12px);
+          }
+          @media (min-width: 1700px) {
+            width: calc(25% - 12px);
+          }
+
+          @include border-radius(19px);
+
+          > .header {
+            @include flex-layout(row, center, null);
+            > p {
+              &.name {
+                font-size: 1rem;
+                color: var(--blue_L5);
+              }
+            }
+          }
+
+          > p.trend {
+            @include font(0.8rem, 500);
+            width: fit-content;
+            margin: 6px 0;
+            padding: 3px 9px;
+            background: var(--ai);
+            color: var(--white);
+            @include border_radius(18px);
+          }
+
+          > .chart {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            margin-top: 12px;
+            // margin-bottom: 18px;
+            @media (max-width: 600px) {
+              height: 180px;
+            }
+
+            * {
+              @include transition(0.7s cubic-bezier(0.23, 1, 0.32, 1));
+            }
           }
         }
-
-        &[data-islast='true'] {
-          opacity: 0;
-        }
-      }
-    }
-  }
-}
-
-.dataAnalysisBoard {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
-
-  * {
-    cursor: default;
-  }
-
-  > .chartBlock {
-    width: calc(50% - 12px);
-    margin: 6px;
-    padding: 12px 12px;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
-    position: relative;
-    background: var(--white);
-
-    @media (max-width: 1080px) {
-      width: calc(100% - 12px);
-    }
-    @media (min-width: 1300px) {
-      width: calc(33.333333% - 12px);
-    }
-    @media (min-width: 1700px) {
-      width: calc(25% - 12px);
-    }
-
-    @include border-radius(19px);
-
-    > .header {
-      @include flex-layout(row, center, null);
-      > span.status {
-        margin-right: 6px;
-        padding: 2px 7px;
-        @include font(0.8rem, 500);
-        color: var(--white);
-        background: var(--black_opacity_2);
-        @include border_radius(12px);
-
-        &[data-actv='true'] {
-          background: var(--green_L5);
-        }
-      }
-      > p {
-        &.name {
-          font-size: 1rem;
-          color: var(--black_opacity_3);
-        }
-      }
-    }
-
-    > p.trend {
-      @include font(0.8rem, 500);
-      width: fit-content;
-      margin: 6px 0;
-      padding: 3px 9px;
-      background: var(--ai);
-      color: var(--white);
-      @include border_radius(18px);
-    }
-
-    > .chart {
-      position: relative;
-      width: 100%;
-      height: 240px;
-      margin-top: 12px;
-      // margin-bottom: 18px;
-
-      * {
-        @include transition(0.7s cubic-bezier(0.23, 1, 0.32, 1));
       }
     }
   }

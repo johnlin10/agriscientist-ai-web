@@ -12,7 +12,8 @@ $actionButtonHeight: 36px;
   width: 100%;
   background: var(--bg_base_light);
   box-shadow: 0 -24px 12px 36px var(--bg_base_light);
-  @media (max-width: 435px) {
+
+  @media (max-width: 900px) {
     top: -6px;
   }
 

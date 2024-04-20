@@ -1,3 +1,5 @@
+@import '../../mixin.scss';
+
 aside {
   z-index: 5000;
   min-width: 240px;
@@ -105,7 +107,7 @@ aside {
         padding: 9px 12px;
         margin-bottom: 6px;
         background: #ffffff;
-        border: 2px solid var(--opacity_w_0);
+        border: 2px solid var(--yellow_L7);
         cursor: pointer;
         white-space: nowrap;
 
@@ -132,6 +134,7 @@ aside {
 
         &.actv {
           border: 2px solid var(--green_L4);
+          border-bottom: 4px solid var(--green_L4);
 
           > p {
             color: var(--green_D2);
@@ -141,7 +144,7 @@ aside {
         > p {
           font-size: 1rem;
           font-family: ZenMaruGothic-Medium;
-          color: var(--green);
+          color: var(--yellow);
         }
 
         // 段落標題

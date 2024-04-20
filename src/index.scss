@@ -8,6 +8,11 @@
   border: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   font-family: 'ZenMaruGothic-Regular';
+  transition: var(--transition-normal);
+  -webkit-transition: var(--transition-normal);
+  -moz-transition: var(--transition-normal);
+  -ms-transition: var(--transition-normal);
+  -o-transition: var(--transition-normal);
 }
 *,
 *::before,
@@ -27,12 +32,8 @@
 }
 a {
   text-decoration: none;
-  color: var(--green-L2);
-  border-bottom: 1px solid #ffffff00;
-
-  &:hover {
-    border-bottom: 1px solid var(--font-green-3-light);
-  }
+  // color: var(--green_L2);
+  // border-bottom: 1px solid #ffffff00;
 
   &:visited {
     color: var(--font-green-2-dark);
