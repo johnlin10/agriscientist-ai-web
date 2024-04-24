@@ -1,4 +1,5 @@
 import style from './Nav.module.scss'
+import { useLocation } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -13,16 +14,19 @@ import {
   faCircleInfo,
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
+import { useEffect } from 'react'
 
 const navItems = [
   {
     title: '首頁',
     icon: faLeaf,
+    basePath: '/',
     path: '/',
   },
   {
     title: '即時',
     icon: faChartSimple,
+    basePath: '/realtime',
     path: '/realtime/dashboard',
     child: [
       {
@@ -38,6 +42,7 @@ const navItems = [
   {
     title: '產品',
     icon: faCube,
+    basePath: '/products',
     path: '/products/microfarm',
     child: [
       {
@@ -53,6 +58,7 @@ const navItems = [
   {
     title: '研究',
     icon: faBook,
+    basePath: '/researches',
     path: '/researches/intro',
     child: [
       {
@@ -88,6 +94,7 @@ const navItems = [
   {
     title: '關於',
     icon: faUsers,
+    basePath: '/about',
     path: '/about',
     child: [
       {
@@ -110,13 +117,29 @@ const navItems = [
   },
 ]
 
-export default function Nav(props) {
+export default function Nav() {
+  const location = useLocation()
+
+  useEffect(() => {
+    console.log(location.pathname)
+  }, [location])
   return (
     <nav className={style.nav}>
       <div className={style.view}>
         <ul>
           {navItems.map((navItem, index) => (
-            <li key={index}>
+            <li
+              key={index}
+              className={
+                navItem.path === '/'
+                  ? location.pathname === navItem.path
+                    ? style.actv
+                    : ''
+                  : location.pathname.startsWith(navItem.basePath)
+                  ? style.actv
+                  : ''
+              }
+            >
               <a href={`/#${navItem.path}`}>
                 <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
                 <span>{navItem.title}</span>
@@ -127,10 +150,10 @@ export default function Nav(props) {
                   <ul>
                     {navItem.child.map((list, index) => {
                       if (list.title === 'hr') {
-                        return <hr />
+                        return <hr key={index} />
                       }
                       return (
-                        <li>
+                        <li key={index}>
                           <a href={`/#${list.path}`}>
                             {list.title}
                             <FontAwesomeIcon icon={faArrowRight} />

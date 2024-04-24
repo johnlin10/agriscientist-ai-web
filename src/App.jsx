@@ -211,18 +211,6 @@ function App() {
                 <Home navigateClick={navigateClick} adminPermit={adminPermit} />
               }
             />
-
-            {/* <Route
-              path="/preview"
-              element={
-                <Preview
-                  adminPermit={adminPermit}
-                  topMaskBackdrop={topMaskBackdrop}
-                  headerTopScale={headerTopScale}
-                />
-              }
-            /> */}
-
             <Route path="post" element={<Post />}></Route>
 
             <Route

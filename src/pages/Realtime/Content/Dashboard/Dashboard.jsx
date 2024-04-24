@@ -3,6 +3,12 @@ import { useEffect, useState } from 'react'
 import style from './Dashboard.module.scss'
 import { db } from '../../../../firebase'
 import { collection, onSnapshot, query } from 'firebase/firestore'
+import {
+  calculateMedian,
+  calculateAverage,
+  sampleGroupedData,
+  groupData,
+} from '../../../../script/DataAnalysis'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -120,7 +126,8 @@ export default function Dashboard() {
   const [trendAnalysis, setTrendAnalysis] = useState(null)
 
   // 感測器當前分組資料
-  const [sensorGroupData, setSensorGroupData] = useState(null)
+  const [sensorGroupData, setSensorGroupData] = useState(null) // 根據單位分組的數據
+  const [sensorSampledData, setSensorSampledData] = useState(null) // 採樣後的數據
   const [dataIndexes, setDataIndexes] = useState([]) // 選擇數據單位段落 - 用於尋找段落
   const [selectDataIndex, setSelectDataIndex] = useState(0)
   const [dataUnit, setDataUnit] = useState('hour') // 選擇數據單位 - hour/day/week/month
@@ -149,151 +156,93 @@ export default function Dashboard() {
    * @param {string} type - 欲分類的數據單位 hour/day/week/month
    * @returns {Array} - 根據單位分組後的數據
    */
-  const groupData = (sensorData, type) => {
-    switch (type) {
-      case 'hour':
-        const groupedByHour = sensorData.reduce((acc, data) => {
-          const timestamp =
-            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-          const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
-          const date = new Date(timestampWithOffset)
-          const formattedDate = date
-            .toISOString()
-            .slice(0, 13)
-            .replace(/-|T|:/g, '') // YYYYMMDDHH format
+  // const groupData = (sensorData, type) => {
+  //   switch (type) {
+  //     case 'hour':
+  //       const groupedByHour = sensorData.reduce((acc, data) => {
+  //         const timestamp =
+  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+  //         const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
+  //         const date = new Date(timestampWithOffset)
+  //         const formattedDate = date
+  //           .toISOString()
+  //           .slice(0, 13)
+  //           .replace(/-|T|:/g, '') // YYYYMMDDHH format
 
-          if (!acc[formattedDate]) {
-            acc[formattedDate] = []
-          }
-          acc[formattedDate].push(data)
-          return acc
-        }, {})
-        return groupedByHour
+  //         if (!acc[formattedDate]) {
+  //           acc[formattedDate] = []
+  //         }
+  //         acc[formattedDate].push(data)
+  //         return acc
+  //       }, {})
+  //       return groupedByHour
 
-      case 'day':
-        const groupedByDay = sensorData.reduce((acc, data) => {
-          const timestamp =
-            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-          const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
-          const date = new Date(timestampWithOffset)
-            .toISOString()
-            .slice(0, 10)
-            .replace(/-/g, '')
+  //     case 'day':
+  //       const groupedByDay = sensorData.reduce((acc, data) => {
+  //         const timestamp =
+  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+  //         const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
+  //         const date = new Date(timestampWithOffset)
+  //           .toISOString()
+  //           .slice(0, 10)
+  //           .replace(/-/g, '')
 
-          if (!acc[date]) {
-            acc[date] = []
-          }
-          acc[date].push(data)
-          return acc
-        }, {})
-        return groupedByDay
+  //         if (!acc[date]) {
+  //           acc[date] = []
+  //         }
+  //         acc[date].push(data)
+  //         return acc
+  //       }, {})
+  //       return groupedByDay
 
-      case 'week':
-        const groupedByWeek = sensorData.reduce((acc, data) => {
-          const timestamp =
-            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-          const date = new Date(timestamp)
-          const weekNumber = getWeekNumber(date)
-          const year = date.getUTCFullYear()
-          const yearWeek = `${year}${weekNumber.toString().padStart(2, '0')}` // Combine year and week
+  //     case 'week':
+  //       const groupedByWeek = sensorData.reduce((acc, data) => {
+  //         const timestamp =
+  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+  //         const date = new Date(timestamp)
+  //         const weekNumber = getWeekNumber(date)
+  //         const year = date.getUTCFullYear()
+  //         const yearWeek = `${year}${weekNumber.toString().padStart(2, '0')}` // Combine year and week
 
-          if (!acc[yearWeek]) {
-            acc[yearWeek] = []
-          }
-          acc[yearWeek].push(data)
-          return acc
-        }, {})
-        return groupedByWeek
+  //         if (!acc[yearWeek]) {
+  //           acc[yearWeek] = []
+  //         }
+  //         acc[yearWeek].push(data)
+  //         return acc
+  //       }, {})
+  //       return groupedByWeek
 
-      case 'month':
-        const groupedByMonth = sensorData.reduce((acc, data) => {
-          const timestamp =
-            data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-          const date = new Date(timestamp)
-          const year = date.getUTCFullYear()
-          const month = (date.getUTCMonth() + 1).toString().padStart(2, '0') // Month from 01 to 12
+  //     case 'month':
+  //       const groupedByMonth = sensorData.reduce((acc, data) => {
+  //         const timestamp =
+  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
+  //         const date = new Date(timestamp)
+  //         const year = date.getUTCFullYear()
+  //         const month = (date.getUTCMonth() + 1).toString().padStart(2, '0') // Month from 01 to 12
 
-          const key = `${year}${month}`
-          if (!acc[key]) {
-            acc[key] = []
-          }
-          acc[key].push(data)
-          return acc
-        }, {})
-        return groupedByMonth
+  //         const key = `${year}${month}`
+  //         if (!acc[key]) {
+  //           acc[key] = []
+  //         }
+  //         acc[key].push(data)
+  //         return acc
+  //       }, {})
+  //       return groupedByMonth
 
-      case 'record':
-        const groupedByRecord = sensorData.reduce((acc, data) => {
-          if (!acc[0]) {
-            acc[0] = []
-          }
-          acc[0].push(data)
-          return acc
-        }, {})
-        return groupedByRecord
+  //     case 'record':
+  //       const groupedByRecord = sensorData.reduce((acc, data) => {
+  //         if (!acc[0]) {
+  //           acc[0] = []
+  //         }
+  //         acc[0].push(data)
+  //         return acc
+  //       }, {})
+  //       return groupedByRecord
 
-      default:
-        break
-    }
-  }
-
-  /**
-   * 對分組的數據進行採樣
-   * @param {Array} groupedData - 分組後的數據
-   * @param {number} sampleSize - 採樣大小
-   * @returns {Array} - 採樣後的數據數組
-   */
-  const sampleGroupedData = (groupedData, sampleSize) => {
-    // 採樣後的數據
-    const sampledData = []
-
-    // 循環每組數據
-    Object.keys(groupedData).forEach((group) => {
-      let groupSample = []
-      let tempSum = 0
-      let lightSum = 0
-      let humiditySum = 0
-      let soilHumiditySum = 0
-      let waterSum = 0
-      let count = 0
-
-      groupedData[group].forEach((data, index) => {
-        // 累計求和
-        tempSum += parseFloat(data.temperature)
-        lightSum += parseInt(data.light, 10)
-        humiditySum += parseFloat(data.humidity)
-        soilHumiditySum += parseFloat(data.soilHumidity)
-        waterSum += parseInt(data.water, 10)
-        count++
-
-        // 當達到樣本大小時，計算平均值，並重置計數器和總和
-        if (
-          (index + 1) % sampleSize === 0 ||
-          index === groupedData[group].length - 1
-        ) {
-          groupSample.push({
-            temperature: parseFloat((tempSum / count).toFixed(1)),
-            light: Math.round(lightSum / count),
-            humidity: parseFloat((humiditySum / count).toFixed(1)),
-            soilHumidity: parseFloat((soilHumiditySum / count).toFixed(1)),
-            water: Math.round(waterSum / count),
-            timestamp: groupedData[group][index].timestamp, // 使用最後一個數據點的時間戳
-          })
-          // 重置
-          tempSum = 0
-          lightSum = 0
-          humiditySum = 0
-          soilHumiditySum = 0
-          waterSum = 0
-          count = 0
-        }
-      })
-
-      // 講採樣後的數據添加到結果數組
-      sampledData[group] = groupSample
-    })
-    return sampledData
-  }
+  //     default:
+  //       break
+  //   }
+  // }
 
   /**
    * 編列單位分組數據的索引
@@ -335,6 +284,7 @@ export default function Dashboard() {
     if (sensorsData && sensorsData.length > 0) {
       // 根據單位對數據進行分類（hour/day/week/month...）
       const groupedData = groupData(sensorsData, dataUnit)
+      setSensorGroupData(groupedData)
 
       // 將數據根據單位設置不同的聚合採樣精度
       let sampleSize
@@ -357,7 +307,7 @@ export default function Dashboard() {
       // 對分組後的數據進行採樣
       const sampledData = sampleGroupedData(groupedData, sampleSize)
       // 儲存採樣後的數據
-      setSensorGroupData(sampledData)
+      setSensorSampledData(sampledData)
 
       if (!isIndexesInitialized) {
         // 當 index 尚未初始化
@@ -521,7 +471,7 @@ export default function Dashboard() {
             <SensorDashboardBlock
               key={index}
               sensor={sensor}
-              data={sensorsData} // 當週數據
+              data={sensorsData}
             />
           ))}
         </div>
@@ -597,8 +547,8 @@ export default function Dashboard() {
                 key={index}
                 sensor={sensor}
                 data={
-                  sensorGroupData
-                    ? sensorGroupData[dataIndexes[selectDataIndex]]
+                  sensorSampledData
+                    ? sensorSampledData[dataIndexes[selectDataIndex]]
                     : null
                 }
                 analysisType={{
@@ -689,10 +639,13 @@ function SensorDashboardBlock({ sensor, data }) {
       </div>
       <div className={style.dashboardData}>
         {latestData ? (
-          <p className={style.data}>
-            {latestData[sensor.type]}
-            {sensor.unit}
-          </p>
+          <div className={style.data}>
+            <p className={style.data}>
+              {latestData[sensor.type]}
+              <span>{sensor.unit}</span>
+            </p>
+            <SensorSimpleBarChartBlock sensor={sensor} data={data} />
+          </div>
         ) : (
           <Loading loadingAniActv={true} type="local" />
         )}
@@ -705,6 +658,72 @@ function SensorDashboardBlock({ sensor, data }) {
       </div>
     </div>
   )
+}
+
+function SensorSimpleBarChartBlock({ sensor, data }) {
+  const [chartData, setChartData] = useState(null)
+
+  useEffect(() => {
+    if (data && data.length) {
+      const latestData = data.slice(-5)
+      setChartData(latestData)
+      // console.log(latestData)
+    }
+  }, [data])
+
+  return (
+    <div className={style.simpleBarChart}>
+      <SensorSimpleBarChart sensor={sensor} data={chartData} />
+    </div>
+  )
+}
+
+function SensorSimpleBarChart({ sensor, data }) {
+  useEffect(() => {
+    console.log(data)
+  }, [data])
+  const style = { x: true, y: true }
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{
+          top: 3,
+          right: 0,
+          left: 0,
+          bottom: 3,
+        }}
+      >
+        <YAxis
+          dataKey={sensor.type}
+          type="number"
+          hide={true}
+          domain={[
+            sensor.minScaleFactor !== ''
+              ? (dataMin) => dataMin * sensor.minScaleFactor
+              : 0,
+            sensor.maxScaleFactor !== ''
+              ? (dataMax) => dataMax * sensor.maxScaleFactor
+              : (dataMax) => dataMax * 1.2,
+          ]}
+          tickFormatter={(data) => data.toFixed(sensor.fixed)}
+        />
+        <Bar
+          dataKey={sensor.type}
+          fill="var(--green_L5)"
+          radius={[6, 6, 6, 6]}
+          minPointSize={12}
+        />
+      </BarChart>
+    </ResponsiveContainer>
+  )
+}
+
+const RediusBar = (props) => {
+  const { fill, x, y, width, height } = props
+  return <div style={{ width: width, height: height }}></div>
 }
 
 function SensorDataChartBlock({ sensor, data, analysisType, trends }) {
@@ -771,32 +790,6 @@ function SensorDataChartBlock({ sensor, data, analysisType, trends }) {
       </div>
     </div>
   )
-}
-
-/**
- * 計算中位數
- * @param {Array} data
- * @param {Number} key
- * @returns
- */
-function calculateMedian(data, key) {
-  const sortedValues = data.map((item) => item[key]).sort((a, b) => a - b)
-  const middleIndex = Math.floor(sortedValues.length / 2)
-  if (sortedValues.length % 2 !== 0) {
-    return sortedValues[middleIndex]
-  }
-  return (sortedValues[middleIndex - 1] + sortedValues[middleIndex]) / 2
-}
-
-/**
- * 計算平均值
- * @param {Array} data - 數據數組
- * @param {Number} key - 感測器代號
- * @returns
- */
-function calculateAverage(data, key) {
-  const sum = data.reduce((acc, item) => acc + item[key], 0)
-  return sum / data.length
 }
 
 function SensorLineChart({ sensor, data, analysisType }) {

@@ -47,6 +47,7 @@
   > div {
     @include flex-layout(row, null, null);
     height: 100%;
+    padding: 6px;
     background: var(--white_opacity_7);
     border-top: 1px solid var(--white_opacity_5);
     border-left: 1px solid var(--white_opacity_5);
@@ -59,7 +60,7 @@
     @include transition(0.5s cubic-bezier(0.5, 1.57, 0.38, 0.98));
 
     @media (min-width: 553px) {
-      @include border-radius(36px 36px 0 0);
+      @include border-radius(30px 30px 0 0);
     }
 
     &::-webkit-scrollbar {
@@ -69,7 +70,8 @@
     > ul {
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      align-items: center;
+      justify-content: space-between;
       height: 100%;
       width: 100%;
       // padding: 0 9px;
@@ -81,19 +83,61 @@
         position: relative;
         list-style: none;
         width: 100%;
+        height: 100%;
         cursor: pointer;
+        @include border-radius(36px);
 
         &:hover {
-          color: var(--green_D3);
-          background: #ffffffa1;
-          box-shadow: 0 3px 10px 0 #0000000f, 0 6px 50px 0 #0000000a;
+          background: var(--black_opacity_1);
+
+          > a {
+            // color: var(--green_D3);
+            > svg {
+              &.more {
+                top: 9px;
+
+                @media (max-width: 552px) {
+                  top: 3px;
+                }
+                @media (max-width: 480px) {
+                  top: 0;
+                }
+
+                transform: rotateX(0deg);
+                -webkit-transform: rotateX(0deg);
+                -moz-transform: rotateX(0deg);
+                -ms-transform: rotateX(0deg);
+                -o-transform: rotateX(0deg);
+              }
+            }
+          }
+          > ul {
+            z-index: 100;
+            opacity: 1;
+            user-select: none;
+            pointer-events: all;
+            @include transform(translateY(-36px));
+
+            &::after {
+              // 此次調整了選項到彈出列表的扇形面積，讓用戶可以更輕鬆的使用鼠標滑動到列表選項，而不會收回
+              z-index: 1000;
+              content: '';
+              position: absolute;
+              bottom: 3px;
+              left: 0;
+              height: 24px + 30px;
+              width: 100%;
+              @include transform(translateY(100%));
+              @include border_radius(0 0 48px 48px);
+            }
+          }
         }
 
-        &:first-child {
-          padding-left: 9px;
-        }
-        &:last-child {
-          padding-right: 9px;
+        &.actv {
+          * {
+            color: var(--green_D3);
+          }
+          background: var(--green_L8);
         }
 
         @media (max-width: 552px) {
@@ -118,67 +162,15 @@
           }
         }
 
-        &:hover {
-          > svg {
-            &.more {
-              top: 6px;
-              color: var(--green_D3);
-
-              @media (max-width: 552px) {
-                top: 3px;
-              }
-              @media (max-width: 480px) {
-                top: 0;
-              }
-
-              transform: rotateX(0deg);
-              -webkit-transform: rotateX(0deg);
-              -moz-transform: rotateX(0deg);
-              -ms-transform: rotateX(0deg);
-              -o-transform: rotateX(0deg);
-            }
-          }
-          > ul {
-            z-index: 100;
-            opacity: 1;
-            user-select: none;
-            pointer-events: all;
-
-            &::after {
-              // 此次調整了選項到彈出列表的扇形面積，讓用戶可以更輕鬆的使用鼠標滑動到列表選項，而不會收回
-              z-index: 1000;
-              content: '';
-              position: absolute;
-              bottom: 3px;
-              left: 0;
-              height: 24px + 30px;
-              width: 100%;
-              transform: translateY(100%);
-              -webkit-transform: translateY(100%);
-              -moz-transform: translateY(100%);
-              -ms-transform: translateY(100%);
-              -o-transform: translateY(100%);
-              border-radius: 0 0 48px 48px;
-              -webkit-border-radius: 0 0 48px 48px;
-              -moz-border-radius: 0 0 48px 48px;
-              -ms-border-radius: 0 0 48px 48px;
-              -o-border-radius: 0 0 48px 48px;
-            }
-            transform: translateY(-48px);
-            -webkit-transform: translateY(-48px);
-            -moz-transform: translateY(-48px);
-            -ms-transform: translateY(-48px);
-            -o-transform: translateY(-48px);
-          }
-        }
-
         > a {
           @include flex-layout(row, center, center);
           font-size: 1.1rem;
+          color: var(--black_opacity_8);
           // font-weight: 600;
           white-space: nowrap;
           height: 100%;
           width: 100%;
+          @include border_radius(40);
 
           > svg.icon {
             margin-right: 6px;
@@ -202,21 +194,17 @@
         > svg {
           &.more {
             position: absolute;
-            top: 6px;
+            top: 3px;
             color: var(--black_opacity_2);
+            @include transition(0.5s cubic-bezier(0.23, 1, 0.32, 1));
 
             @media (max-width: 552px) {
-              top: 6px;
+              top: 0;
             }
             @media (max-width: 480px) {
-              top: 3px;
+              top: -3px;
             }
 
-            transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             transform: rotateX(60deg);
             -webkit-transform: rotateX(60deg);
             -moz-transform: rotateX(60deg);
@@ -328,11 +316,6 @@
         -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        border-radius: 36px;
-        -webkit-border-radius: 36px;
-        -moz-border-radius: 36px;
-        -ms-border-radius: 36px;
-        -o-border-radius: 36px;
       }
     }
   }
