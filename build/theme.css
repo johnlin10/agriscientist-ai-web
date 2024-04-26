@@ -33,6 +33,16 @@
   --black_opacity_2: rgba(0, 0, 0, 0.2);
   --black_opacity_1: rgba(0, 0, 0, 0.1);
 
+  --grayscale_10: rgba(230, 230, 230);
+  --grayscale_20: rgba(204, 204, 204);
+  --grayscale_30: rgba(179, 179, 179);
+  --grayscale_40: rgba(153, 153, 153);
+  --grayscale_50: rgba(128, 128, 128);
+  --grayscale_60: rgba(102, 102, 102);
+  --grayscale_70: rgba(77, 77, 77);
+  --grayscale_80: rgba(51, 51, 51);
+  --grayscale_90: rgba(26, 26, 26);
+
   --green_L9: #f2fff6;
   --green_L8: #dbf8e4;
   --green_L7: #bdf0cd;

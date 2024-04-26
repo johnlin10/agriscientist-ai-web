@@ -46,6 +46,7 @@
 
   > div {
     @include flex-layout(row, null, null);
+    position: relative;
     height: 100%;
     padding: 6px;
     background: var(--white_opacity_7);
@@ -76,6 +77,30 @@
       width: 100%;
       // padding: 0 9px;
 
+      > div.navBar {
+        position: absolute;
+        height: calc(100% - 12px);
+        width: 20%;
+        background: var(--green_L4);
+        @include border_radius(30px);
+
+        &[data-position='0'] {
+          left: 6px;
+        }
+        &[data-position='1'] {
+          left: 20%;
+        }
+        &[data-position='2'] {
+          left: 40%;
+        }
+        &[data-position='3'] {
+          left: 60%;
+        }
+        &[data-position='4'] {
+          left: calc(80% - 6px);
+        }
+      }
+
       > li {
         display: flex;
         justify-content: center;
@@ -88,7 +113,7 @@
         @include border-radius(36px);
 
         &:hover {
-          background: var(--black_opacity_1);
+          // background: var(--black_opacity_1);
 
           > a {
             // color: var(--green_D3);
@@ -112,7 +137,6 @@
             }
           }
           > ul {
-            z-index: 100;
             opacity: 1;
             user-select: none;
             pointer-events: all;
@@ -129,15 +153,16 @@
               width: 100%;
               @include transform(translateY(100%));
               @include border_radius(0 0 48px 48px);
+              user-select: none;
             }
           }
         }
 
         &.actv {
-          * {
-            color: var(--green_D3);
+          > a {
+            color: var(--green_L9);
           }
-          background: var(--green_L8);
+          // background: var(--green_L4);
         }
 
         @media (max-width: 552px) {
@@ -262,8 +287,7 @@
             }
 
             &:hover {
-              > p,
-              a {
+              > a {
                 font-family: 'ZenMaruGothic-Medium';
                 color: var(--green_D2);
                 > svg {
@@ -272,8 +296,7 @@
                 }
               }
             }
-            > p,
-            a {
+            > a {
               font-family: 'ZenMaruGothic-Medium';
               width: 100%;
               white-space: nowrap;

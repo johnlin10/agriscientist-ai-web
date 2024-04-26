@@ -14,7 +14,7 @@ import {
   faCircleInfo,
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const navItems = [
   {
@@ -119,6 +119,7 @@ const navItems = [
 
 export default function Nav() {
   const location = useLocation()
+  const [navBarPosition, setNavBarPosition] = useState(0)
 
   useEffect(() => {
     console.log(location.pathname)
@@ -127,44 +128,50 @@ export default function Nav() {
     <nav className={style.nav}>
       <div className={style.view}>
         <ul>
+          <div className={style.navBar} data-position={navBarPosition}></div>
           {navItems.map((navItem, index) => (
-            <li
-              key={index}
-              className={
-                navItem.path === '/'
-                  ? location.pathname === navItem.path
+            <>
+              <li
+                key={index}
+                className={
+                  navItem.path === '/'
+                    ? location.pathname === navItem.path
+                      ? style.actv
+                      : ''
+                    : location.pathname.startsWith(navItem.basePath)
                     ? style.actv
                     : ''
-                  : location.pathname.startsWith(navItem.basePath)
-                  ? style.actv
-                  : ''
-              }
-            >
-              <a href={`/#${navItem.path}`}>
-                <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
-                <span>{navItem.title}</span>
-              </a>
-              {navItem.child && (
-                <>
-                  <FontAwesomeIcon icon={faCaretUp} className={style.more} />
-                  <ul>
-                    {navItem.child.map((list, index) => {
-                      if (list.title === 'hr') {
-                        return <hr key={index} />
-                      }
-                      return (
-                        <li key={index}>
-                          <a href={`/#${list.path}`}>
-                            {list.title}
-                            <FontAwesomeIcon icon={faArrowRight} />
-                          </a>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </>
-              )}
-            </li>
+                }
+              >
+                <a
+                  href={`/#${navItem.path}`}
+                  onClick={() => setNavBarPosition(index)}
+                >
+                  <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
+                  <span>{navItem.title}</span>
+                </a>
+                {navItem.child && (
+                  <>
+                    <FontAwesomeIcon icon={faCaretUp} className={style.more} />
+                    <ul>
+                      {navItem.child.map((list, index) => {
+                        if (list.title === 'hr') {
+                          return <hr key={index} />
+                        }
+                        return (
+                          <li key={index}>
+                            <a href={`/#${list.path}`}>
+                              {list.title}
+                              <FontAwesomeIcon icon={faArrowRight} />
+                            </a>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </>
+                )}
+              </li>
+            </>
           ))}
         </ul>
       </div>

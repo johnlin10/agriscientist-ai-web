@@ -110,9 +110,8 @@
             cursor: pointer;
 
             &:hover {
-              color: var(--green_D2);
-
               > a {
+                color: var(--green_D2);
                 > svg {
                   opacity: 1;
                   transform: translateX(6px);
@@ -136,6 +135,7 @@
             }
 
             > a {
+              color: var(--grayscale_80);
               @include font(1rem, 500);
               > svg {
                 color: var(--green_D2);
