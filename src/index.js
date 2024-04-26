@@ -7,7 +7,12 @@ import { HashRouter } from 'react-router-dom'
 import { AppProvider } from './AppContext'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-serviceWorkerRegistration.register()
+serviceWorkerRegistration.register({
+  onSuccess: () => console.log('Service Worker 註冊成功'),
+  onUpdate: (registration) => {
+    console.log('Service Worker 更新可用')
+  },
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

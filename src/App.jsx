@@ -60,67 +60,31 @@ import Post from './pages/Post/Post'
 function App() {
   const location = useLocation()
   const navigate = useNavigate()
-  const contextValue = useContext(AppContext)
-
   const { user, adminPermit } = useContext(AppContext)
-  // console.log(user);
 
   // Service Worker 自動檢查更新
   const [updateAvailable, setUpdateAvailable] = useState(false)
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .register(`/service-worker.js`)
-          .then((registration) => {
-            registration.update()
-            console.log(
-              'ServiceWorker 註冊成功！ 管轄範圍：',
-              registration.scope
-            )
-            // 檢查是否有新版本可用
-            if (registration.waiting) {
-              setUpdateAvailable(true)
-            }
-            registration.addEventListener('updatefound', () => {
-              const installingWorker = registration.installing
-              if (installingWorker) {
-                installingWorker.addEventListener('statechange', () => {
-                  if (
-                    installingWorker.state === 'installed' &&
-                    navigator.serviceWorker.controller
-                  ) {
-                    // 提示用戶更新
-                    setUpdateAvailable(true)
-                  }
-                })
-              }
-            })
-            // 當新版本可用時觸發
-            serviceWorkerRegistration.register({
-              onUpdate: () => {
-                // 提示用戶更新
-                setUpdateAvailable(true)
-              },
-            })
-          })
-          .catch((error) => {
-            console.log('ServiceWorker 註冊失敗：', error)
-          })
-      }
-    }, 2500)
-
-    return () => clearInterval(intervalId)
+    serviceWorkerRegistration.register({
+      onUpdate: (registration) => {
+        // 如果有新的 Service Worker 等待中，提示用戶更新
+        if (registration && registration.waiting) {
+          setUpdateAvailable(true)
+        }
+      },
+    })
   }, [])
 
   // 檢查到新版本後，用戶需手動更新新版本
-  const handleUpdate = async () => {
-    const registration = await getRegistration()
-    if (registration && registration.waiting) {
-      // 強制激活新版本
-      registration.waiting.postMessage({ type: 'SKIP_WAITING' })
-      setUpdateAvailable(false)
-      window.location.reload(true)
+  const handleUpdate = () => {
+    if (updateAvailable) {
+      // 如果有新的 Service Worker 等待中，發送消息來觸發更新
+      serviceWorkerRegistration.getRegistration().then((registration) => {
+        if (registration.waiting) {
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+          setUpdateAvailable(false)
+        }
+      })
     }
   }
 

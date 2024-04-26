@@ -11,35 +11,60 @@ import { clientsClaim } from 'workbox-core'
 import { ExpirationPlugin } from 'workbox-expiration'
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
-import { StaleWhileRevalidate } from 'workbox-strategies'
+import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
 clientsClaim()
 precacheAndRoute(self.__WB_MANIFEST)
 
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
-registerRoute(
-  ({ request, url }) => {
-    if (request.mode !== 'navigate') {
-      return false
-    }
-    if (url.pathname.startsWith('/_')) {
-      return false
-    }
-    if (url.pathname.match(fileExtensionRegexp)) {
-      return false
-    }
-    return true
-  },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
-)
+registerRoute(({ request, url }) => {
+  if (request.mode !== 'navigate') {
+    return false
+  }
+  if (url.pathname.startsWith('/_')) {
+    return false
+  }
+  if (url.pathname.match(fileExtensionRegexp)) {
+    return false
+  }
+  return true
+}, createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html'))
 
+// images cache
 registerRoute(
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  ({ request }) => request.destination === 'image',
   new StaleWhileRevalidate({
     cacheName: 'images',
+    plugins: [],
+  })
+)
+
+// fonts cache
+registerRoute(
+  ({ url }) =>
+    url.origin === self.location.origin &&
+    (url.pathname.endsWith('.ttf') || url.pathname.endsWith('.otf')),
+  new CacheFirst({
+    cacheName: 'font-cache',
     plugins: [
-      new ExpirationPlugin({ maxEntries: 50 }),
+      new ExpirationPlugin({
+        maxEntries: 20,
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
     ],
+  })
+)
+
+// CSS cache
+registerRoute(
+  ({ request }) => request.destination === 'style',
+  new StaleWhileRevalidate({
+    cacheName: 'css-cache',
+    plugins: [],
   })
 )
 
@@ -48,9 +73,3 @@ self.addEventListener('message', (event) => {
     self.skipWaiting()
   }
 })
-
-// Any other custom service worker logic can go here.
-// Set a cache name
-const cacheName = 'cache'
-
-// Set an array of assets to cache
