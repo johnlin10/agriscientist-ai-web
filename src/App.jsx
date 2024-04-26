@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react'
+import { Workbox } from 'workbox-window'
 import { AppContext } from './AppContext'
 import { useLocation } from 'react-router-dom'
 import { useNavigate, Navigate, Route, Routes, Outlet } from 'react-router-dom'
@@ -65,14 +66,14 @@ function App() {
   // Service Worker 自動檢查更新
   const [updateAvailable, setUpdateAvailable] = useState(false)
   useEffect(() => {
-    serviceWorkerRegistration.register({
-      onUpdate: (registration) => {
-        // 如果有新的 Service Worker 等待中，提示用戶更新
-        if (registration && registration.waiting) {
-          setUpdateAvailable(true)
-        }
-      },
-    })
+    if ('serviceWorker' in navigator) {
+      const wb = new Workbox('/service-worker.js')
+
+      wb.addEventListener('externalwaiting', (event) => {
+        setUpdateAvailable(true)
+      })
+      wb.register()
+    }
   }, [])
 
   // 檢查到新版本後，用戶需手動更新新版本
@@ -240,7 +241,7 @@ function App() {
         )}
         {/* 更新彈窗 */}
         {updateAvailable && (
-          <div className={css.updater}>
+          <div className={css.updater} data-home={location.pathname === '/'}>
             <h1>網站有更新！</h1>
             <button onClick={handleUpdate}>
               <FontAwesomeIcon
