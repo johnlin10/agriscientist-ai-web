@@ -67,6 +67,7 @@ const navItems = [
       },
       {
         title: 'hr',
+        basePath: '',
         path: '',
       },
       {
@@ -128,6 +129,11 @@ export default function Nav() {
       if (navItem.path === '/') {
         if (location.pathname === navItem.path) {
           index = i
+        } else if (
+          location.pathname === '/user' ||
+          location.pathname === '/post'
+        ) {
+          index = 4
         }
       } else if (location.pathname.startsWith(navItem.basePath)) {
         index = i
@@ -142,45 +148,35 @@ export default function Nav() {
         <ul>
           <div className={style.navBar} data-position={navBarPosition}></div>
           {navItems.map((navItem, index) => (
-            <>
-              <li
-                key={index}
-                className={
-                  navItem.path === '/'
-                    ? location.pathname === navItem.path
-                      ? style.actv
-                      : ''
-                    : location.pathname.startsWith(navItem.basePath)
-                    ? style.actv
-                    : ''
-                }
-              >
-                <a href={`/#${navItem.path}`}>
-                  <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
-                  <span>{navItem.title}</span>
-                </a>
-                {navItem.child && (
-                  <>
-                    <FontAwesomeIcon icon={faCaretUp} className={style.more} />
-                    <ul>
-                      {navItem.child.map((list, index) => {
-                        if (list.title === 'hr') {
-                          return <hr key={index} />
-                        }
-                        return (
-                          <li key={index}>
-                            <a href={`/#${list.path}`}>
-                              {list.title}
-                              <FontAwesomeIcon icon={faArrowRight} />
-                            </a>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </>
-                )}
-              </li>
-            </>
+            <li
+              key={index}
+              className={navBarPosition === index ? style.actv : ''}
+            >
+              <a href={`/#${navItem.path}`}>
+                <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
+                <span>{navItem.title}</span>
+              </a>
+              {navItem.child && (
+                <>
+                  <FontAwesomeIcon icon={faCaretUp} className={style.more} />
+                  <ul>
+                    {navItem.child.map((list, index) => {
+                      if (list.title === 'hr') {
+                        return <hr key={index} />
+                      }
+                      return (
+                        <li key={index}>
+                          <a href={`/#${list.path}`}>
+                            {list.title}
+                            <FontAwesomeIcon icon={faArrowRight} />
+                          </a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </>
+              )}
+            </li>
           ))}
         </ul>
       </div>

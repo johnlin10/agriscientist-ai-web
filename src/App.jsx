@@ -175,7 +175,6 @@ function App() {
                 <Home navigateClick={navigateClick} adminPermit={adminPermit} />
               }
             />
-            <Route path="post" element={<Post />}></Route>
 
             <Route
               path="/products"
@@ -202,12 +201,12 @@ function App() {
               <Route path="aiml" element={<AIML />} />
             </Route>
 
-            <Route path="/about" element={<About />}></Route>
-
             <Route
               path="/user"
               element={<User adminPermit={adminPermit} />}
             ></Route>
+            <Route path="/post" element={<Post />}></Route>
+            <Route path="/about" element={<About />}></Route>
 
             <Route
               path="*"
