@@ -121,9 +121,21 @@ export default function Nav() {
   const location = useLocation()
   const [navBarPosition, setNavBarPosition] = useState(0)
 
+  // 讓 navBar 根據頁面的 location 改鰾定位ㄋ
   useEffect(() => {
-    console.log(location.pathname)
+    let index = 0
+    navItems.forEach((navItem, i) => {
+      if (navItem.path === '/') {
+        if (location.pathname === navItem.path) {
+          index = i
+        }
+      } else if (location.pathname.startsWith(navItem.basePath)) {
+        index = i
+      }
+    })
+    setNavBarPosition(index)
   }, [location])
+
   return (
     <nav className={style.nav}>
       <div className={style.view}>
@@ -143,10 +155,7 @@ export default function Nav() {
                     : ''
                 }
               >
-                <a
-                  href={`/#${navItem.path}`}
-                  onClick={() => setNavBarPosition(index)}
-                >
+                <a href={`/#${navItem.path}`}>
                   <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
                   <span>{navItem.title}</span>
                 </a>
