@@ -58,6 +58,7 @@ import TermsOfUse from './pages/TermsOfUse/TermsOfUse'
 import Feedback from './pages/Feedback/Feedback'
 import Post from './pages/Post/Post'
 
+// serviece worker test
 function App() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -66,14 +67,11 @@ function App() {
   // Service Worker 自動檢查更新
   const [updateAvailable, setUpdateAvailable] = useState(false)
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      const wb = new Workbox('/service-worker.js')
-
-      wb.addEventListener('externalwaiting', (event) => {
-        setUpdateAvailable(true)
-      })
-      wb.register()
-    }
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data === 'new-sw-activated') {
+        window.location.reload()
+      }
+    })
   }, [])
 
   // 檢查到新版本後，用戶需手動更新新版本
@@ -109,8 +107,6 @@ function App() {
         }, 500)
       }, 1000)
     }, 500)
-    // window.addEventListener('load', () => {
-    // })
   }, [])
 
   const [pathname, setPathname] = useState('')
@@ -242,7 +238,7 @@ function App() {
         {/* 更新彈窗 */}
         {updateAvailable && (
           <div className={css.updater} data-home={location.pathname === '/'}>
-            <h1>網站有更新！</h1>
+            <h1>網站有新版本</h1>
             <button onClick={handleUpdate}>
               <FontAwesomeIcon
                 icon={faCircleUp}

@@ -1,12 +1,5 @@
 /* eslint-disable no-restricted-globals */
 
-// This service worker can be customized!
-// See https://developers.google.com/web/tools/workbox/modules
-// for the list of available Workbox modules, or add any other
-// code you'd like.
-// You can also remove this file if you'd prefer not to use a
-// service worker, and the Workbox build step will be skipped.
-
 import { clientsClaim } from 'workbox-core'
 import { ExpirationPlugin } from 'workbox-expiration'
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
@@ -16,6 +9,7 @@ import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
 clientsClaim()
 precacheAndRoute(self.__WB_MANIFEST)
+const clients = self.clients
 
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
 registerRoute(({ request, url }) => {
@@ -72,4 +66,23 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting()
   }
+})
+self.addEventListener('install', (event) => {
+  self.skipWaiting() // 強制跳過等待狀態
+})
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(clients.claim()) // 立即接管當前的客戶端
+})
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    clients.claim().then(() => {
+      return clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+          client.postMessage('new-sw-activated')
+        })
+      })
+    })
+  )
 })
