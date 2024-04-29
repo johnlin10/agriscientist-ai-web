@@ -105,10 +105,9 @@
         height: 100%;
         cursor: pointer;
         @include border-radius(36px);
+        @include transition(0.5s cubic-bezier(0.23, 1, 0.32, 1));
 
         &:hover {
-          // background: var(--black_opacity_1);
-
           > svg {
             &.more {
               top: 0px;
@@ -131,7 +130,6 @@
             @include transform(translateY(-36px));
 
             &::after {
-              // 此次調整了選項到彈出列表的扇形面積，讓用戶可以更輕鬆的使用鼠標滑動到列表選項，而不會收回
               z-index: 1000;
               content: '';
               position: absolute;
@@ -145,7 +143,6 @@
             }
           }
         }
-
         &.actv {
           > a {
             color: var(--green_L9);
@@ -154,18 +151,12 @@
             color: var(--white_opacity_7);
           }
         }
-
-        // @media (max-width: 552px) {
-        //   width: 72px;
-        // }
-
         &.hidden {
           position: absolute;
           width: 0;
           overflow: hidden;
           // max-width: 0;
         }
-
         &:first-child {
           ul {
             left: 0;
@@ -181,7 +172,6 @@
           @include flex-layout(row, center, center);
           font-size: 1.1rem;
           color: var(--black_opacity_8);
-          // font-weight: 600;
           white-space: nowrap;
           height: 100%;
           width: 100%;
@@ -189,6 +179,7 @@
 
           > svg.icon {
             margin-right: 6px;
+            @include transition(0.2s var(--transition_func_normal));
 
             @media (max-width: 552px) {
               margin-right: 0;
@@ -199,6 +190,7 @@
             }
           }
           > span {
+            @include transition(0.2s var(--transition_func_normal));
             @media (max-width: 552px) {
               display: none;
             }
@@ -210,7 +202,7 @@
             position: absolute;
             top: 0px;
             color: var(--black_opacity_2);
-            @include transition(0.5s cubic-bezier(0.23, 1, 0.32, 1));
+            @include transition(0.3s var(--transition_func_normal));
 
             @media (max-width: 552px) {
               top: -2px;
@@ -320,11 +312,6 @@
           -ms-border-radius: 13px;
           -o-border-radius: 13px;
         }
-        transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
       }
     }
   }

@@ -46,7 +46,7 @@
       font-size: 2.5rem;
     }
     > h2 {
-      z-index: 100;
+      z-index: 5100;
       position: sticky;
       top: 0;
       margin: 72px 0 24px 0;
@@ -60,7 +60,7 @@
       box-shadow: 0 -28px 24px 28px var(--bg_base_light);
 
       @media (max-width: 900px) {
-        top: 12px;
+        top: 0px;
         margin: 66px 0 12px -6px;
         width: calc(100% + 12px);
         border-left: 6px solid var(--green_D2);

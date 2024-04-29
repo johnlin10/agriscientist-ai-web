@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
  * @param {Array} list - 傳遞結構與動作
  * @returns 
  * @example
- * 
   const aside = [
     {
       title: '研究',

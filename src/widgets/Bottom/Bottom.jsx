@@ -117,7 +117,7 @@ export default function Bottom() {
   }
 
   return (
-    <div className={`${style.container}`}>
+    <footer className={`${style.container}`}>
       <div className={style.view}>
         <div className={style.header}>
           <div className={style.title}>
@@ -192,6 +192,6 @@ export default function Bottom() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   )
 }

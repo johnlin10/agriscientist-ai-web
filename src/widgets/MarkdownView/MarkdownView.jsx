@@ -107,7 +107,7 @@ export default function MarkdownView({ filePath }) {
 
   return (
     <>
-      <div
+      <article
         className={`${style.view}${
           isEditing ? ` ${style.edit}` : ''
         } markdownView`}
@@ -131,7 +131,7 @@ export default function MarkdownView({ filePath }) {
             setEditingMarkdown={setEditingMarkdown}
           />
         )}
-      </div>
+      </article>
 
       {adminPermit && (
         <div className={style.buttons}>
