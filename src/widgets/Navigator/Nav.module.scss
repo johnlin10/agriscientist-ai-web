@@ -139,6 +139,7 @@
             }
           }
           > ul {
+            z-index: 10;
             opacity: 1;
             user-select: none;
             pointer-events: all;

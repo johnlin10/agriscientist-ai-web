@@ -1,7 +1,10 @@
+@import '../../../../mixin.scss';
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  // position: relative;
   // position: relative;
   padding: 0 24px;
   width: 100%;
@@ -409,7 +412,7 @@
       &::after {
         content: '已遺忘';
         position: absolute;
-        top: 6px;
+        bottom: 6px;
         right: 9px;
         font-size: 0.8rem;
       }
@@ -485,5 +488,73 @@
     -moz-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     -ms-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     -o-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  > .deleteMessageBtn {
+    margin-top: 12px;
+    padding: 3px 9px;
+    width: fit-content;
+    @include border_radius(18px);
+    color: #7f7f7f;
+    background: #efefef;
+  }
+
+  > .messageInput {
+    @include flex-layout(row, center, space-between);
+    position: absolute;
+    padding: 6px;
+    bottom: 88px;
+    right: 24px;
+    width: calc(100% - 240px - 48px);
+    max-width: 600px;
+    height: 60px;
+    overflow: hidden;
+    @include border_radius(30px);
+    background: var(--yellow_L6);
+    box-shadow: 0 3px 10px 0 #6b5a090f, 0 6px 50px 0 #6b5a090a;
+
+    @media (max-width: 900px) {
+      right: 24px;
+      width: calc(100% - 48px);
+    }
+    @media (max-width: 552px) {
+      bottom: 108px;
+    }
+
+    > .input {
+      padding: 9px 15px;
+      width: 100%;
+      height: 100%;
+      background: var(--yellow_L8);
+      @include border_radius(30px);
+
+      > input {
+        height: 100%;
+        width: 100%;
+        font-size: 1rem;
+        color: var(--yellow_D4);
+        background: var(--yellow_L8);
+
+        &::placeholder {
+          color: var(--yellow_L3);
+        }
+      }
+    }
+
+    > .ctrls {
+      margin-left: 6px;
+      width: 48px;
+      min-width: fit-content;
+      height: 100%;
+
+      > button {
+        width: 48px;
+        height: 100%;
+        @include border_radius(30px);
+        color: #fff;
+        background: var(--yellow_L3);
+        font-size: 1.2rem;
+      }
+    }
   }
 }

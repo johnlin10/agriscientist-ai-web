@@ -1,22 +1,33 @@
 import style from './Chats.module.scss'
+import { AppContext } from '../../../../AppContext'
+
 import { db } from '../../../../firebase'
 import { doc, onSnapshot } from 'firebase/firestore'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import TestingBlock from '../../../../widgets/TestingNoticeBlock/TestingNoticeBlock'
+import { writeFirestoreDoc } from '../../../../firebase'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function Chats(props) {
-  const [chat_history, setChat_history] = useState([])
+  const { adminPermit } = useContext(AppContext)
+  const [chatHistory, setChatHistory] = useState([])
   const [assistanStatus, setAssistantStatus] = useState(false)
   const [KEEP_RECENT, setKEEP_RECENT] = useState(0)
   const sensorsDataRef = doc(db, 'chat', 'chat_history')
   const assistanStatusRef = doc(db, 'chat', 'assistant_status')
 
+  // 傳送訊息
+  const [messageInput, setMessageInput] = useState('')
+
   // 感測器數據即時同步
   useEffect(() => {
     const unsubscribe = onSnapshot(sensorsDataRef, (docSnap) => {
       const messages = docSnap.data().messages
-      setChat_history(messages)
+      setChatHistory(messages)
+      console.log(messages)
       setKEEP_RECENT(docSnap.data().KEEP_RECENT)
     })
 
@@ -29,7 +40,6 @@ export default function Chats(props) {
     const unsubscribe = onSnapshot(assistanStatusRef, (docSnap) => {
       const status = docSnap.data().status
       setAssistantStatus(status)
-      console.log(status)
     })
 
     return () => {
@@ -44,7 +54,7 @@ export default function Chats(props) {
         newChat[newChat.length - 1].scrollIntoView({ behavior: 'smooth' })
       }, 150)
     }
-  }, [chat_history])
+  }, [chatHistory])
 
   const [isFirstChatLoad, setIsFirstChatLoad] = useState(true)
   useEffect(() => {
@@ -68,7 +78,7 @@ export default function Chats(props) {
       }, 100)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chat_history])
+  }, [chatHistory])
 
   // 打字機效果函數
   const typeWriterEffect = (text, element, index = 0) => {
@@ -104,23 +114,32 @@ export default function Chats(props) {
       lastChatBlock.textContent = '' // 清空原有內容
       setTimeout(() => {
         typeWriterEffect(
-          chat_history[chat_history.length - 1].content,
+          chatHistory[chatHistory.length - 1].content,
           lastChatBlock
         )
       }, 400)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chat_history])
+  }, [chatHistory])
+
+  const sendMessage = (message) => {
+    writeFirestoreDoc('chat/user_message', { message: message }, true)
+    setMessageInput('')
+  }
+
+  const deleteMessage = () => {
+    writeFirestoreDoc('chat/delete_message_status', { delete: true }, true)
+  }
 
   return (
     <div className={`${style.container}`}>
       <Helmet>
         <title>農場助理｜田野數據科學家</title>
       </Helmet>
-      <TestingBlock
+      {/* <TestingBlock
         title="服務暫停中"
         description="正在與數據分析進行全面整合。"
-      />
+      /> */}
       <div
         className={`${style.assistant}${
           assistanStatus === 'true' ? ` ${style.actv}` : ''
@@ -152,14 +171,17 @@ export default function Chats(props) {
           }`}
         ></div>
       </div>
-      {chat_history && chat_history.length > 0
-        ? chat_history.map((item, index) => {
+
+      {chatHistory && chatHistory.length > 0
+        ? chatHistory.map((item, index) => {
             // eslint-disable-next-line array-callback-return
             if (index < KEEP_RECENT) return
             return (
               <div
                 className={`chat_block ${style.chat_block}${
-                  index < KEEP_RECENT ? ` ${style.expire}` : ''
+                  index < chatHistory.length + 1 - KEEP_RECENT
+                    ? ` ${style.expire}`
+                    : ''
                 }${item.role === 'user' ? ` ${style.user}` : ''}`}
                 key={index}
               >
@@ -177,11 +199,40 @@ export default function Chats(props) {
                 ) : (
                   ''
                 )}
-                <p>{item.content}</p>
+                <p>
+                  {index}: {item.content}
+                </p>
               </div>
             )
           })
         : ''}
+      {adminPermit && (
+        <>
+          {chatHistory.length > KEEP_RECENT && (
+            <button
+              className={style.deleteMessageBtn}
+              onClick={() => deleteMessage()}
+            >
+              清空此對話
+            </button>
+          )}
+          <div className={style.messageInput}>
+            <div className={style.input}>
+              <input
+                type="text"
+                placeholder="輸入訊息"
+                value={messageInput}
+                onChange={(e) => setMessageInput(e.target.value)}
+              />
+            </div>
+            <div className={style.ctrls}>
+              <button type="button" onClick={() => sendMessage(messageInput)}>
+                <FontAwesomeIcon icon={faArrowUp} />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
