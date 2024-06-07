@@ -199,9 +199,7 @@ export default function Chats(props) {
                 ) : (
                   ''
                 )}
-                <p>
-                  {index}: {item.content}
-                </p>
+                <p>{item.content}</p>
               </div>
             )
           })
