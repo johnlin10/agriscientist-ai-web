@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import style from './Dashboard.module.scss'
 import { db } from '../../../../firebase'
 import { collection, onSnapshot, query } from 'firebase/firestore'
@@ -17,6 +17,8 @@ import {
   faAnglesRight,
 } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
+import { formatDistanceToNow, formatRelative, format } from 'date-fns'
+import { zhTW } from 'date-fns/locale'
 
 import {
   BarChart,
@@ -107,17 +109,17 @@ export default function Dashboard() {
       maxScaleFactor: 1.2,
       minScaleFactor: '',
     },
-    {
-      name: '水位高度',
-      type: 'water',
-      unit: '',
-      fixed: 0,
-      chartType: 'bar',
-      color: 'var(--blue_L5)',
-      accentColor: 'var(--blue_D3)',
-      maxScaleFactor: 1.2,
-      minScaleFactor: '',
-    },
+    // {
+    //   name: '水位高度',
+    //   type: 'water',
+    //   unit: '',
+    //   fixed: 0,
+    //   chartType: 'bar',
+    //   color: 'var(--blue_L5)',
+    //   accentColor: 'var(--blue_D3)',
+    //   maxScaleFactor: 1.2,
+    //   minScaleFactor: '',
+    // },
   ]
   const dataAnalysisType = ['平均', '中位']
 
@@ -138,111 +140,6 @@ export default function Dashboard() {
   const [isIndexesInitialized, setIsIndexesInitialized] = useState(false)
 
   // *=== 數據處理 ===============================================================
-
-  /**
-   * 根據日期取得週數
-   * @param {date} date
-   * @returns {string} - 週數
-   */
-  const getWeekNumber = (date) => {
-    const firstDayOfYear = new Date(date.getUTCFullYear(), 0, 1)
-    const pastDaysOfYear = (date - firstDayOfYear) / 86400000
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)
-  }
-
-  /**
-   * 將數據進行指定時間單位的分組
-   * @param {Array} data - 感測器完整數據
-   * @param {string} type - 欲分類的數據單位 hour/day/week/month
-   * @returns {Array} - 根據單位分組後的數據
-   */
-  // const groupData = (sensorData, type) => {
-  //   switch (type) {
-  //     case 'hour':
-  //       const groupedByHour = sensorData.reduce((acc, data) => {
-  //         const timestamp =
-  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-  //         const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
-  //         const date = new Date(timestampWithOffset)
-  //         const formattedDate = date
-  //           .toISOString()
-  //           .slice(0, 13)
-  //           .replace(/-|T|:/g, '') // YYYYMMDDHH format
-
-  //         if (!acc[formattedDate]) {
-  //           acc[formattedDate] = []
-  //         }
-  //         acc[formattedDate].push(data)
-  //         return acc
-  //       }, {})
-  //       return groupedByHour
-
-  //     case 'day':
-  //       const groupedByDay = sensorData.reduce((acc, data) => {
-  //         const timestamp =
-  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-  //         const timestampWithOffset = timestamp + 8 * 60 * 60 * 1000
-  //         const date = new Date(timestampWithOffset)
-  //           .toISOString()
-  //           .slice(0, 10)
-  //           .replace(/-/g, '')
-
-  //         if (!acc[date]) {
-  //           acc[date] = []
-  //         }
-  //         acc[date].push(data)
-  //         return acc
-  //       }, {})
-  //       return groupedByDay
-
-  //     case 'week':
-  //       const groupedByWeek = sensorData.reduce((acc, data) => {
-  //         const timestamp =
-  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-  //         const date = new Date(timestamp)
-  //         const weekNumber = getWeekNumber(date)
-  //         const year = date.getUTCFullYear()
-  //         const yearWeek = `${year}${weekNumber.toString().padStart(2, '0')}` // Combine year and week
-
-  //         if (!acc[yearWeek]) {
-  //           acc[yearWeek] = []
-  //         }
-  //         acc[yearWeek].push(data)
-  //         return acc
-  //       }, {})
-  //       return groupedByWeek
-
-  //     case 'month':
-  //       const groupedByMonth = sensorData.reduce((acc, data) => {
-  //         const timestamp =
-  //           data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6
-  //         const date = new Date(timestamp)
-  //         const year = date.getUTCFullYear()
-  //         const month = (date.getUTCMonth() + 1).toString().padStart(2, '0') // Month from 01 to 12
-
-  //         const key = `${year}${month}`
-  //         if (!acc[key]) {
-  //           acc[key] = []
-  //         }
-  //         acc[key].push(data)
-  //         return acc
-  //       }, {})
-  //       return groupedByMonth
-
-  //     case 'record':
-  //       const groupedByRecord = sensorData.reduce((acc, data) => {
-  //         if (!acc[0]) {
-  //           acc[0] = []
-  //         }
-  //         acc[0].push(data)
-  //         return acc
-  //       }, {})
-  //       return groupedByRecord
-
-  //     default:
-  //       break
-  //   }
-  // }
 
   /**
    * 編列單位分組數據的索引
@@ -290,16 +187,16 @@ export default function Dashboard() {
       let sampleSize
       switch (dataUnit) {
         case 'hour':
-          sampleSize = 1 // 每小时数据不采样
+          sampleSize = 1
           break
         case 'day':
-          sampleSize = 6 // 每天采样一次
+          sampleSize = 6
           break
         case 'week':
-          sampleSize = 7 * 6 // 每周采样一次，假设一周7天，每天24小时
+          sampleSize = 7 * 6
           break
         case 'month':
-          sampleSize = 4 * 7 * 6 // 每月采样一次，假设一月30天，每天24小时
+          sampleSize = 4 * 7 * 6
           break
         default:
           sampleSize = 1
@@ -362,7 +259,7 @@ export default function Dashboard() {
             temperature: parseFloat(item.temperature),
             humidity: parseFloat(item.humidity),
             light: parseInt(item.light, 10),
-            water: parseInt(item.water, 10),
+            // water: parseInt(item.water, 10),
           }))
 
           // 將當前文檔的數據添加到數組中
@@ -563,6 +460,15 @@ export default function Dashboard() {
               />
             ))}
           </div>
+          {/* <MixChart
+            type=""
+            sensor={sensors}
+            data={
+              sensorSampledData
+                ? sensorSampledData[dataIndexes[selectDataIndex]]
+                : null
+            }
+          /> */}
         </div>
       </div>
     </div>
@@ -578,6 +484,8 @@ export default function Dashboard() {
 function SensorDashboardBlock({ sensor, data }) {
   const [latestData, setLatestData] = useState(null)
   const [sensors_actv, setSensors_actv] = useState(null)
+  const [timeType, setTimeType] = useState('absolute') // relative, absolute
+  const [relativeTime, setRelativeTime] = useState('')
 
   useEffect(() => {
     const latest = data ? data[data.length - 1] : null
@@ -619,15 +527,61 @@ function SensorDashboardBlock({ sensor, data }) {
     }
   }, [latestData])
 
+  const handleChangeTimeType = () => {
+    // setTimeType(timeType === 'relative' ? 'absolute' : 'relative')
+
+    if (timeType === 'absolute') {
+      setTimeType('relative')
+      setTimeout(() => {
+        setTimeType('absolute')
+      }, 5000)
+    }
+  }
+
   /**
    * 將timestamp時間格式化
    * @param {number} seconds - timestamp.seconds
-   * @returns - YYYY/MM/DD 上/下午HH:mm:ss
+   * @returns - 絕對時間 (今天上午 7:34, 昨天下午 4:30等)
    */
   function formatTimestamp(seconds) {
     const date = new Date(seconds * 1000)
-    return date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
+    const now = new Date()
+
+    const relativeDay = formatRelative(date, now, { locale: zhTW })
+    const time = format(date, 'aaa h:mm', { locale: zhTW })
+
+    return `${relativeDay}`
   }
+
+  /**
+   * 將timestamp時間格式化
+   * @param {number} seconds - timestamp.seconds
+   * @returns - 相對時間 (今天、昨天等)
+   */
+  function formatRelativeTimestamp(seconds) {
+    const date = new Date(seconds * 1000)
+    const relativeTime = formatDistanceToNow(date, { locale: zhTW })
+    const fullTime = `(${format(date, 'yyyy/MM/dd HH:mm:ss', {
+      locale: zhTW,
+    })})`
+    return `${relativeTime}前`
+  }
+
+  // 定期更新相對時間
+  useEffect(() => {
+    if (latestData) {
+      const updateRelativeTime = () => {
+        setRelativeTime(formatRelativeTimestamp(latestData.timestamp.seconds))
+      }
+
+      updateRelativeTime()
+      const intervalId = setInterval(updateRelativeTime, 30000)
+
+      return () => {
+        clearInterval(intervalId) // 清除定时器
+      }
+    }
+  }, [latestData])
 
   return (
     <div className={style.dashboardBlock} data-actv={sensors_actv}>
@@ -650,9 +604,13 @@ function SensorDashboardBlock({ sensor, data }) {
           <Loading loadingAniActv={true} type="local" />
         )}
 
-        <p className={style.time}>
+        <p className={style.time} onClick={handleChangeTimeType}>
           {latestData
-            ? `${formatTimestamp(latestData.timestamp.seconds)}`
+            ? `${
+                timeType === 'relative'
+                  ? relativeTime
+                  : formatTimestamp(latestData.timestamp.seconds)
+              }`
             : 'Loading...'}
         </p>
       </div>
@@ -679,10 +637,6 @@ function SensorSimpleBarChartBlock({ sensor, data }) {
 }
 
 function SensorSimpleBarChart({ sensor, data }) {
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-  const style = { x: true, y: true }
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
@@ -719,11 +673,6 @@ function SensorSimpleBarChart({ sensor, data }) {
       </BarChart>
     </ResponsiveContainer>
   )
-}
-
-const RediusBar = (props) => {
-  const { fill, x, y, width, height } = props
-  return <div style={{ width: width, height: height }}></div>
 }
 
 function SensorDataChartBlock({ sensor, data, analysisType, trends }) {
@@ -1068,4 +1017,186 @@ function SensorAreaChart({ sensor, data, analysisType }) {
       </AreaChart>
     </ResponsiveContainer>
   )
+}
+
+function MixChart({ type, sensor, data }) {
+  const typeset = [
+    {
+      sensor: 'temperature',
+      chartType: '',
+      color: '',
+    },
+    {
+      sensor: 'humidity',
+      chartType: '',
+      color: '',
+    },
+  ]
+
+  useEffect(() => {
+    let chartElement = []
+    if (data) {
+      typeset.forEach((type) => {
+        console.log(`${data}`)
+
+        // 根據 chart 類型 area, line, bar，生成對應的 recharts 圖表，並將圖表 element 添加到 chartElement 變數中。並且 forEach 循環添加多個 chart element。
+        if (type.chartType === 'area') {
+          chartElement.push({
+            element: (
+              <AreaChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 12,
+                  right: 12,
+                  left: -12,
+                  bottom: 0,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="timestamp.seconds"
+                  tickFormatter={(unixTime) =>
+                    moment(unixTime * 1000).format('MM/DD HH:mm')
+                  }
+                />
+                <YAxis
+                  dataKey={sensor.type}
+                  type="number"
+                  domain={[
+                    sensor.minScaleFactor !== ''
+                      ? (dataMin) => dataMin * sensor.minScaleFactor
+                      : 0,
+                    sensor.maxScaleFactor !== ''
+                      ? (dataMax) => dataMax * sensor.maxScaleFactor
+                      : (dataMax) => dataMax * 1.2,
+                  ]}
+                  tickFormatter={(data) => data.toFixed(sensor.fixed)}
+                />
+
+                <Tooltip
+                  animationDuration={50}
+                  animationEasing="ease-in-out"
+                  labelFormatter={(unixTime) =>
+                    moment(unixTime * 1000).format('MM月DD日 HH:mm')
+                  }
+                />
+                <Area
+                  type="monotone"
+                  dataKey={sensor.type}
+                  stroke={sensor.color}
+                  fill={sensor.color}
+                />
+              </AreaChart>
+            ),
+          })
+        } else if (type.chartType === 'line') {
+          chartElement.push({
+            element: (
+              <AreaChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 12,
+                  right: 12,
+                  left: -12,
+                  bottom: 0,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="timestamp.seconds"
+                  tickFormatter={(unixTime) =>
+                    moment(unixTime * 1000).format('MM/DD HH:mm')
+                  }
+                />
+                <YAxis
+                  dataKey={sensor.type}
+                  type="number"
+                  domain={[
+                    sensor.minScaleFactor !== ''
+                      ? (dataMin) => dataMin * sensor.minScaleFactor
+                      : 0,
+                    sensor.maxScaleFactor !== ''
+                      ? (dataMax) => dataMax * sensor.maxScaleFactor
+                      : (dataMax) => dataMax * 1.2,
+                  ]}
+                  tickFormatter={(data) => data.toFixed(sensor.fixed)}
+                />
+
+                <Tooltip
+                  animationDuration={50}
+                  animationEasing="ease-in-out"
+                  labelFormatter={(unixTime) =>
+                    moment(unixTime * 1000).format('MM月DD日 HH:mm')
+                  }
+                />
+                <Area
+                  type="monotone"
+                  dataKey={sensor.type}
+                  stroke={sensor.color}
+                  fill={sensor.color}
+                />
+              </AreaChart>
+            ),
+          })
+        } else if (type.chartType === 'bar') {
+          chartElement.push({
+            element: (
+              <AreaChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 12,
+                  right: 12,
+                  left: -12,
+                  bottom: 0,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="timestamp.seconds"
+                  tickFormatter={(unixTime) =>
+                    moment(unixTime * 1000).format('MM/DD HH:mm')
+                  }
+                />
+                <YAxis
+                  dataKey={sensor.type}
+                  type="number"
+                  domain={[
+                    sensor.minScaleFactor !== ''
+                      ? (dataMin) => dataMin * sensor.minScaleFactor
+                      : 0,
+                    sensor.maxScaleFactor !== ''
+                      ? (dataMax) => dataMax * sensor.maxScaleFactor
+                      : (dataMax) => dataMax * 1.2,
+                  ]}
+                  tickFormatter={(data) => data.toFixed(sensor.fixed)}
+                />
+
+                <Tooltip
+                  animationDuration={50}
+                  animationEasing="ease-in-out"
+                  labelFormatter={(unixTime) =>
+                    moment(unixTime * 1000).format('MM月DD日 HH:mm')
+                  }
+                />
+                <Area
+                  type="monotone"
+                  dataKey={sensor.type}
+                  stroke={sensor.color}
+                  fill={sensor.color}
+                />
+              </AreaChart>
+            ),
+          })
+        }
+      })
+    }
+  }, [type, sensor, data])
+
+  return <ResponsiveContainer width="100%" height="100%"></ResponsiveContainer>
 }
