@@ -1,29 +1,17 @@
 /* eslint-disable no-unused-vars */
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useContext,
-} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Workbox } from 'workbox-window'
 import { AppContext } from './AppContext'
 import { useLocation } from 'react-router-dom'
-import { useNavigate, Navigate, Route, Routes, Outlet } from 'react-router-dom'
+import { useNavigate, Route, Routes } from 'react-router-dom'
 import css from './App.module.scss'
 
 // Service Worker
 import { serviceWorkerRegistration } from './serviceWorkerRegistration'
-import { getRegistration } from './serviceWorkerRegistration'
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faSun,
-  faMoon,
-  faCircleHalfStroke,
-  faCircleUp,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCircleUp } from '@fortawesome/free-solid-svg-icons'
 
 // Pages
 import Home from './pages/Home/Home'
@@ -49,7 +37,7 @@ import AIML from './pages/Researches/Content/AIML/AIML'
 import ResearchesIntro from './pages/Researches/Content/Intro/Intro'
 import About from './pages/About/About'
 
-import Loading from './widgets/Loading/Loading'
+// import Loading from './widgets/Loading/Loading'
 import NotFound from './pages/NotFound/NotFound'
 
 // Widgets
@@ -62,7 +50,7 @@ import Post from './pages/Post/Post'
 function App() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { user, adminPermit } = useContext(AppContext)
+  const { adminPermit } = useContext(AppContext)
 
   // Service Worker 自動檢查更新
   const [updateAvailable, setUpdateAvailable] = useState(false)
@@ -116,12 +104,8 @@ function App() {
   }, [location])
 
   const [scrollmax, setScrollmax] = useState(false)
-  const [topMaskBackdrop, setTopMaskBackdrop] = useState(0)
-  const [headerTopScale, setHeaderTopScale] = useState(1)
   useEffect(() => {
     const myElement = document.querySelector('main')
-    setTopMaskBackdrop(0)
-    setHeaderTopScale(1)
 
     const handleScroll = () => {
       const windowHeight = window.innerHeight
@@ -129,10 +113,6 @@ function App() {
         setScrollmax(true)
       } else {
         setScrollmax(false)
-      }
-      if ((myElement.scrollTop / windowHeight) * 100 < 20) {
-        setTopMaskBackdrop((myElement.scrollTop / windowHeight) * 100)
-        setHeaderTopScale(1 - myElement.scrollTop / windowHeight / 1.5)
       }
     }
 

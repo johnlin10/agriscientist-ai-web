@@ -58,6 +58,7 @@ export default function Home(props) {
               <br />
               <CountdownTimer targetDate="2024-03-19 17:00:00" />
             </p> */}
+            {/* <Button type="primary" labal="askdfhkl" onClick={() => {}} /> */}
             <div
               className={style.aboutProjectCompetition}
               data-rellax-speed="-5.5"

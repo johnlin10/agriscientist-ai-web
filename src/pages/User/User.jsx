@@ -11,24 +11,8 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 // Firebase
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc,
-  onSnapshot,
-} from 'firebase/firestore'
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from 'firebase/auth'
-import { app, db } from '../../firebase'
+import { getAuth, signOut } from 'firebase/auth'
+import { app } from '../../firebase'
 
 export const auth = getAuth(app)
 

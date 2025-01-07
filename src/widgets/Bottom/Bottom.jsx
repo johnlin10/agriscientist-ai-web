@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import style from './Bottom.module.scss'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -132,9 +132,9 @@ export default function Bottom() {
         <div className={style.socialMedias}>
           {socialMedias.map((item, index) => (
             <div className={style.media} title={item.name} key={index}>
-              <a href={item.url} target="_blank" rel="noreferrer">
+              <Link to={item.url} target="_blank" rel="noreferrer">
                 {item.icon}
-              </a>
+              </Link>
             </div>
           ))}
         </div>
@@ -145,11 +145,11 @@ export default function Bottom() {
               <ul>
                 {item.child?.map((child, index) => (
                   <li key={index}>
-                    <a
-                      href={
+                    <Link
+                      to={
                         child.path.includes('https://')
                           ? child.path
-                          : `/#${child.path}`
+                          : `${child.path}`
                       }
                       target={child.path.includes('https://') ? '_blank' : ''}
                       rel="noreferrer"
@@ -161,7 +161,7 @@ export default function Bottom() {
                           child.path.includes('https://') ? style.outLink : ''
                         }
                       />
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -170,7 +170,9 @@ export default function Bottom() {
         </div>
         <div className={style.copyRight}>
           <div>
-            <p>Copyright © 2023-2024 | Agriscientist AI</p>
+            <p>
+              Copyright © 2023-{new Date().getFullYear()} | Agriscientist AI
+            </p>
           </div>
           <div>
             {/* <p>

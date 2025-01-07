@@ -1,17 +1,15 @@
 import style from './Nav.module.scss'
 import { useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCaretUp,
   faLeaf,
-  faMagnifyingGlassChart,
   faChartSimple,
-  faInbox,
   faCube,
   faBook,
   faUsers,
-  faCircleInfo,
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
@@ -152,10 +150,10 @@ export default function Nav() {
               key={index}
               className={navBarPosition === index ? style.actv : ''}
             >
-              <a href={`/#${navItem.path}`}>
+              <Link to={`${process.env.PUBLIC_URL}${navItem.path}`}>
                 <FontAwesomeIcon icon={navItem.icon} className={style.icon} />
                 <span>{navItem.title}</span>
-              </a>
+              </Link>
               {navItem.child && (
                 <>
                   <FontAwesomeIcon icon={faCaretUp} className={style.more} />
@@ -166,10 +164,10 @@ export default function Nav() {
                       }
                       return (
                         <li key={index}>
-                          <a href={`/#${list.path}`}>
+                          <Link to={`${process.env.PUBLIC_URL}${list.path}`}>
                             {list.title}
                             <FontAwesomeIcon icon={faArrowRight} />
-                          </a>
+                          </Link>
                         </li>
                       )
                     })}
